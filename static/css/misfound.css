@@ -191,20 +191,17 @@ h1, h2, h3, h4, h5, h6 {
 /* ---------------------------------------------------------------- */
 .choices[data-type*="select-one"] .choices__inner {
     border-radius: var(--mf-radius-sm);
-    padding: 0.5rem 1rem 0.5rem 2.2rem;
+    padding: 0.5rem 0.75rem;
     background-color: #fff;
     border-color: var(--bs-border-color, #dee2e6);
     min-height: calc(1.5em + 0.75rem + 2px);
 }
 
-.choices[data-type*="select-one"] .choices__inner::after {
-    right: auto;
-    left: 11.5px;
+/* Choices only applies its own RTL layout (arrow side, text padding) when
+   the wrapper has dir="rtl" — set via mfNewChoices() in misfound.js. This
+   just re-colors the arrow to match the design; position stays library-managed. */
+.choices[data-type*="select-one"]::after {
     border-color: var(--mf-text-muted) transparent transparent transparent;
-}
-
-.choices.is-open .choices__inner::after {
-    transform: rotate(180deg);
 }
 
 .choices__list--dropdown,

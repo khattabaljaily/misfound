@@ -176,10 +176,23 @@ function misfoundChoicesConfig() {
     };
 }
 
+/**
+ * Choices.js ships full RTL styling (arrow side, text padding, dropdown
+ * alignment) but only activates it when the `.choices` wrapper itself has
+ * dir="rtl" — it doesn't inherit that from an ancestor like normal CSS, so
+ * we set it explicitly on every instance we create.
+ */
+function mfNewChoices(selectEl, config) {
+    var instance = new Choices(selectEl, config || misfoundChoicesConfig());
+    var wrapper = selectEl.closest('.choices');
+    if (wrapper) wrapper.setAttribute('dir', 'rtl');
+    return instance;
+}
+
 function initChoicesOn(root) {
     if (typeof Choices === 'undefined') return;
     (root || document).querySelectorAll('select[data-choices]').forEach(function (el) {
-        new Choices(el, misfoundChoicesConfig());
+        mfNewChoices(el);
     });
 }
 
@@ -198,8 +211,8 @@ function initCityCascade(countrySelectId, citySelectId, citiesUrl, emptyLabel) {
     var initialCity = cityEl.value;
 
     var hasChoices = typeof Choices !== 'undefined';
-    var countryChoices = hasChoices ? new Choices(countryEl, misfoundChoicesConfig()) : null;
-    var cityChoices = hasChoices ? new Choices(cityEl, misfoundChoicesConfig()) : null;
+    var countryChoices = hasChoices ? mfNewChoices(countryEl) : null;
+    var cityChoices = hasChoices ? mfNewChoices(cityEl) : null;
 
     function setCityDisabled(disabled) {
         if (cityChoices) {
