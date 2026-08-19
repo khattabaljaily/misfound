@@ -532,7 +532,7 @@ input.mf-pill-field {
     border: 1px solid var(--mf-border);
     border-radius: var(--mf-radius-lg);
     box-shadow: var(--mf-shadow);
-    padding: 1rem 1rem 0.25rem;
+    padding: 1rem;
     margin-inline: 0;
 }
 
