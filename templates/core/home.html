@@ -1,7 +1,8 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block content %}
 <div class="text-center py-5 mb-4 bg-light rounded-3">
+    <img src="{% static 'img/logo.png' %}" alt="Misfound" height="56" class="mb-3">
     <h1 class="display-5 fw-bold">{% trans "هل عثرت على شيء؟ أم فقدت شيئًا؟" %}</h1>
     <p class="lead text-muted">{% trans "منصة إلكترونية تهدف إلى إعادة كل مفقود إلى صاحبه" %}</p>
     <form action="{% url 'reports:list' %}" method="get" class="d-flex justify-content-center gap-2 mt-4">
