@@ -26,7 +26,7 @@
 document.getElementById('id_country').addEventListener('change', function () {
     var countryId = this.value;
     var citySelect = document.getElementById('id_city');
-    citySelect.innerHTML = '<option value="">---------</option>';
+    citySelect.innerHTML = '<option value="">اختر المدينة</option>';
     if (!countryId) return;
     fetch("{% url 'reports:cities_for_country' %}?country=" + countryId)
         .then(function (r) { return r.text(); })

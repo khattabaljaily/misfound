@@ -16,6 +16,9 @@ class ReportForm(forms.ModelForm):
 
     def __init__(self, *args, report_type=None, **kwargs):
         super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            if isinstance(field, forms.ModelChoiceField):
+                field.empty_label = f'اختر {field.label}'
         self.report_type = report_type
         if report_type == Report.FOUND:
             self.fields['verification_question'].widget = forms.HiddenInput()
