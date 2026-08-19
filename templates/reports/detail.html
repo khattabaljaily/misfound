@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="row">
+    <div class="col-md-5">
+        {% if report.image %}
+        <img src="{{ report.image.url }}" class="img-fluid rounded">
+        {% else %}
+        <div class="bg-light rounded p-5 text-center text-muted">{% trans "لا توجد صورة" %}</div>
+        {% endif %}
+    </div>
+    <div class="col-md-7">
+        <span class="badge {% if report.type == 'lost' %}badge-lost{% else %}badge-found{% endif %} mb-2">
+            {{ report.get_type_display }}
+        </span>
+        {% if report.status == 'resolved' %}
+        <span class="badge bg-secondary mb-2">{% trans "تم الاسترجاع" %}</span>
+        {% endif %}
+        <h1 class="h3">{{ report.title }}</h1>
+        <p class="text-muted">
+            {{ report.category.name }} —
+            {{ report.city.name|default:"" }}{% if report.city %}, {% endif %}{{ report.country.name }}
+            — {{ report.event_date }}
+        </p>
+        <p>{{ report.description }}</p>
+        {% if report.location_details %}
+        <p><strong>{% trans "مكان الفقدان/العثور:" %}</strong> {{ report.location_details }}</p>
+        {% endif %}
+
+        {% if is_owner %}
+            {% if report.verification_question %}
+            <div class="alert alert-info">
+                <strong>{% trans "سؤال التحقق (يظهر لك فقط):" %}</strong> {{ report.verification_question }}
+            </div>
+            {% endif %}
+            {% if report.status == 'open' %}
+            <form action="{% url 'reports:resolve' pk=report.pk %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-success">{% trans "تم الاسترجاع ✓" %}</button>
+            </form>
+            {% endif %}
+        {% elif report.status == 'open' %}
+            {% if user.is_authenticated %}
+            <form action="{% url 'messaging:start' report_pk=report.pk %}" method="post">
+                {% csrf_token %}
+                <textarea name="body" class="form-control mb-2" rows="2" placeholder="{% trans 'اكتب رسالتك...' %}" required></textarea>
+                <button class="btn btn-primary">
+                    {% if report.type == 'lost' %}{% trans "أعتقد إني لقيتها" %}{% else %}{% trans "أعتقد إنها بتاعتي" %}{% endif %}
+                </button>
+            </form>
+            {% else %}
+            <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn btn-primary">{% trans "سجّل دخولك للتواصل" %}</a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

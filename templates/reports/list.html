@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1 class="h3 mb-4">{% trans "تصفح البلاغات" %}</h1>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-2">
+        <select name="type" class="form-select">
+            <option value="">{% trans "الكل" %}</option>
+            <option value="lost" {% if selected.type == 'lost' %}selected{% endif %}>{% trans "مفقود" %}</option>
+            <option value="found" {% if selected.type == 'found' %}selected{% endif %}>{% trans "معثور عليه" %}</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="category" class="form-select">
+            <option value="">{% trans "كل التصنيفات" %}</option>
+            {% for c in categories %}
+            <option value="{{ c.id }}" {% if selected.category == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="country" id="id_country" class="form-select">
+            <option value="">{% trans "كل الدول" %}</option>
+            {% for country in countries %}
+            <option value="{{ country.id }}" {% if selected.country == country.id|stringformat:"s" %}selected{% endif %}>{{ country.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="city" id="id_city" class="form-select">
+            <option value="">{% trans "كل المدن" %}</option>
+            {% for city in cities %}
+            <option value="{{ city.id }}" {% if selected.city == city.id|stringformat:"s" %}selected{% endif %}>{{ city.name_ar }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="q" class="form-control" placeholder="{% trans 'بحث' %}" value="{{ selected.q }}">
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-primary w-100">{% trans "فلترة" %}</button>
+    </div>
+</form>
+
+<div class="row row-cols-1 row-cols-md-4 g-3">
+    {% for report in reports %}
+    <div class="col">
+        <div class="card report-card h-100">
+            {% if report.image %}<img src="{{ report.image.url }}" class="card-img-top" alt="">{% endif %}
+            <div class="card-body">
+                <span class="badge {% if report.type == 'lost' %}badge-lost{% else %}badge-found{% endif %} mb-2">
+                    {{ report.get_type_display }}
+                </span>
+                <h5 class="card-title">{{ report.title }}</h5>
+                <p class="card-text text-muted small">{{ report.category.name }} — {{ report.city.name|default:"" }}</p>
+                <a href="{% url 'reports:detail' pk=report.pk %}" class="btn btn-sm btn-outline-primary">{% trans "التفاصيل" %}</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">{% trans "مفيش نتائج مطابقة." %}</p>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('id_country').addEventListener('change', function () {
+    var countryId = this.value;
+    var citySelect = document.getElementById('id_city');
+    citySelect.innerHTML = '<option value="">{% trans "كل المدن" %}</option>';
+    if (!countryId) return;
+    fetch("{% url 'reports:cities_for_country' %}?country=" + countryId)
+        .then(function (r) { return r.text(); })
+        .then(function (html) { citySelect.innerHTML += html; });
+});
+</script>
+{% endblock %}

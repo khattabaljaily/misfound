@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="text-center py-5 mb-4 bg-light rounded-3">
+    <h1 class="display-5 fw-bold">{% trans "لقيت حاجة؟ ولا فقدت حاجة؟" %}</h1>
+    <p class="lead text-muted">{% trans "منصة تجمع أهل الوطن العربي عشان توصّل كل مفقود لصاحبه" %}</p>
+    <form action="{% url 'reports:list' %}" method="get" class="d-flex justify-content-center gap-2 mt-4">
+        <input type="text" name="q" class="form-control w-50" placeholder="{% trans 'ابحث عن حاجة...' %}">
+        <button class="btn btn-primary">{% trans "بحث" %}</button>
+    </form>
+</div>
+
+<h2 class="h4 mb-3">{% trans "آخر المفقودات" %}</h2>
+<div class="row row-cols-1 row-cols-md-3 g-3 mb-5">
+    {% for report in latest_lost %}
+    <div class="col">
+        <div class="card report-card h-100">
+            {% if report.image %}<img src="{{ report.image.url }}" class="card-img-top" alt="">{% endif %}
+            <div class="card-body">
+                <span class="badge badge-lost mb-2">{% trans "مفقود" %}</span>
+                <h5 class="card-title">{{ report.title }}</h5>
+                <p class="card-text text-muted small">{{ report.category.name }} — {{ report.city.name|default:"" }}</p>
+                <a href="{% url 'reports:detail' pk=report.pk %}" class="btn btn-sm btn-outline-primary">{% trans "التفاصيل" %}</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">{% trans "مفيش بلاغات مفقودات دلوقتي." %}</p>
+    {% endfor %}
+</div>
+
+<h2 class="h4 mb-3">{% trans "آخر المعثورات" %}</h2>
+<div class="row row-cols-1 row-cols-md-3 g-3">
+    {% for report in latest_found %}
+    <div class="col">
+        <div class="card report-card h-100">
+            {% if report.image %}<img src="{{ report.image.url }}" class="card-img-top" alt="">{% endif %}
+            <div class="card-body">
+                <span class="badge badge-found mb-2">{% trans "معثور عليه" %}</span>
+                <h5 class="card-title">{{ report.title }}</h5>
+                <p class="card-text text-muted small">{{ report.category.name }} — {{ report.city.name|default:"" }}</p>
+                <a href="{% url 'reports:detail' pk=report.pk %}" class="btn btn-sm btn-outline-success">{% trans "التفاصيل" %}</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">{% trans "مفيش بلاغات معثورات دلوقتي." %}</p>
+    {% endfor %}
+</div>
+{% endblock %}

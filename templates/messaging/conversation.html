@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1 class="h4 mb-1">{{ conversation.report.title }}</h1>
+<p class="text-muted mb-4">
+    <a href="{% url 'reports:detail' pk=conversation.report.pk %}">{% trans "عرض البلاغ" %}</a>
+</p>
+
+<div id="messages" class="border rounded p-3 mb-3" style="max-height: 400px; overflow-y: auto;">
+    {% for message in conversation.messages.all %}
+        {% include "messaging/_message.html" %}
+    {% endfor %}
+</div>
+
+<form id="message-form" method="post">
+    {% csrf_token %}
+    <div class="input-group">
+        {{ form.body }}
+        <button class="btn btn-primary">{% trans "إرسال" %}</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+var form = document.getElementById('message-form');
+var messagesBox = document.getElementById('messages');
+
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var formData = new FormData(form);
+    fetch(window.location.href, {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: formData,
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+        messagesBox.insertAdjacentHTML('beforeend', data.html);
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+        form.reset();
+    });
+});
+</script>
+{% endblock %}

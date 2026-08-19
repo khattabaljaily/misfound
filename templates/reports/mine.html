@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1 class="h3 mb-4">{% trans "بلاغاتي" %}</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans "العنوان" %}</th>
+            <th>{% trans "النوع" %}</th>
+            <th>{% trans "الحالة" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for report in reports %}
+        <tr>
+            <td><a href="{% url 'reports:detail' pk=report.pk %}">{{ report.title }}</a></td>
+            <td>{{ report.get_type_display }}</td>
+            <td>{{ report.get_status_display }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" class="text-muted">{% trans "مفيش بلاغات لسه." %}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

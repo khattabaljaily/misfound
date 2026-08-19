@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n widget_tweaks %}
+{% block content %}
+<h1 class="h3 mb-4">
+    {% if report_type == 'lost' %}{% trans "الإبلاغ عن مفقود" %}{% else %}{% trans "الإبلاغ عن معثور عليه" %}{% endif %}
+</h1>
+
+<form method="post" enctype="multipart/form-data" class="row g-3">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="col-md-6">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field|add_class:"form-control" }}
+        {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+        {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+    </div>
+    {% endfor %}
+    <div class="col-12">
+        <button class="btn btn-primary">{% trans "نشر البلاغ" %}</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('id_country').addEventListener('change', function () {
+    var countryId = this.value;
+    var citySelect = document.getElementById('id_city');
+    citySelect.innerHTML = '<option value="">---------</option>';
+    if (!countryId) return;
+    fetch("{% url 'reports:cities_for_country' %}?country=" + countryId)
+        .then(function (r) { return r.text(); })
+        .then(function (html) { citySelect.innerHTML += html; });
+});
+</script>
+{% endblock %}

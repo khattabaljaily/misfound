@@ -1,0 +1,16 @@
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+.report-card img {
+    height: 180px;
+    object-fit: cover;
+}
+
+.badge-lost {
+    background-color: #dc3545;
+}
+
+.badge-found {
+    background-color: #198754;
+}
