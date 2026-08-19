@@ -5,14 +5,14 @@
 
 <form method="get" class="row g-2 mb-4">
     <div class="col-md-2">
-        <select name="type" class="form-select">
+        <select name="type" class="form-select" data-choices>
             <option value="">{% trans "الكل" %}</option>
             <option value="lost" {% if selected.type == 'lost' %}selected{% endif %}>{% trans "مفقود" %}</option>
             <option value="found" {% if selected.type == 'found' %}selected{% endif %}>{% trans "معثور عليه" %}</option>
         </select>
     </div>
     <div class="col-md-2">
-        <select name="category" class="form-select">
+        <select name="category" class="form-select" data-choices>
             <option value="">{% trans "جميع التصنيفات" %}</option>
             {% for c in categories %}
             <option value="{{ c.id }}" {% if selected.category == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
@@ -66,14 +66,6 @@
 
 {% block extra_js %}
 <script>
-document.getElementById('id_country').addEventListener('change', function () {
-    var countryId = this.value;
-    var citySelect = document.getElementById('id_city');
-    citySelect.innerHTML = '<option value="">{% trans "جميع المدن" %}</option>';
-    if (!countryId) return;
-    fetch("{% url 'reports:cities_for_country' %}?country=" + countryId)
-        .then(function (r) { return r.text(); })
-        .then(function (html) { citySelect.innerHTML += html; });
-});
+initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}", "{% trans 'جميع المدن' %}");
 </script>
 {% endblock %}

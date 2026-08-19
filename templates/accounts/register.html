@@ -22,3 +22,9 @@
 </div>
 </div>
 {% endblock %}
+
+{% block extra_js %}
+<script>
+initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}");
+</script>
+{% endblock %}

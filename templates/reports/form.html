@@ -10,7 +10,11 @@
     {% for field in form %}
     <div class="col-md-6">
         <label class="form-label">{{ field.label }}</label>
-        {{ field|add_class:"form-control" }}
+        {% if field.name == 'category' %}
+            {{ field|add_class:"form-control"|attr:"data-choices:true" }}
+        {% else %}
+            {{ field|add_class:"form-control" }}
+        {% endif %}
         {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
         {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
     </div>
@@ -23,14 +27,6 @@
 
 {% block extra_js %}
 <script>
-document.getElementById('id_country').addEventListener('change', function () {
-    var countryId = this.value;
-    var citySelect = document.getElementById('id_city');
-    citySelect.innerHTML = '<option value="">اختر المدينة</option>';
-    if (!countryId) return;
-    fetch("{% url 'reports:cities_for_country' %}?country=" + countryId)
-        .then(function (r) { return r.text(); })
-        .then(function (html) { citySelect.innerHTML += html; });
-});
+initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}");
 </script>
 {% endblock %}

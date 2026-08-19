@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.locations.models import City, Country
@@ -50,8 +50,8 @@ def report_list(request):
 
 def cities_for_country(request):
     country_id = request.GET.get('country')
-    cities = City.objects.filter(country_id=country_id).values('id', 'name_ar', 'name_en')
-    return render(request, 'reports/_city_options.html', {'cities': cities})
+    cities = City.objects.filter(country_id=country_id).order_by('name_ar').values('id', 'name_ar')
+    return JsonResponse(list(cities), safe=False)
 
 
 def report_detail(request, pk):
