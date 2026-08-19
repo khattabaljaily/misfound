@@ -189,12 +189,25 @@ h1, h2, h3, h4, h5, h6 {
 /* ---------------------------------------------------------------- */
 /* Choices.js (searchable selects) — RTL polish                      */
 /* ---------------------------------------------------------------- */
+.choices {
+    margin-bottom: 0;
+}
+
 .choices[data-type*="select-one"] .choices__inner {
     border-radius: var(--mf-radius-sm);
-    padding: 0.5rem 0.75rem;
     background-color: #fff;
     border-color: var(--bs-border-color, #dee2e6);
-    min-height: calc(1.5em + 0.75rem + 2px);
+    font-size: 1rem;
+    height: calc(1.5rem + 0.75rem + 2px);
+    min-height: 0;
+    padding: 0 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.choices[data-type*="select-one"] .choices__list--single {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /* Choices only applies its own RTL layout (arrow side, text padding) when
