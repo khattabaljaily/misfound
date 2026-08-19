@@ -1,22 +1,29 @@
 {% extends "base.html" %}
 {% load i18n static %}
 {% block content %}
-<div class="text-center py-5 mb-4 bg-light rounded-3">
+<div class="text-center py-5 mb-5 mf-hero">
     <img src="{% static 'img/logo.png' %}" alt="Misfound" height="56" class="mb-3">
     <h1 class="display-5 fw-bold">{% trans "هل عثرت على شيء؟ أم فقدت شيئًا؟" %}</h1>
     <p class="lead text-muted">{% trans "منصة إلكترونية تهدف إلى إعادة كل مفقود إلى صاحبه" %}</p>
-    <form action="{% url 'reports:list' %}" method="get" class="d-flex justify-content-center gap-2 mt-4">
+    <form action="{% url 'reports:list' %}" method="get" class="d-flex justify-content-center gap-2 mt-4 px-3">
         <input type="text" name="q" class="form-control w-50" placeholder="{% trans 'ابحث عن غرض...' %}">
-        <button class="btn btn-primary">{% trans "بحث" %}</button>
+        <button class="btn btn-primary"><i class="bi bi-search"></i> {% trans "بحث" %}</button>
     </form>
 </div>
 
-<h2 class="h4 mb-3">{% trans "آخر المفقودات" %}</h2>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0"><i class="bi bi-exclamation-circle text-danger me-2"></i>{% trans "آخر المفقودات" %}</h2>
+    <a href="{% url 'reports:list' %}?type=lost" class="small">{% trans "عرض الكل" %}</a>
+</div>
 <div class="row row-cols-1 row-cols-md-3 g-3 mb-5">
     {% for report in latest_lost %}
     <div class="col">
         <div class="card report-card h-100">
-            {% if report.image %}<img src="{{ report.image.url }}" class="card-img-top" alt="">{% endif %}
+            {% if report.image %}
+                <img src="{{ report.image.url }}" class="card-img-top" alt="">
+            {% else %}
+                <div class="card-img-placeholder"><i class="bi bi-search"></i></div>
+            {% endif %}
             <div class="card-body">
                 <span class="badge badge-lost mb-2">{% trans "مفقود" %}</span>
                 <h5 class="card-title">{{ report.title }}</h5>
@@ -26,16 +33,23 @@
         </div>
     </div>
     {% empty %}
-    <p class="text-muted">{% trans "لا توجد إعلانات عن مفقودات حاليًا." %}</p>
+    <div class="col-12 text-center text-muted py-4">{% trans "لا توجد إعلانات عن مفقودات حاليًا." %}</div>
     {% endfor %}
 </div>
 
-<h2 class="h4 mb-3">{% trans "آخر المعثورات" %}</h2>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0"><i class="bi bi-check-circle text-success me-2"></i>{% trans "آخر المعثورات" %}</h2>
+    <a href="{% url 'reports:list' %}?type=found" class="small">{% trans "عرض الكل" %}</a>
+</div>
 <div class="row row-cols-1 row-cols-md-3 g-3">
     {% for report in latest_found %}
     <div class="col">
         <div class="card report-card h-100">
-            {% if report.image %}<img src="{{ report.image.url }}" class="card-img-top" alt="">{% endif %}
+            {% if report.image %}
+                <img src="{{ report.image.url }}" class="card-img-top" alt="">
+            {% else %}
+                <div class="card-img-placeholder"><i class="bi bi-search"></i></div>
+            {% endif %}
             <div class="card-body">
                 <span class="badge badge-found mb-2">{% trans "معثور عليه" %}</span>
                 <h5 class="card-title">{{ report.title }}</h5>
@@ -45,7 +59,7 @@
         </div>
     </div>
     {% empty %}
-    <p class="text-muted">{% trans "لا توجد إعلانات عن معثورات حاليًا." %}</p>
+    <div class="col-12 text-center text-muted py-4">{% trans "لا توجد إعلانات عن معثورات حاليًا." %}</div>
     {% endfor %}
 </div>
 {% endblock %}

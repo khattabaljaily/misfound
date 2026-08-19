@@ -1,3 +1,168 @@
+/* =================================================================
+   Toasts
+   ================================================================= */
+var MF_TOAST_ICONS = {
+    success: 'bi-check-circle-fill',
+    error: 'bi-x-circle-fill',
+    warning: 'bi-exclamation-triangle-fill',
+    info: 'bi-info-circle-fill',
+};
+
+function mfToastContainer() {
+    var el = document.querySelector('.mf-toast-container');
+    if (!el) {
+        el = document.createElement('div');
+        el.className = 'mf-toast-container';
+        document.body.appendChild(el);
+    }
+    return el;
+}
+
+function showToast(type, message) {
+    type = MF_TOAST_ICONS[type] ? type : 'info';
+    var container = mfToastContainer();
+
+    var toast = document.createElement('div');
+    toast.className = 'mf-toast mf-toast--' + type;
+    toast.innerHTML =
+        '<i class="bi ' + MF_TOAST_ICONS[type] + ' mf-toast__icon"></i>' +
+        '<div class="mf-toast__body"></div>' +
+        '<button type="button" class="mf-toast__close" aria-label="إغلاق">&times;</button>';
+    toast.querySelector('.mf-toast__body').textContent = message;
+
+    container.appendChild(toast);
+    requestAnimationFrame(function () { toast.classList.add('mf-toast--show'); });
+
+    function dismiss() {
+        toast.classList.remove('mf-toast--show');
+        setTimeout(function () { toast.remove(); }, 250);
+    }
+
+    toast.querySelector('.mf-toast__close').addEventListener('click', dismiss);
+    setTimeout(dismiss, 5000);
+}
+
+/** Picks up Django messages rendered as JSON by base.html and shows them as toasts. */
+function mfShowServerMessages() {
+    var el = document.getElementById('django-messages-data');
+    if (!el) return;
+    try {
+        var messages = JSON.parse(el.textContent);
+    } catch (e) {
+        return;
+    }
+    var typeMap = { debug: 'info', info: 'info', success: 'success', warning: 'warning', error: 'error' };
+    messages.forEach(function (m, i) {
+        setTimeout(function () { showToast(typeMap[m.tags] || 'info', m.text); }, i * 150);
+    });
+}
+
+/* =================================================================
+   Confirm modal
+   ================================================================= */
+function mfConfirm(options) {
+    var modalEl = document.getElementById('mfConfirmModal');
+    if (!modalEl) return;
+
+    modalEl.querySelector('.mf-confirm-title').textContent = options.title || 'تأكيد العملية';
+    modalEl.querySelector('.mf-confirm-message').textContent = options.message || 'هل أنت متأكد؟';
+
+    var confirmBtn = modalEl.querySelector('.mf-confirm-btn');
+    confirmBtn.textContent = options.confirmLabel || 'تأكيد';
+    confirmBtn.className = 'btn mf-confirm-btn ' + (options.confirmVariant || 'btn-primary');
+
+    var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
+    var newBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+    newBtn.addEventListener('click', function () {
+        modal.hide();
+        options.onConfirm && options.onConfirm();
+    });
+
+    modal.show();
+}
+
+/* =================================================================
+   AJAX helpers
+   ================================================================= */
+function mfGetCookie(name) {
+    var match = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return match ? decodeURIComponent(match[2]) : null;
+}
+
+function mfSetButtonLoading(btn, loading) {
+    if (!btn) return;
+    if (loading) {
+        btn.dataset.originalHtml = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="mf-spinner"></span> ' + (btn.dataset.loadingText || 'جاري التنفيذ...');
+    } else {
+        btn.disabled = false;
+        if (btn.dataset.originalHtml) btn.innerHTML = btn.dataset.originalHtml;
+    }
+}
+
+/**
+ * Submits a <form> via fetch instead of a full page load.
+ *  - On a JSON {success:true, redirect} response, navigates to `redirect`.
+ *  - On a JSON {success:true, message} response (no redirect), shows a toast
+ *    and calls onSuccess(data).
+ *  - On any other (non-JSON / error) response, swaps the form's parent
+ *    container innerHTML with the returned HTML (re-rendered form with
+ *    Django's validation errors) and re-runs `afterSwap` so widgets like
+ *    Choices.js get re-initialised on the fresh markup.
+ */
+function ajaxForm(form, options) {
+    options = options || {};
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var submitBtn = form.querySelector('button[type="submit"], button:not([type])');
+        mfSetButtonLoading(submitBtn, true);
+
+        fetch(form.action || window.location.href, {
+            method: form.method || 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        })
+            .then(function (response) {
+                var contentType = response.headers.get('content-type') || '';
+                if (contentType.indexOf('application/json') !== -1) {
+                    return response.json().then(function (data) { return { data: data }; });
+                }
+                return response.text().then(function (html) { return { html: html }; });
+            })
+            .then(function (result) {
+                mfSetButtonLoading(submitBtn, false);
+                if (result.data) {
+                    if (result.data.success) {
+                        if (result.data.redirect) {
+                            window.location = result.data.redirect;
+                        } else {
+                            if (result.data.message) showToast('success', result.data.message);
+                            options.onSuccess && options.onSuccess(result.data);
+                        }
+                    } else {
+                        if (result.data.message) showToast('error', result.data.message);
+                        options.onError && options.onError(result.data);
+                    }
+                    return;
+                }
+                var container = options.swapTarget ? document.querySelector(options.swapTarget) : form.parentElement;
+                container.innerHTML = result.html;
+                options.afterSwap && options.afterSwap(container);
+                showToast('error', 'في بيانات محتاجة مراجعة، شوف الحقول تحت.');
+            })
+            .catch(function () {
+                mfSetButtonLoading(submitBtn, false);
+                showToast('error', 'حصل خطأ في الاتصال، حاول تاني.');
+            });
+    });
+}
+
+/* =================================================================
+   Searchable selects (Choices.js) + country -> city cascade
+   ================================================================= */
 function misfoundChoicesConfig() {
     return {
         searchEnabled: true,
@@ -9,6 +174,13 @@ function misfoundChoicesConfig() {
         loadingText: 'جاري التحميل...',
         removeItemButton: false,
     };
+}
+
+function initChoicesOn(root) {
+    if (typeof Choices === 'undefined') return;
+    (root || document).querySelectorAll('select[data-choices]').forEach(function (el) {
+        new Choices(el, misfoundChoicesConfig());
+    });
 }
 
 /**
@@ -83,8 +255,6 @@ function initCityCascade(countrySelectId, citySelectId, citiesUrl, emptyLabel) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    if (typeof Choices === 'undefined') return;
-    document.querySelectorAll('select[data-choices]').forEach(function (el) {
-        new Choices(el, misfoundChoicesConfig());
-    });
+    initChoicesOn(document);
+    mfShowServerMessages();
 });

@@ -6,16 +6,16 @@
         {% if report.image %}
         <img src="{{ report.image.url }}" class="img-fluid rounded">
         {% else %}
-        <div class="bg-light rounded p-5 text-center text-muted">{% trans "لا توجد صورة" %}</div>
+        <div class="card-img-placeholder rounded" style="height: 320px; font-size: 3rem;"><i class="bi bi-search"></i></div>
         {% endif %}
     </div>
     <div class="col-md-7">
         <span class="badge {% if report.type == 'lost' %}badge-lost{% else %}badge-found{% endif %} mb-2">
             {{ report.get_type_display }}
         </span>
-        {% if report.status == 'resolved' %}
-        <span class="badge bg-secondary mb-2">{% trans "تم الاسترجاع" %}</span>
-        {% endif %}
+        <span class="badge bg-secondary mb-2" id="resolvedBadge" {% if report.status != 'resolved' %}hidden{% endif %}>
+            {% trans "تم الاسترجاع" %}
+        </span>
         <h1 class="h3">{{ report.title }}</h1>
         <p class="text-muted">
             {{ report.category.name }} —
@@ -33,18 +33,15 @@
                 <strong>{% trans "سؤال التحقق (يظهر لك فقط):" %}</strong> {{ report.verification_question }}
             </div>
             {% endif %}
-            {% if report.status == 'open' %}
-            <form action="{% url 'reports:resolve' pk=report.pk %}" method="post">
-                {% csrf_token %}
-                <button class="btn btn-success">{% trans "تم الاسترجاع ✓" %}</button>
-            </form>
-            {% endif %}
+            <button class="btn btn-success" id="resolveBtn" {% if report.status != 'open' %}hidden{% endif %}>
+                {% trans "تم الاسترجاع ✓" %}
+            </button>
         {% elif report.status == 'open' %}
             {% if user.is_authenticated %}
-            <form action="{% url 'messaging:start' report_pk=report.pk %}" method="post">
+            <form action="{% url 'messaging:start' report_pk=report.pk %}" method="post" id="claimForm">
                 {% csrf_token %}
                 <textarea name="body" class="form-control mb-2" rows="2" placeholder="{% trans 'اكتب رسالتك...' %}" required></textarea>
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" type="submit">
                     {% if report.type == 'lost' %}{% trans "أعتقد أنني وجدتها" %}{% else %}{% trans "أعتقد أنها لي" %}{% endif %}
                 </button>
             </form>
@@ -54,4 +51,47 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+var resolveBtn = document.getElementById('resolveBtn');
+if (resolveBtn) {
+    resolveBtn.addEventListener('click', function () {
+        mfConfirm({
+            title: '{% trans "تأكيد الاسترجاع" %}',
+            message: '{% trans "هل استرجعت هذا الغرض فعلاً؟ سيتم وسم الإعلان كمنتهي." %}',
+            confirmLabel: '{% trans "نعم، تم الاسترجاع" %}',
+            confirmVariant: 'btn-success',
+            onConfirm: function () {
+                mfSetButtonLoading(resolveBtn, true);
+                fetch("{% url 'reports:resolve' pk=report.pk %}", {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': mfGetCookie('csrftoken'),
+                    },
+                })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.success) {
+                            showToast('success', data.message);
+                            resolveBtn.hidden = true;
+                            document.getElementById('resolvedBadge').hidden = false;
+                        }
+                    })
+                    .catch(function () {
+                        mfSetButtonLoading(resolveBtn, false);
+                        showToast('error', 'حصل خطأ، حاول تاني.');
+                    });
+            },
+        });
+    });
+}
+
+var claimForm = document.getElementById('claimForm');
+if (claimForm) {
+    ajaxForm(claimForm, {});
+}
+</script>
 {% endblock %}

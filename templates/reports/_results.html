@@ -1,0 +1,27 @@
+{% load i18n %}
+<div class="row row-cols-1 row-cols-md-4 g-3">
+    {% for report in reports %}
+    <div class="col">
+        <div class="card report-card h-100">
+            {% if report.image %}
+                <img src="{{ report.image.url }}" class="card-img-top" alt="">
+            {% else %}
+                <div class="card-img-placeholder"><i class="bi bi-search"></i></div>
+            {% endif %}
+            <div class="card-body">
+                <span class="badge {% if report.type == 'lost' %}badge-lost{% else %}badge-found{% endif %} mb-2">
+                    {{ report.get_type_display }}
+                </span>
+                <h5 class="card-title">{{ report.title }}</h5>
+                <p class="card-text text-muted small">{{ report.category.name }} — {{ report.city.name|default:"" }}</p>
+                <a href="{% url 'reports:detail' pk=report.pk %}" class="btn btn-sm btn-outline-primary">{% trans "التفاصيل" %}</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center text-muted py-5">
+        <i class="bi bi-inboxes display-4 d-block mb-2"></i>
+        {% trans "لا توجد نتائج مطابقة." %}
+    </div>
+    {% endfor %}
+</div>

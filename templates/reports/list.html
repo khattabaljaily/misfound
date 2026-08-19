@@ -3,7 +3,7 @@
 {% block content %}
 <h1 class="h3 mb-4">{% trans "تصفح الإعلانات" %}</h1>
 
-<form method="get" class="row g-2 mb-4">
+<form method="get" class="row g-2 mb-4" id="filterForm">
     <div class="col-md-2">
         <select name="type" class="form-select" data-choices>
             <option value="">{% trans "الكل" %}</option>
@@ -39,33 +39,69 @@
         <input type="text" name="q" class="form-control" placeholder="{% trans 'بحث' %}" value="{{ selected.q }}">
     </div>
     <div class="col-md-1">
-        <button class="btn btn-primary w-100">{% trans "تصفية" %}</button>
+        <button class="btn btn-primary w-100">
+            <span class="mf-filter-spinner d-none"><span class="mf-spinner"></span></span>
+            <span class="mf-filter-label">{% trans "تصفية" %}</span>
+        </button>
     </div>
 </form>
 
-<div class="row row-cols-1 row-cols-md-4 g-3">
-    {% for report in reports %}
-    <div class="col">
-        <div class="card report-card h-100">
-            {% if report.image %}<img src="{{ report.image.url }}" class="card-img-top" alt="">{% endif %}
-            <div class="card-body">
-                <span class="badge {% if report.type == 'lost' %}badge-lost{% else %}badge-found{% endif %} mb-2">
-                    {{ report.get_type_display }}
-                </span>
-                <h5 class="card-title">{{ report.title }}</h5>
-                <p class="card-text text-muted small">{{ report.category.name }} — {{ report.city.name|default:"" }}</p>
-                <a href="{% url 'reports:detail' pk=report.pk %}" class="btn btn-sm btn-outline-primary">{% trans "التفاصيل" %}</a>
-            </div>
-        </div>
-    </div>
-    {% empty %}
-    <p class="text-muted">{% trans "لا توجد نتائج مطابقة." %}</p>
-    {% endfor %}
+<div id="results">
+    {% include "reports/_results.html" %}
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
 initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}", "{% trans 'جميع المدن' %}");
+
+(function () {
+    var form = document.getElementById('filterForm');
+    var results = document.getElementById('results');
+    var spinner = form.querySelector('.mf-filter-spinner');
+    var label = form.querySelector('.mf-filter-label');
+
+    function fetchResults(url, pushState) {
+        spinner.classList.remove('d-none');
+        label.classList.add('d-none');
+        results.classList.add('mf-loading');
+
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function (r) { return r.text(); })
+            .then(function (html) {
+                results.innerHTML = html;
+                results.classList.remove('mf-loading');
+                spinner.classList.add('d-none');
+                label.classList.remove('d-none');
+                if (pushState) window.history.pushState({}, '', url);
+            })
+            .catch(function () {
+                results.classList.remove('mf-loading');
+                spinner.classList.add('d-none');
+                label.classList.remove('d-none');
+                showToast('error', 'حصل خطأ في تحميل النتائج، حاول تاني.');
+            });
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var params = new URLSearchParams(new FormData(form)).toString();
+        fetchResults(window.location.pathname + '?' + params, true);
+    });
+
+    form.querySelectorAll('select').forEach(function (el) {
+        if (el.id === 'id_country') return; // handled separately below (must clear city first)
+        el.addEventListener('change', function () { form.requestSubmit(); });
+    });
+
+    document.getElementById('id_country').addEventListener('change', function () {
+        document.getElementById('id_city').value = '';
+        form.requestSubmit();
+    });
+
+    window.addEventListener('popstate', function () {
+        fetchResults(window.location.href, false);
+    });
+})();
 </script>
 {% endblock %}

@@ -14,7 +14,7 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark mf-navbar mb-4">
         <div class="container">
             <a class="navbar-brand" href="{% url 'core:home' %}">
                 <img src="{% static 'img/logo_white.png' %}" alt="Misfound" height="32">
@@ -42,14 +42,14 @@
                 <div class="d-flex align-items-center gap-2">
                     {% if user.is_authenticated %}
                         <a href="{% url 'reports:create' report_type='lost' %}" class="btn btn-outline-light btn-sm">{% trans "إعلان مفقود" %}</a>
-                        <a href="{% url 'reports:create' report_type='found' %}" class="btn btn-light btn-sm">{% trans "إعلان معثور عليه" %}</a>
-                        <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
+                        <a href="{% url 'reports:create' report_type='found' %}" class="btn btn-primary btn-sm">{% trans "إعلان معثور عليه" %}</a>
+                        <button type="button" class="btn btn-link btn-sm text-light" id="mfLogoutBtn">{% trans "تسجيل الخروج" %}</button>
+                        <form action="{% url 'accounts:logout' %}" method="post" id="mfLogoutForm" class="d-none">
                             {% csrf_token %}
-                            <button class="btn btn-link btn-sm text-light">{% trans "تسجيل الخروج" %}</button>
                         </form>
                     {% else %}
                         <a href="{% url 'accounts:login' %}" class="btn btn-outline-light btn-sm">{% trans "تسجيل الدخول" %}</a>
-                        <a href="{% url 'accounts:register' %}" class="btn btn-light btn-sm">{% trans "حساب جديد" %}</a>
+                        <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-sm">{% trans "حساب جديد" %}</a>
                     {% endif %}
                 </div>
             </div>
@@ -57,17 +57,49 @@
     </nav>
 
     <div class="container mb-5">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
         {% block content %}{% endblock %}
+    </div>
+
+    {% if messages %}
+    <script type="application/json" id="django-messages-data">
+        [{% for message in messages %}{"tags": "{{ message.tags|escapejs }}", "text": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]
+    </script>
+    {% endif %}
+
+    <!-- Shared confirmation modal -->
+    <div class="modal fade" id="mfConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-3">
+                <div class="modal-body">
+                    <div class="mf-confirm-icon"><i class="bi bi-question-lg"></i></div>
+                    <h5 class="mf-confirm-title mb-2">{% trans "تأكيد العملية" %}</h5>
+                    <p class="mf-confirm-message text-muted mb-4">{% trans "هل أنت متأكد؟" %}</p>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{% trans "إلغاء" %}</button>
+                        <button type="button" class="btn btn-primary mf-confirm-btn">{% trans "تأكيد" %}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js"></script>
     <script src="{% static 'js/misfound.js' %}"></script>
+    <script>
+        var mfLogoutBtn = document.getElementById('mfLogoutBtn');
+        if (mfLogoutBtn) {
+            mfLogoutBtn.addEventListener('click', function () {
+                mfConfirm({
+                    title: '{% trans "تسجيل الخروج" %}',
+                    message: '{% trans "هل تريد تسجيل الخروج من حسابك؟" %}',
+                    confirmLabel: '{% trans "تسجيل الخروج" %}',
+                    confirmVariant: 'btn-danger',
+                    onConfirm: function () { document.getElementById('mfLogoutForm').submit(); },
+                });
+            });
+        }
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

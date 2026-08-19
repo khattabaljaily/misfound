@@ -2,14 +2,25 @@
 {% load i18n %}
 {% block content %}
 <h1 class="h3 mb-4">{% trans "الرسائل" %}</h1>
-<div class="list-group">
-    {% for c in conversations %}
-    <a href="{% url 'messaging:conversation' pk=c.pk %}" class="list-group-item list-group-item-action">
-        <strong>{{ c.report.title }}</strong>
-        <span class="text-muted small">— {% if c.claimant == user %}{{ c.report.reporter }}{% else %}{{ c.claimant }}{% endif %}</span>
-    </a>
-    {% empty %}
-    <p class="text-muted">{% trans "لا توجد محادثات بعد." %}</p>
-    {% endfor %}
+<div class="card">
+    <div class="list-group list-group-flush">
+        {% for c in conversations %}
+        <a href="{% url 'messaging:conversation' pk=c.pk %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+            <div>
+                <div class="fw-semibold">{{ c.report.title }}</div>
+                <div class="text-muted small">
+                    <i class="bi bi-person"></i>
+                    {% if c.claimant == user %}{{ c.report.reporter }}{% else %}{{ c.claimant }}{% endif %}
+                </div>
+            </div>
+            <i class="bi bi-chevron-left text-muted"></i>
+        </a>
+        {% empty %}
+        <div class="text-muted text-center py-5">
+            <i class="bi bi-chat-dots display-4 d-block mb-2"></i>
+            {% trans "لا توجد محادثات بعد." %}
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

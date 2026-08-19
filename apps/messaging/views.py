@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
 
 from apps.reports.models import Report
 from .forms import MessageForm
@@ -12,6 +13,8 @@ from .models import Conversation, Message
 @login_required
 def start_conversation(request, report_pk):
     report = get_object_or_404(Report, pk=report_pk)
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
     if report.reporter == request.user:
         return redirect('reports:detail', pk=report.pk)
 
@@ -23,8 +26,11 @@ def start_conversation(request, report_pk):
             Message.objects.create(
                 conversation=conversation, sender=request.user, body=form.cleaned_data['body']
             )
-            return redirect('messaging:conversation', pk=conversation.pk)
-    return redirect('messaging:conversation', pk=conversation.pk)
+
+    conversation_url = reverse('messaging:conversation', args=[conversation.pk])
+    if is_ajax:
+        return JsonResponse({'success': True, 'redirect': conversation_url})
+    return redirect(conversation_url)
 
 
 def _can_access(user, conversation):

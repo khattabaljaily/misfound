@@ -1,32 +1,27 @@
 {% extends "base.html" %}
-{% load i18n widget_tweaks %}
+{% load i18n %}
 {% block content %}
 <h1 class="h3 mb-4">
     {% if report_type == 'lost' %}{% trans "نشر إعلان مفقود" %}{% else %}{% trans "نشر إعلان معثور عليه" %}{% endif %}
 </h1>
 
-<form method="post" enctype="multipart/form-data" class="row g-3">
-    {% csrf_token %}
-    {% for field in form %}
-    <div class="col-md-6">
-        <label class="form-label">{{ field.label }}</label>
-        {% if field.name == 'category' %}
-            {{ field|add_class:"form-control"|attr:"data-choices:true" }}
-        {% else %}
-            {{ field|add_class:"form-control" }}
-        {% endif %}
-        {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
-        {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-    </div>
-    {% endfor %}
-    <div class="col-12">
-        <button class="btn btn-primary">{% trans "نشر الإعلان" %}</button>
-    </div>
-</form>
+<div id="formWrapper">
+    {% include "reports/_form.html" %}
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}");
+function mfInitReportForm(root) {
+    initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}");
+    initChoicesOn(root || document);
+    var form = (root || document).querySelector('#reportForm');
+    if (!form) return;
+    ajaxForm(form, {
+        swapTarget: '#formWrapper',
+        afterSwap: function (container) { mfInitReportForm(container); },
+    });
+}
+mfInitReportForm(document);
 </script>
 {% endblock %}

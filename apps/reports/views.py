@@ -45,6 +45,8 @@ def report_list(request):
             'q': q or '',
         },
     }
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render(request, 'reports/_results.html', context)
     return render(request, 'reports/list.html', context)
 
 
@@ -68,6 +70,8 @@ def report_create(request, report_type):
     if report_type not in (Report.LOST, Report.FOUND):
         raise Http404
 
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
     if request.method == 'POST':
         form = ReportForm(request.POST, request.FILES, report_type=report_type)
         if form.is_valid():
@@ -75,8 +79,15 @@ def report_create(request, report_type):
             report.type = report_type
             report.reporter = request.user
             report.save()
+            if is_ajax:
+                return JsonResponse({'success': True, 'redirect': report.get_absolute_url()})
             messages.success(request, 'تم نشر الإعلان بنجاح.')
             return redirect('reports:detail', pk=report.pk)
+
+        if is_ajax:
+            return render(
+                request, 'reports/_form.html', {'form': form, 'report_type': report_type}, status=400
+            )
     else:
         form = ReportForm(report_type=report_type)
 
@@ -95,5 +106,7 @@ def report_resolve(request, pk):
     if request.method == 'POST':
         report.status = Report.RESOLVED
         report.save(update_fields=['status'])
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True, 'message': 'تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح.'})
         messages.success(request, 'تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح.')
     return redirect('reports:detail', pk=report.pk)
