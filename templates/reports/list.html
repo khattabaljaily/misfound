@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<h1 class="h3 mb-4">{% trans "تصفح الإعلانات" %}</h1>
+<div class="d-flex align-items-center gap-2 mb-4">
+    <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-grid"></i></span>
+    <h1 class="h4 mb-0">{% trans "تصفح الإعلانات" %}</h1>
+</div>
 
-<form method="get" class="row g-2 mb-4" id="filterForm">
+<form method="get" class="mf-filter-bar row g-2 mb-4" id="filterForm">
     <div class="col-md-2">
         <select name="type" class="form-select" data-choices>
             <option value="">{% trans "الكل" %}</option>

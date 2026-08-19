@@ -1,63 +1,79 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static humanize %}
 {% block content %}
-<div class="text-center py-5 mb-5 mf-hero">
-    <img src="{% static 'img/logo.png' %}" alt="Misfound" height="56" class="mb-3">
-    <h1 class="display-5 fw-bold">{% trans "هل عثرت على شيء؟ أم فقدت شيئًا؟" %}</h1>
-    <p class="lead text-muted">{% trans "منصة إلكترونية تهدف إلى إعادة كل مفقود إلى صاحبه" %}</p>
-    <form action="{% url 'reports:list' %}" method="get" class="d-flex justify-content-center gap-2 mt-4 px-3">
-        <input type="text" name="q" class="form-control w-50" placeholder="{% trans 'ابحث عن غرض...' %}">
-        <button class="btn btn-primary"><i class="bi bi-search"></i> {% trans "بحث" %}</button>
-    </form>
-</div>
+<div class="mf-hero mb-4">
+    <div class="mf-hero-grid">
+        <div class="mf-hero-content">
+            <span class="mf-hero-eyebrow">
+                <i class="bi bi-search"></i> {% trans "منصة المفقودات والمعثورات" %}
+            </span>
+            <h1>{% trans "فقدت شيئًا؟ أو عثرت على شيء يخص أحدهم؟" %}</h1>
+            <p>{% trans "مفقود يجمع كل بلاغات المفقودات والمعثورات في العالم العربي في مكان واحد، ليعيد كل غرض إلى صاحبه." %}</p>
 
-<div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0"><i class="bi bi-exclamation-circle text-danger me-2"></i>{% trans "آخر المفقودات" %}</h2>
-    <a href="{% url 'reports:list' %}?type=lost" class="small">{% trans "عرض الكل" %}</a>
-</div>
-<div class="row row-cols-1 row-cols-md-3 g-3 mb-5">
-    {% for report in latest_lost %}
-    <div class="col">
-        <div class="card report-card h-100">
-            {% if report.image %}
-                <img src="{{ report.image.url }}" class="card-img-top" alt="">
-            {% else %}
-                <div class="card-img-placeholder"><i class="bi bi-search"></i></div>
-            {% endif %}
-            <div class="card-body">
-                <span class="badge badge-lost mb-2">{% trans "مفقود" %}</span>
-                <h5 class="card-title">{{ report.title }}</h5>
-                <p class="card-text text-muted small">{{ report.category.name }} — {{ report.city.name|default:"" }}</p>
-                <a href="{% url 'reports:detail' pk=report.pk %}" class="btn btn-sm btn-outline-primary">{% trans "التفاصيل" %}</a>
+            <div class="mf-hero-trust">
+                <i class="bi bi-geo-alt-fill"></i> {% trans "تغطية أكثر من 469 مدينة عربية" %}
             </div>
         </div>
+
+        <div class="mf-hero-visual">
+            <div class="mf-radar-ring mf-radar-ring--1"></div>
+            <div class="mf-radar-ring mf-radar-ring--2"></div>
+            <div class="mf-radar-ring mf-radar-ring--3"></div>
+            <div class="mf-radar-sweep"></div>
+
+            <div class="mf-radar-core">
+                <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#0e101c" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.2" y2="16.2"></line></svg>
+            </div>
+
+            <span class="mf-radar-pin mf-radar-pin--1"></span>
+            <span class="mf-radar-pin mf-radar-pin--2"></span>
+        </div>
     </div>
+</div>
+
+<form action="{% url 'reports:list' %}" method="get" class="mf-search-pill mb-5">
+    <select name="category" class="form-select border-0 bg-transparent mf-pill-field mf-pill-field--select">
+        <option value="">{% trans "كل التصنيفات" %}</option>
+        {% for c in categories %}
+        <option value="{{ c.id }}">{{ c.name }}</option>
+        {% endfor %}
+    </select>
+    <span class="mf-pill-divider"></span>
+    <input type="text" name="q" class="form-control border-0 bg-transparent mf-pill-field" placeholder="{% trans 'مثال: محفظة جلد بني، آيفون 13...' %}">
+    <button class="btn btn-primary mf-pill-submit" type="submit">
+        <i class="bi bi-search"></i> {% trans "بحث" %}
+    </button>
+</form>
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <div class="d-flex align-items-center gap-2">
+        <span class="mf-section-icon mf-section-icon--lost"><i class="bi bi-exclamation-circle"></i></span>
+        <h2 class="h4 mb-0">{% trans "آخر المفقودات" %}</h2>
+    </div>
+    <a href="{% url 'reports:list' %}?type=lost" class="mf-section-link">
+        {% trans "عرض الكل" %} <i class="bi bi-chevron-left"></i>
+    </a>
+</div>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 mb-5">
+    {% for report in latest_lost %}
+        {% include "reports/_card.html" %}
     {% empty %}
     <div class="col-12 text-center text-muted py-4">{% trans "لا توجد إعلانات عن مفقودات حاليًا." %}</div>
     {% endfor %}
 </div>
 
 <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0"><i class="bi bi-check-circle text-success me-2"></i>{% trans "آخر المعثورات" %}</h2>
-    <a href="{% url 'reports:list' %}?type=found" class="small">{% trans "عرض الكل" %}</a>
-</div>
-<div class="row row-cols-1 row-cols-md-3 g-3">
-    {% for report in latest_found %}
-    <div class="col">
-        <div class="card report-card h-100">
-            {% if report.image %}
-                <img src="{{ report.image.url }}" class="card-img-top" alt="">
-            {% else %}
-                <div class="card-img-placeholder"><i class="bi bi-search"></i></div>
-            {% endif %}
-            <div class="card-body">
-                <span class="badge badge-found mb-2">{% trans "معثور عليه" %}</span>
-                <h5 class="card-title">{{ report.title }}</h5>
-                <p class="card-text text-muted small">{{ report.category.name }} — {{ report.city.name|default:"" }}</p>
-                <a href="{% url 'reports:detail' pk=report.pk %}" class="btn btn-sm btn-outline-success">{% trans "التفاصيل" %}</a>
-            </div>
-        </div>
+    <div class="d-flex align-items-center gap-2">
+        <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-check-circle"></i></span>
+        <h2 class="h4 mb-0">{% trans "آخر المعثورات" %}</h2>
     </div>
+    <a href="{% url 'reports:list' %}?type=found" class="mf-section-link">
+        {% trans "عرض الكل" %} <i class="bi bi-chevron-left"></i>
+    </a>
+</div>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+    {% for report in latest_found %}
+        {% include "reports/_card.html" %}
     {% empty %}
     <div class="col-12 text-center text-muted py-4">{% trans "لا توجد إعلانات عن معثورات حاليًا." %}</div>
     {% endfor %}

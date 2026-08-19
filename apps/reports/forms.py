@@ -1,7 +1,8 @@
 from django import forms
 
 from apps.locations.models import City
-from .models import Report
+from django.db.models import Case, When, Value, IntegerField
+from .models import Report, Category
 
 
 class ReportForm(forms.ModelForm):
@@ -26,6 +27,24 @@ class ReportForm(forms.ModelForm):
         self.fields['city'].queryset = (
             City.objects.filter(country_id=country_id) if country_id else City.objects.none()
         )
+
+        # Order categories using a custom priority list so default dropdown
+        # shows the preferred sequence (Arabic names). 'أخرى' will be last.
+        preferred = [
+            'الهواتف والإلكترونيات',
+            'الوثائق والبطاقات',
+            'المركبات وملحقاتها',
+            'الحقائب والأمتعة',
+            'المفاتيح',
+            'الملابس والإكسسوارات',
+            'الحيوانات الأليفة',
+            'أغراض الأطفال',
+            'النقود والمقتنيات الثمينة',
+            'أخرى',
+        ]
+
+        # Rely on the model-level `priority` ordering; ensure fallback ordering by name
+        self.fields['category'].queryset = Category.objects.order_by('priority', 'name_ar')
 
         self.report_type = report_type
         if report_type == Report.FOUND:

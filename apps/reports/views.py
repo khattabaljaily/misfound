@@ -96,7 +96,7 @@ def report_create(request, report_type):
 
 @login_required
 def my_reports(request):
-    reports = Report.objects.filter(reporter=request.user).select_related('category')
+    reports = Report.objects.filter(reporter=request.user).select_related('category', 'city')
     return render(request, 'reports/mine.html', {'reports': reports})
 
 

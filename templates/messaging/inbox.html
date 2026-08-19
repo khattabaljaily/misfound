@@ -1,15 +1,20 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<h1 class="h3 mb-4">{% trans "الرسائل" %}</h1>
-<div class="card">
+<div class="d-flex align-items-center gap-2 mb-4">
+    <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-chat-dots"></i></span>
+    <h1 class="h4 mb-0">{% trans "الرسائل" %}</h1>
+</div>
+<div class="mf-panel p-0">
     <div class="list-group list-group-flush">
         {% for c in conversations %}
-        <a href="{% url 'messaging:conversation' pk=c.pk %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
-            <div>
+        <a href="{% url 'messaging:conversation' pk=c.pk %}" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+            <span class="mf-avatar">
+                {% if c.claimant == user %}{{ c.report.reporter|stringformat:"s"|first|upper }}{% else %}{{ c.claimant|stringformat:"s"|first|upper }}{% endif %}
+            </span>
+            <div class="flex-grow-1">
                 <div class="fw-semibold">{{ c.report.title }}</div>
                 <div class="text-muted small">
-                    <i class="bi bi-person"></i>
                     {% if c.claimant == user %}{{ c.report.reporter }}{% else %}{{ c.claimant }}{% endif %}
                 </div>
             </div>

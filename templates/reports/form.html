@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<h1 class="h3 mb-4">
-    {% if report_type == 'lost' %}{% trans "نشر إعلان مفقود" %}{% else %}{% trans "نشر إعلان معثور عليه" %}{% endif %}
-</h1>
+<div class="d-flex align-items-center gap-2 mb-4">
+    <span class="mf-section-icon {% if report_type == 'lost' %}mf-section-icon--lost{% else %}mf-section-icon--found{% endif %}">
+        <i class="bi {% if report_type == 'lost' %}bi-exclamation-circle{% else %}bi-check-circle{% endif %}"></i>
+    </span>
+    <h1 class="h4 mb-0">
+        {% if report_type == 'lost' %}{% trans "نشر إعلان مفقود" %}{% else %}{% trans "نشر إعلان معثور عليه" %}{% endif %}
+    </h1>
+</div>
 
-<div id="formWrapper">
-    {% include "reports/_form.html" %}
+<div class="mf-panel">
+    <div id="formWrapper">
+        {% include "reports/_form.html" %}
+    </div>
 </div>
 {% endblock %}
 

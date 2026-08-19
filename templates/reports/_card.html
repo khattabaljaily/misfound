@@ -1,0 +1,28 @@
+{% load i18n humanize %}
+<div class="col">
+    <div class="card report-card h-100">
+        <div class="position-relative">
+            {% if report.image %}
+                <img src="{{ report.image.url }}" class="card-img-top" alt="">
+            {% else %}
+                <div class="card-img-placeholder"><i class="bi {{ report.category.icon|default:'bi-search' }}"></i></div>
+            {% endif %}
+            <span class="badge {% if report.type == 'lost' %}badge-lost{% else %}badge-found{% endif %} mf-card-badge">
+                {{ report.get_type_display }}
+            </span>
+            {% if report.status == 'resolved' %}
+            <span class="badge bg-secondary mf-card-badge mf-card-badge--secondary">{% trans "تم الاسترجاع" %}</span>
+            {% endif %}
+        </div>
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ report.title }}</h5>
+            <p class="card-text text-muted small mb-3">{{ report.category.name }} · {{ report.city.name|default:"" }}</p>
+            <div class="mt-auto d-flex align-items-center justify-content-between">
+                <span class="mf-card-time">{{ report.created_at|naturaltime }}</span>
+                <a href="{% url 'reports:detail' pk=report.pk %}" class="mf-card-link">
+                    {% trans "التفاصيل" %} <i class="bi bi-chevron-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

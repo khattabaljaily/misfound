@@ -11,9 +11,10 @@ class Category(models.Model):
         max_length=50, blank=True, verbose_name='الأيقونة',
         help_text='CSS icon class, e.g. bi-wallet2'
     )
+    priority = models.PositiveSmallIntegerField(default=999, verbose_name='ترتيب')
 
     class Meta:
-        ordering = ['name_ar']
+        ordering = ['priority', 'name_ar']
         verbose_name = 'تصنيف'
         verbose_name_plural = 'التصنيفات'
 
