@@ -75,7 +75,7 @@ def report_create(request, report_type):
             report.type = report_type
             report.reporter = request.user
             report.save()
-            messages.success(request, 'تم نشر البلاغ بنجاح.')
+            messages.success(request, 'تم نشر الإعلان بنجاح.')
             return redirect('reports:detail', pk=report.pk)
     else:
         form = ReportForm(report_type=report_type)
@@ -95,5 +95,5 @@ def report_resolve(request, pk):
     if request.method == 'POST':
         report.status = Report.RESOLVED
         report.save(update_fields=['status'])
-        messages.success(request, 'تم تحديث حالة البلاغ إلى «تم الاسترجاع» بنجاح.')
+        messages.success(request, 'تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح.')
     return redirect('reports:detail', pk=report.pk)

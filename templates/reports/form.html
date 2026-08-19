@@ -2,7 +2,7 @@
 {% load i18n widget_tweaks %}
 {% block content %}
 <h1 class="h3 mb-4">
-    {% if report_type == 'lost' %}{% trans "الإبلاغ عن مفقود" %}{% else %}{% trans "الإبلاغ عن معثور عليه" %}{% endif %}
+    {% if report_type == 'lost' %}{% trans "نشر إعلان مفقود" %}{% else %}{% trans "نشر إعلان معثور عليه" %}{% endif %}
 </h1>
 
 <form method="post" enctype="multipart/form-data" class="row g-3">
@@ -16,7 +16,7 @@
     </div>
     {% endfor %}
     <div class="col-12">
-        <button class="btn btn-primary">{% trans "نشر البلاغ" %}</button>
+        <button class="btn btn-primary">{% trans "نشر الإعلان" %}</button>
     </div>
 </form>
 {% endblock %}

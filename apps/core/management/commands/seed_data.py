@@ -42,7 +42,7 @@ CATEGORIES = [
 
 
 class Command(BaseCommand):
-    help = 'تعبئة البيانات الأساسية: الدول والمدن العربية وتصنيفات البلاغات'
+    help = 'تعبئة البيانات الأساسية: الدول والمدن العربية وتصنيفات الإعلانات'
 
     def handle(self, *args, **options):
         for code, name_ar, name_en, cities in ARAB_COUNTRIES:
