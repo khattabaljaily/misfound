@@ -22,5 +22,5 @@ class ReportForm(forms.ModelForm):
             self.fields['verification_question'].required = False
         else:
             self.fields['verification_question'].help_text = (
-                'سؤال بيتأكد بيه إن اللي بيتواصل معاك هو صاحب الحاجة فعلاً (مش هيظهر للعموم)'
+                'سؤال يُستخدم للتحقق من أن المتواصل معك هو صاحب الغرض فعلاً (لن يظهر للعامة)'
             )

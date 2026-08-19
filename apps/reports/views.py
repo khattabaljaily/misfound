@@ -95,5 +95,5 @@ def report_resolve(request, pk):
     if request.method == 'POST':
         report.status = Report.RESOLVED
         report.save(update_fields=['status'])
-        messages.success(request, 'تم وسم البلاغ كمسترجَع. الحمد لله على السلامة!')
+        messages.success(request, 'تم تحديث حالة البلاغ إلى «تم الاسترجاع» بنجاح.')
     return redirect('reports:detail', pk=report.pk)

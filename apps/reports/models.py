@@ -58,7 +58,7 @@ class Report(models.Model):
 
     verification_question = models.CharField(
         max_length=255, blank=True,
-        help_text='سؤال يستخدم للتأكد من ملكية الحاجة قبل التسليم (يظهر لصاحب البلاغ فقط)'
+        help_text='سؤال يُستخدم للتحقق من ملكية الغرض قبل التسليم (يظهر لصاحب البلاغ فقط)'
     )
 
     views = models.PositiveIntegerField(default=0)

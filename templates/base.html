@@ -45,10 +45,10 @@
                         <a href="{% url 'reports:create' report_type='found' %}" class="btn btn-light btn-sm">{% trans "أبلغ عن معثور" %}</a>
                         <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
                             {% csrf_token %}
-                            <button class="btn btn-link btn-sm text-light">{% trans "خروج" %}</button>
+                            <button class="btn btn-link btn-sm text-light">{% trans "تسجيل الخروج" %}</button>
                         </form>
                     {% else %}
-                        <a href="{% url 'accounts:login' %}" class="btn btn-outline-light btn-sm">{% trans "دخول" %}</a>
+                        <a href="{% url 'accounts:login' %}" class="btn btn-outline-light btn-sm">{% trans "تسجيل الدخول" %}</a>
                         <a href="{% url 'accounts:register' %}" class="btn btn-light btn-sm">{% trans "حساب جديد" %}</a>
                     {% endif %}
                     <form action="{% url 'set_language' %}" method="post" class="d-inline">

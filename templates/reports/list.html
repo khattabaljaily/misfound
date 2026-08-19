@@ -13,7 +13,7 @@
     </div>
     <div class="col-md-2">
         <select name="category" class="form-select">
-            <option value="">{% trans "كل التصنيفات" %}</option>
+            <option value="">{% trans "جميع التصنيفات" %}</option>
             {% for c in categories %}
             <option value="{{ c.id }}" {% if selected.category == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
             {% endfor %}
@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-2">
         <select name="country" id="id_country" class="form-select">
-            <option value="">{% trans "كل الدول" %}</option>
+            <option value="">{% trans "جميع الدول" %}</option>
             {% for country in countries %}
             <option value="{{ country.id }}" {% if selected.country == country.id|stringformat:"s" %}selected{% endif %}>{{ country.name }}</option>
             {% endfor %}
@@ -29,7 +29,7 @@
     </div>
     <div class="col-md-2">
         <select name="city" id="id_city" class="form-select">
-            <option value="">{% trans "كل المدن" %}</option>
+            <option value="">{% trans "جميع المدن" %}</option>
             {% for city in cities %}
             <option value="{{ city.id }}" {% if selected.city == city.id|stringformat:"s" %}selected{% endif %}>{{ city.name_ar }}</option>
             {% endfor %}
@@ -39,7 +39,7 @@
         <input type="text" name="q" class="form-control" placeholder="{% trans 'بحث' %}" value="{{ selected.q }}">
     </div>
     <div class="col-md-1">
-        <button class="btn btn-primary w-100">{% trans "فلترة" %}</button>
+        <button class="btn btn-primary w-100">{% trans "تصفية" %}</button>
     </div>
 </form>
 
@@ -59,7 +59,7 @@
         </div>
     </div>
     {% empty %}
-    <p class="text-muted">{% trans "مفيش نتائج مطابقة." %}</p>
+    <p class="text-muted">{% trans "لا توجد نتائج مطابقة." %}</p>
     {% endfor %}
 </div>
 {% endblock %}
@@ -69,7 +69,7 @@
 document.getElementById('id_country').addEventListener('change', function () {
     var countryId = this.value;
     var citySelect = document.getElementById('id_city');
-    citySelect.innerHTML = '<option value="">{% trans "كل المدن" %}</option>';
+    citySelect.innerHTML = '<option value="">{% trans "جميع المدن" %}</option>';
     if (!countryId) return;
     fetch("{% url 'reports:cities_for_country' %}?country=" + countryId)
         .then(function (r) { return r.text(); })

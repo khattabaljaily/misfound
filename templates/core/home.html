@@ -2,10 +2,10 @@
 {% load i18n %}
 {% block content %}
 <div class="text-center py-5 mb-4 bg-light rounded-3">
-    <h1 class="display-5 fw-bold">{% trans "لقيت حاجة؟ ولا فقدت حاجة؟" %}</h1>
-    <p class="lead text-muted">{% trans "منصة تجمع أهل الوطن العربي عشان توصّل كل مفقود لصاحبه" %}</p>
+    <h1 class="display-5 fw-bold">{% trans "هل عثرت على شيء؟ أم فقدت شيئًا؟" %}</h1>
+    <p class="lead text-muted">{% trans "منصة إلكترونية تهدف إلى إعادة كل مفقود إلى صاحبه" %}</p>
     <form action="{% url 'reports:list' %}" method="get" class="d-flex justify-content-center gap-2 mt-4">
-        <input type="text" name="q" class="form-control w-50" placeholder="{% trans 'ابحث عن حاجة...' %}">
+        <input type="text" name="q" class="form-control w-50" placeholder="{% trans 'ابحث عن غرض...' %}">
         <button class="btn btn-primary">{% trans "بحث" %}</button>
     </form>
 </div>
@@ -25,7 +25,7 @@
         </div>
     </div>
     {% empty %}
-    <p class="text-muted">{% trans "مفيش بلاغات مفقودات دلوقتي." %}</p>
+    <p class="text-muted">{% trans "لا توجد بلاغات عن مفقودات حاليًا." %}</p>
     {% endfor %}
 </div>
 
@@ -44,7 +44,7 @@
         </div>
     </div>
     {% empty %}
-    <p class="text-muted">{% trans "مفيش بلاغات معثورات دلوقتي." %}</p>
+    <p class="text-muted">{% trans "لا توجد بلاغات عن معثورات حاليًا." %}</p>
     {% endfor %}
 </div>
 {% endblock %}

@@ -45,11 +45,11 @@
                 {% csrf_token %}
                 <textarea name="body" class="form-control mb-2" rows="2" placeholder="{% trans 'اكتب رسالتك...' %}" required></textarea>
                 <button class="btn btn-primary">
-                    {% if report.type == 'lost' %}{% trans "أعتقد إني لقيتها" %}{% else %}{% trans "أعتقد إنها بتاعتي" %}{% endif %}
+                    {% if report.type == 'lost' %}{% trans "أعتقد أنني وجدتها" %}{% else %}{% trans "أعتقد أنها لي" %}{% endif %}
                 </button>
             </form>
             {% else %}
-            <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn btn-primary">{% trans "سجّل دخولك للتواصل" %}</a>
+            <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn btn-primary">{% trans "يرجى تسجيل الدخول للتواصل" %}</a>
             {% endif %}
         {% endif %}
     </div>

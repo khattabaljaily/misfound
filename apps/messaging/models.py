@@ -8,7 +8,7 @@ class Conversation(models.Model):
     )
     claimant = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='claimed_conversations',
-        help_text='المستخدم اللي بيدّعي إن الحاجة بتاعته'
+        help_text='المستخدم الذي يدّعي ملكية الغرض'
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
