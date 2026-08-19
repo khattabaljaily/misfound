@@ -73,7 +73,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -119,17 +118,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization — Arabic is the primary language, English secondary
+# Internationalization — Arabic only for now; English support comes later
 LANGUAGE_CODE = 'ar'
-LANGUAGES = [
-    ('ar', 'العربية'),
-    ('en', 'English'),
-]
 LOCALE_PATHS = [BASE_DIR / 'locale']
 TIME_ZONE = 'Africa/Cairo'
 USE_I18N = True
 USE_TZ = True
-LANGUAGE_COOKIE_NAME = 'misfound_language'
 
 
 # Static & media files
