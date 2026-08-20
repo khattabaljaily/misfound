@@ -30,6 +30,11 @@ def register(request):
 class MisfoundLoginView(LoginView):
     template_name = 'accounts/login.html'
 
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            return reverse('core:admin_stats')
+        return super().get_success_url()
+
     def form_valid(self, form):
         response = super().form_valid(form)
         if _is_ajax(self.request):

@@ -2,9 +2,16 @@
 {% load i18n %}
 {% block title %}{% trans "لوحة الإحصائيات" %} | Misfound{% endblock %}
 {% block content %}
-<div class="d-flex align-items-center gap-2 mb-4">
-    <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-bar-chart-line"></i></span>
-    <h1 class="h4 mb-0">{% trans "لوحة الإحصائيات" %}</h1>
+<div class="d-flex align-items-center justify-content-between gap-2 mb-4 flex-wrap">
+    <div class="d-flex align-items-center gap-2">
+        <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-bar-chart-line"></i></span>
+        <h1 class="h4 mb-0">{% trans "لوحة الإحصائيات" %}</h1>
+    </div>
+    {% if user.is_superuser %}
+    <a href="/admin/" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-gear"></i> {% trans "الذهاب إلى لوحة إدارة Django" %}
+    </a>
+    {% endif %}
 </div>
 
 <div class="mf-stat-grid mb-4">

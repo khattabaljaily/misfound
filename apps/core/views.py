@@ -34,7 +34,7 @@ def terms(request):
     return render(request, 'core/terms.html')
 
 
-@staff_member_required
+@staff_member_required(login_url='accounts:login')
 def admin_stats(request):
     total_reports = Report.objects.count()
     resolved_count = Report.objects.filter(status=Report.RESOLVED).count()
