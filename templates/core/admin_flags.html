@@ -1,0 +1,74 @@
+{% extends "core/admin_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "البلاغات" %} | {{ block.super }}{% endblock %}
+{% block admin_content %}
+<div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+    <h1 class="h4 mb-0">{% trans "البلاغات" %}</h1>
+    <div class="mf-admin-filter-tabs">
+        <a href="?" class="{% if not show_resolved %}mf-admin-filter-tabs__link--active{% endif %} mf-admin-filter-tabs__link">{% trans "بانتظار المراجعة" %}</a>
+        <a href="?resolved=1" class="{% if show_resolved %}mf-admin-filter-tabs__link--active{% endif %} mf-admin-filter-tabs__link">{% trans "تمت مراجعتها" %}</a>
+    </div>
+</div>
+
+<div class="mf-panel p-0">
+    <div class="mf-flags-table">
+        {% for flag in flags %}
+        <div class="mf-flags-row" id="flag-row-{{ flag.pk }}">
+            <div class="mf-flags-row__main">
+                <a href="{% url 'reports:detail' pk=flag.report_id %}" target="_blank" class="mf-flags-row__title">{{ flag.report.title }}</a>
+                <span class="mf-flags-row__reason">{{ flag.get_reason_display }}</span>
+                {% if flag.note %}<p class="mf-flags-row__note">{{ flag.note }}</p>{% endif %}
+                <span class="mf-flags-row__meta">{% trans "بواسطة" %} {{ flag.reporter }} — {{ flag.created_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            {% if not flag.resolved %}
+            <button type="button" class="btn btn-sm btn-outline-success mf-flag-resolve-btn" data-flag-id="{{ flag.pk }}">
+                <i class="bi bi-check-lg"></i> {% trans "وسم كمُراجَع" %}
+            </button>
+            {% else %}
+            <span class="mf-flags-row__done"><i class="bi bi-check-circle-fill"></i> {% trans "تمت المراجعة" %}</span>
+            {% endif %}
+        </div>
+        {% empty %}
+        <div class="text-center text-muted py-5">
+            <i class="bi bi-flag display-4 d-block mb-2"></i>
+            {% if show_resolved %}{% trans "لا توجد بلاغات تمت مراجعتها." %}{% else %}{% trans "لا توجد بلاغات بانتظار المراجعة." %}{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% include "core/_pagination.html" %}
+{% endblock %}
+
+{% block admin_js %}
+<script>
+var resolveUrlTemplate = "{% url 'core:admin_flag_resolve' pk=0 %}";
+document.querySelectorAll('.mf-flag-resolve-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        var flagId = btn.dataset.flagId;
+        mfSetButtonLoading(btn, true);
+        fetch(resolveUrlTemplate.replace('/0/resolve/', '/' + flagId + '/resolve/'), {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': mfGetCookie('csrftoken'),
+            },
+        })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (data.success) {
+                    showToast('success', data.message);
+                    var row = document.getElementById('flag-row-' + flagId);
+                    btn.outerHTML = '<span class="mf-flags-row__done"><i class="bi bi-check-circle-fill"></i> {% trans "تمت المراجعة" %}</span>';
+                } else {
+                    mfSetButtonLoading(btn, false);
+                    showToast('error', data.message);
+                }
+            })
+            .catch(function () {
+                mfSetButtonLoading(btn, false);
+                showToast('error', 'حدث خطأ، يرجى المحاولة مرة أخرى.');
+            });
+    });
+});
+</script>
+{% endblock %}

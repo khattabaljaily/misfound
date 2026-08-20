@@ -1278,6 +1278,84 @@ button.mf-flag-link:hover { color: var(--mf-danger); }
 }
 
 /* ---------------------------------------------------------------- */
+/* Admin panel shell                                                   */
+/* ---------------------------------------------------------------- */
+.mf-admin-body {
+    margin: 0;
+    font-family: "Al-Mohanad", Tahoma, sans-serif;
+    background: var(--mf-bg);
+    color: var(--mf-text);
+}
+.mf-admin-shell { display: flex; min-height: 100vh; align-items: stretch; }
+.mf-admin-sidebar {
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.4rem 1.1rem;
+    background: var(--mf-navy-2);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+.mf-admin-sidebar__brand { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1.8rem; padding-inline: 0.4rem; }
+.mf-admin-sidebar__brand .mf-brand__logo { width: 110px; height: auto; }
+.mf-admin-sidebar__brand span { color: rgba(255, 255, 255, 0.55); font-size: 0.72rem; font-weight: 700; }
+.mf-admin-nav { display: flex; flex-direction: column; gap: 0.25rem; flex-grow: 1; }
+.mf-admin-nav__link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 0.85rem;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.86rem;
+    font-weight: 700;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.mf-admin-nav__link i { font-size: 0.95rem; width: 1.1rem; text-align: center; }
+.mf-admin-nav__link:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+.mf-admin-nav__link--active { background: var(--mf-teal); color: var(--mf-navy-2); }
+.mf-admin-nav__badge {
+    margin-inline-start: auto;
+    min-width: 1.35rem;
+    height: 1.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 0.3rem;
+    border-radius: 999px;
+    background: var(--mf-danger);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+.mf-admin-sidebar__footer { display: flex; flex-direction: column; gap: 0.2rem; padding-top: 0.8rem; margin-top: 0.8rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.mf-admin-content { flex: 1 1 auto; padding: clamp(1.2rem, 3vw, 2.4rem); min-width: 0; }
+
+@media (max-width: 767px) {
+    .mf-admin-shell { flex-direction: column; }
+    .mf-admin-sidebar { position: static; height: auto; flex: 0 0 auto; }
+    .mf-admin-nav { flex-direction: row; flex-wrap: wrap; }
+    .mf-admin-sidebar__footer { flex-direction: row; flex-wrap: wrap; }
+}
+
+.mf-admin-filter-tabs { display: flex; gap: 0.4rem; }
+.mf-admin-filter-tabs__link { padding: 0.45rem 0.9rem; border-radius: 8px; background: var(--mf-surface); border: 1px solid var(--mf-border); color: var(--mf-text-muted); font-size: 0.8rem; font-weight: 700; }
+.mf-admin-filter-tabs__link--active { background: var(--mf-teal); border-color: var(--mf-teal); color: #fff; }
+
+.mf-flags-table { display: flex; flex-direction: column; }
+.mf-flags-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.2rem; border-bottom: 1px solid var(--mf-border); }
+.mf-flags-row:last-child { border-bottom: 0; }
+.mf-flags-row__main { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.mf-flags-row__title { color: var(--mf-navy); font-weight: 800; font-size: 0.9rem; }
+.mf-flags-row__reason { color: var(--mf-teal-dark); font-size: 0.76rem; font-weight: 700; }
+.mf-flags-row__note { margin: 0.15rem 0 0; color: var(--mf-text); font-size: 0.8rem; }
+.mf-flags-row__meta { color: var(--mf-text-muted); font-size: 0.72rem; }
+.mf-flags-row__done { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--mf-success); font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+
+/* ---------------------------------------------------------------- */
 /* Admin stats dashboard                                              */
 /* ---------------------------------------------------------------- */
 .mf-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.9rem; }

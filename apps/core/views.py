@@ -1,10 +1,18 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
+from django.core.paginator import Paginator
 from django.db.models import Avg, Count, DurationField, ExpressionWrapper, F
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
 
 from apps.locations.models import City, Country
 from apps.reports.models import Category, Match, Report, ReportFlag
+
+ADMIN_FLAGS_PAGE_SIZE = 20
+
+
+def _admin_context(active):
+    return {'active': active, 'pending_flags_count': ReportFlag.objects.filter(resolved=False).count()}
 
 
 def home(request):
@@ -64,10 +72,39 @@ def admin_stats(request):
         'avg_resolve_days': avg_resolve_days,
         'total_matches': Match.objects.count(),
         'total_users': get_user_model().objects.count(),
-        'pending_flags': ReportFlag.objects.filter(resolved=False).count(),
         'top_categories': top_categories,
         'top_countries': top_countries,
         'max_category_count': top_categories[0].report_count if top_categories else 0,
         'max_country_count': top_countries[0].report_count if top_countries else 0,
+        **_admin_context('dashboard'),
     }
-    return render(request, 'core/admin_stats.html', context)
+    return render(request, 'core/admin_dashboard.html', context)
+
+
+@staff_member_required(login_url='accounts:login')
+def admin_flags(request):
+    show_resolved = request.GET.get('resolved') == '1'
+    qs = ReportFlag.objects.filter(resolved=show_resolved).select_related('report', 'reporter')
+    page_obj = Paginator(qs, ADMIN_FLAGS_PAGE_SIZE).get_page(request.GET.get('page'))
+
+    querystring = request.GET.copy()
+    querystring.pop('page', None)
+
+    context = {
+        'flags': page_obj,
+        'page_obj': page_obj,
+        'base_qs': querystring.urlencode(),
+        'show_resolved': show_resolved,
+        **_admin_context('flags'),
+    }
+    return render(request, 'core/admin_flags.html', context)
+
+
+@staff_member_required(login_url='accounts:login')
+def admin_flag_resolve(request, pk):
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'طلب غير صالح.'}, status=405)
+    flag = get_object_or_404(ReportFlag, pk=pk)
+    flag.resolved = True
+    flag.save(update_fields=['resolved'])
+    return JsonResponse({'success': True, 'message': 'تم وسم البلاغ كمُراجَع.'})
