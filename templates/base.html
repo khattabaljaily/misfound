@@ -61,20 +61,17 @@
     </div>
 
     <footer class="mf-footer mt-auto">
-        <div class="container py-4">
+        <div class="container py-3">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                <a href="{% url 'core:home' %}">
-                    <img src="{% static 'img/logo_white.png' %}" alt="Misfound" height="24">
+                <a href="{% url 'core:home' %}" class="d-inline-flex">
+                    <img src="{% static 'img/logo_white.png' %}" alt="Misfound" height="22">
                 </a>
-                <ul class="list-inline mb-0 mf-footer-links">
-                    <li class="list-inline-item"><a href="{% url 'core:privacy' %}">{% trans "سياسة الخصوصية" %}</a></li>
-                    <li class="list-inline-item"><a href="{% url 'core:terms' %}">{% trans "الشروط والأحكام" %}</a></li>
-                </ul>
-            </div>
-            <hr class="mf-footer-divider">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 small">
-                <span>&copy; {% now "Y" %} Misfound. {% trans "جميع الحقوق محفوظة." %}</span>
-                <span>{% trans "صُنع بواسطة" %} <a href="https://khattabaljaily.com" target="_blank" rel="noopener">خطاب الجعيلي</a></span>
+                <div class="d-flex flex-wrap align-items-center gap-3 small mf-footer-links">
+                    <a href="{% url 'core:privacy' %}">{% trans "سياسة الخصوصية" %}</a>
+                    <a href="{% url 'core:terms' %}">{% trans "الشروط والأحكام" %}</a>
+                    <span>&copy; {% now "Y" %} Misfound</span>
+                    <span>{% trans "تم التطوير بواسطة" %} <a href="https://khattabaljaily.com" target="_blank" rel="noopener">خطاب الجعيلي</a></span>
+                </div>
             </div>
         </div>
     </footer>

@@ -809,12 +809,3 @@ input.mf-pill-field {
 .mf-footer-links a {
     font-weight: 600;
 }
-
-.mf-footer-links .list-inline-item:not(:last-child) {
-    margin-inline-end: 1.25rem;
-}
-
-.mf-footer-divider {
-    border-color: rgba(255, 255, 255, 0.12);
-    margin: 1rem 0;
-}
