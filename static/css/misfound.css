@@ -560,10 +560,10 @@ input.mf-pill-field {
     inset: 0;
     z-index: -1;
     border-radius: inherit;
-    background: #e4e7f0;
-    border: 1px solid rgba(18, 38, 58, 0.14);
+    background: #dfe3ec;
+    border: 1px solid rgba(18, 38, 58, 0.16);
     box-shadow: 0 16px 30px rgba(18, 38, 58, 0.16);
-    transform: translate(16px, 18px) rotate(3deg);
+    transform: translate(16px, 16px);
     transition: transform 0.25s ease;
 }
 
@@ -573,7 +573,7 @@ input.mf-pill-field {
 }
 
 .report-card:hover::before {
-    transform: translate(16px, 19px) rotate(3deg);
+    transform: translate(19px, 19px);
 }
 
 .report-card .card-title { transition: color 0.2s ease; }
@@ -1065,7 +1065,7 @@ input.mf-pill-field {
 .mf-section-kicker i { font-size: 0.42rem; vertical-align: middle; margin-inline-end: 0.25rem; }
 .mf-section-link { color: var(--mf-text-muted); font-size: 0.78rem; }
 
-.report-card { border: 1px solid rgba(18, 38, 58, 0.06); border-radius: 18px; box-shadow: 0 10px 28px rgba(18, 38, 58, 0.055); }
+.report-card { border: 1px solid rgba(18, 38, 58, 0.08); border-radius: 18px; box-shadow: 0 12px 26px rgba(18, 38, 58, 0.16); }
 .report-card__media { min-height: 188px; }
 .report-card__media { background: #fff; }
 .report-card__body { padding: 1rem 1.1rem 1.1rem; }
