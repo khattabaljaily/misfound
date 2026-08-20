@@ -30,6 +30,9 @@
                 <span class="mf-detail-label">{% trans "التفاصيل" %}</span>
                 <p>{{ report.description }}</p>
             </div>
+            {% if report.identifier %}
+            <div class="mf-detail-location"><i class="bi bi-upc-scan"></i><div><span>{% trans "رقم المعرف" %}</span><strong>{{ report.identifier }}</strong></div></div>
+            {% endif %}
             {% if report.location_details %}
             <div class="mf-detail-location"><i class="bi bi-pin-map"></i><div><span>{% trans "مكان الفقدان/العثور" %}</span><strong>{{ report.location_details }}</strong></div></div>
             {% endif %}

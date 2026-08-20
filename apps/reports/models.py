@@ -63,6 +63,10 @@ class Report(models.Model):
 
     title = models.CharField(max_length=200, verbose_name='العنوان')
     description = models.TextField(verbose_name='الوصف')
+    identifier = models.CharField(
+        max_length=100, blank=True, verbose_name='رقم المعرف',
+        help_text='رقم مميز للغرض إن وجد، مثل الرقم التسلسلي للإلكترونيات أو رقم المستند للوثائق. غير إجباري، لكنه يسهّل البحث والتأكد من الملكية.'
+    )
     location_details = models.CharField(
         max_length=200, blank=True, verbose_name='تفاصيل المكان',
         help_text='مكان الفقدان/العثور بالتفصيل'

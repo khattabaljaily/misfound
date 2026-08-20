@@ -47,7 +47,11 @@ def report_list(request):
 
     q = request.GET.get('q')
     if q:
-        qs = qs.filter(title__icontains=q) | qs.filter(description__icontains=q)
+        qs = (
+            qs.filter(title__icontains=q)
+            | qs.filter(description__icontains=q)
+            | qs.filter(identifier__icontains=q)
+        )
 
     paginator = Paginator(qs, REPORTS_PAGE_SIZE)
     page_obj = paginator.get_page(request.GET.get('page'))

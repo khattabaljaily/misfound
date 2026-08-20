@@ -12,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class ReportAdmin(admin.ModelAdmin):
     list_display = ['title', 'type', 'status', 'category', 'country', 'city', 'reporter', 'created_at']
     list_filter = ['type', 'status', 'category', 'country']
-    search_fields = ['title', 'description', 'reporter__username']
+    search_fields = ['title', 'description', 'identifier', 'reporter__username']
     autocomplete_fields = ['reporter']
     date_hierarchy = 'created_at'
 

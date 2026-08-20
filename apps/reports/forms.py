@@ -9,7 +9,7 @@ class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = [
-            'category', 'country', 'city', 'title', 'description',
+            'category', 'country', 'city', 'title', 'description', 'identifier',
             'location_details', 'event_date', 'image', 'verification_question',
         ]
         widgets = {

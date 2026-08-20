@@ -37,6 +37,7 @@ def _build_prompt(report, candidates):
     target = (
         f"العنوان: {report.title}\n"
         f"الوصف: {report.description}\n"
+        f"رقم المعرف: {report.identifier or 'غير محدد'}\n"
         f"التصنيف: {report.category.name_ar}\n"
         f"المدينة: {report.city.name_ar if report.city else 'غير محددة'}\n"
         f"التاريخ: {report.event_date}"
@@ -46,6 +47,7 @@ def _build_prompt(report, candidates):
     for c in candidates:
         lines.append(
             f"- id={c.id} | العنوان: {c.title} | الوصف: {c.description} | "
+            f"رقم المعرف: {c.identifier or 'غير محدد'} | "
             f"المدينة: {c.city.name_ar if c.city else 'غير محددة'} | التاريخ: {c.event_date}"
         )
     candidates_block = '\n'.join(lines)
@@ -54,8 +56,11 @@ def _build_prompt(report, candidates):
         f"هذا إعلان عن غرض {kind}:\n{target}\n\n"
         f"وهذه إعلانات {opposite_kind} مرشحة لنفس التصنيف والدولة:\n{candidates_block}\n\n"
         "قيّم مدى احتمال أن كل مرشح يصف نفس الغرض بالإعلان الأول، بناءً على الوصف والمكان "
-        "والتاريخ فقط. أعطِ نسبة من 0 إلى 100 لكل مرشح، وسببًا مختصرًا بالعربية لا يتجاوز "
-        "١٥ كلمة. اذكر فقط المرشحين الذين نسبتهم ٤٠ أو أكثر. أجب بصيغة JSON فقط بالشكل التالي:\n"
+        "والتاريخ. إذا كان رقم المعرف محددًا في كلا الإعلانين ومتطابقًا، فهذا دليل قوي جدًا "
+        "على التطابق ويجب أن تعطيه نسبة عالية جدًا (٩٠ فأكثر) حتى لو اختلفت تفاصيل أخرى؛ وإذا "
+        "كان محددًا في كليهما لكنه مختلف تمامًا فهذا يقلل احتمال التطابق. أعطِ نسبة من 0 إلى "
+        "100 لكل مرشح، وسببًا مختصرًا بالعربية لا يتجاوز ١٥ كلمة. اذكر فقط المرشحين الذين "
+        "نسبتهم ٤٠ أو أكثر. أجب بصيغة JSON فقط بالشكل التالي:\n"
         '{"matches": [{"id": 12, "score": 75, "reason": "..."}]}'
     )
 
