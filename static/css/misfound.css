@@ -62,6 +62,9 @@ body {
     font-family: "Al-Mohanad", Tahoma, sans-serif;
     background-color: var(--mf-bg);
     color: var(--mf-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 a {
@@ -785,4 +788,33 @@ input.mf-pill-field {
 
 @keyframes mf-spin {
     to { transform: rotate(360deg); }
+}
+
+/* ---------------------------------------------------------------- */
+/* Footer                                                             */
+/* ---------------------------------------------------------------- */
+.mf-footer {
+    background: linear-gradient(90deg, var(--mf-navy-2), var(--mf-navy));
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.mf-footer a {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.mf-footer a:hover {
+    color: var(--mf-teal);
+}
+
+.mf-footer-links a {
+    font-weight: 600;
+}
+
+.mf-footer-links .list-inline-item:not(:last-child) {
+    margin-inline-end: 1.25rem;
+}
+
+.mf-footer-divider {
+    border-color: rgba(255, 255, 255, 0.12);
+    margin: 1rem 0;
 }
