@@ -41,7 +41,7 @@
                     <div><span>{% trans "سؤال التحقق الخاص بك" %}</span><strong>{{ report.verification_question }}</strong></div>
                 </div>
                 {% endif %}
-                <button class="btn btn-success mf-detail-action" id="resolveBtn" {% if report.status != 'open' %}hidden{% endif %}>
+                <button class="btn btn-success mf-detail-action mt-4" id="resolveBtn" {% if report.status != 'open' %}hidden{% endif %}>
                     <i class="bi bi-check-circle"></i> {% trans "تم الاسترجاع" %}
                 </button>
             {% elif report.status == 'open' %}

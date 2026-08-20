@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<div class="d-flex align-items-center gap-2 mb-4">
-    <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-chat-dots"></i></span>
-    <h1 class="h4 mb-0">{% trans "الرسائل" %}</h1>
+<div class="mf-inbox-heading">
+    <div><span>{% trans "تواصلك" %}</span><h1>{% trans "الرسائل" %}</h1></div>
+    <i class="bi bi-chat-heart"></i>
 </div>
-<div class="mf-panel p-0">
-    <div class="list-group list-group-flush">
+<div class="mf-inbox-shell">
+    <div class="mf-conversation-list">
         {% for c in conversations %}
-        <a href="{% url 'messaging:conversation' pk=c.pk %}" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
-            <span class="mf-avatar">
+        <a href="{% url 'messaging:conversation' pk=c.pk %}" class="mf-conversation-item">
+            <span class="mf-conversation-avatar">
                 {% if c.claimant == user %}{{ c.report.reporter|stringformat:"s"|first|upper }}{% else %}{{ c.claimant|stringformat:"s"|first|upper }}{% endif %}
             </span>
-            <div class="flex-grow-1">
-                <div class="fw-semibold">{{ c.report.title }}</div>
-                <div class="text-muted small">
+            <div class="mf-conversation-copy">
+                <strong>{{ c.report.title }}</strong>
+                <span>
                     {% if c.claimant == user %}{{ c.report.reporter }}{% else %}{{ c.claimant }}{% endif %}
-                </div>
+                </span>
             </div>
-            <i class="bi bi-chevron-left text-muted"></i>
+            <i class="bi bi-arrow-left mf-conversation-arrow"></i>
         </a>
         {% empty %}
         <div class="text-muted text-center py-5">

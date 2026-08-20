@@ -1,28 +1,31 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<div class="d-flex align-items-center gap-2 mb-1">
-    <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-chat-dots"></i></span>
-    <h1 class="h4 mb-0">{{ conversation.report.title }}</h1>
+<div class="mf-chat-heading">
+    <a href="{% url 'reports:detail' pk=conversation.report.pk %}" class="mf-chat-back"><i class="bi bi-arrow-right"></i></a>
+    <span class="mf-chat-heading__icon"><i class="bi bi-chat-heart"></i></span>
+    <div>
+        <span>{% trans "محادثة حول الإعلان" %}</span>
+        <h1>{{ conversation.report.title }}</h1>
+    </div>
+    <a href="{% url 'reports:detail' pk=conversation.report.pk %}" class="mf-chat-report-link"><i class="bi bi-box-arrow-up-left"></i> {% trans "عرض الإعلان" %}</a>
 </div>
-<p class="text-muted mb-4" style="padding-inline-start: 50px;">
-    <a href="{% url 'reports:detail' pk=conversation.report.pk %}"><i class="bi bi-box-arrow-up-left"></i> {% trans "عرض الإعلان" %}</a>
-</p>
 
-<div class="mf-panel p-0">
-    <div id="messages" class="p-3" style="max-height: 420px; overflow-y: auto;">
+<div class="mf-chat-shell">
+    <div id="messages" class="mf-messages">
         {% for message in conversation.messages.all %}
             {% include "messaging/_message.html" %}
         {% endfor %}
     </div>
-    <div class="border-top p-3">
+    <div class="mf-composer-wrap">
         <form id="message-form" method="post">
             {% csrf_token %}
-            <div class="input-group">
+            <div class="mf-composer">
                 {{ form.body }}
-                <button class="btn btn-primary" type="submit"><i class="bi bi-send"></i> {% trans "إرسال" %}</button>
+                <button class="mf-send-button" type="submit" aria-label="{% trans 'إرسال الرسالة' %}" title="{% trans 'إرسال' %}"><i class="bi bi-arrow-up"></i></button>
             </div>
         </form>
+        <span class="mf-composer-hint"><i class="bi bi-lock"></i> {% trans "محادثة خاصة وآمنة" %}</span>
     </div>
 </div>
 {% endblock %}

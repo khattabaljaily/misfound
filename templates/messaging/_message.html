@@ -1,6 +1,7 @@
-<div class="mb-2 d-flex {% if message.sender == user %}justify-content-end{% endif %}">
-    <div class="p-2 rounded {% if message.sender == user %}bg-primary text-white{% else %}bg-light{% endif %}" style="max-width: 70%;">
-        <div>{{ message.body }}</div>
-        <div class="small opacity-75">{{ message.created_at|date:"H:i" }}</div>
+<div class="mf-message-row {% if message.sender == user %}mf-message-row--mine{% endif %}">
+    <div class="mf-message-avatar"><i class="bi bi-person-fill"></i></div>
+    <div class="mf-message-bubble">
+        <div class="mf-message-body">{{ message.body }}</div>
+        <div class="mf-message-time">{{ message.created_at|date:"H:i" }}</div>
     </div>
 </div>
