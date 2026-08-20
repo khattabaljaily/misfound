@@ -9,6 +9,7 @@ urlpatterns = [
     path('accounts/', include('apps.accounts.urls')),
     path('reports/', include('apps.reports.urls')),
     path('messages/', include('apps.messaging.urls')),
+    path('notifications/', include('apps.notifications.urls')),
     re_path(
         r'^media/(?P<path>.*)$',
         serve_static,

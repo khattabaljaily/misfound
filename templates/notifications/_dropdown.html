@@ -1,0 +1,48 @@
+{% load i18n humanize mf_extras %}
+<div class="mf-notif-header">
+    <span>{% trans "الإشعارات" %}</span>
+    {% if unread_count %}
+    <button type="button" class="btn btn-link btn-sm p-0" id="mfMarkAllRead">{% trans "تعليم الكل كمقروء" %}</button>
+    {% endif %}
+</div>
+<div class="mf-notif-list">
+    {% for n in notifications %}
+    <a href="{% url 'notifications:mark_read' pk=n.pk %}" class="mf-notif-item {% if not n.is_read %}mf-notif-item--unread{% endif %}">
+        <span class="mf-notif-item__icon"><i class="bi {{ n.icon }}"></i></span>
+        <span class="mf-notif-item__body">
+            <strong>{{ n.title }}</strong>
+            {% if n.body %}<span class="d-block text-muted small">{{ n.body }}</span>{% endif %}
+            <span class="d-block text-muted small">{{ n.created_at|naturaltime_ar }}</span>
+        </span>
+    </a>
+    {% empty %}
+    <div class="text-center text-muted py-4 small">
+        <i class="bi bi-bell-slash d-block mb-2" style="font-size: 1.5rem;"></i>
+        {% trans "لا توجد إشعارات بعد." %}
+    </div>
+    {% endfor %}
+</div>
+{% if notifications %}
+<a href="{% url 'notifications:list' %}" class="mf-notif-footer">{% trans "عرض كل الإشعارات" %}</a>
+{% endif %}
+
+<script>
+(function () {
+    var btn = document.getElementById('mfMarkAllRead');
+    if (btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            fetch("{% url 'notifications:mark_all_read' %}", {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': mfGetCookie('csrftoken') },
+            }).then(function () {
+                document.querySelectorAll('.mf-notif-item--unread').forEach(function (el) {
+                    el.classList.remove('mf-notif-item--unread');
+                });
+                btn.remove();
+                document.getElementById('mfNotifBadge').classList.add('d-none');
+            });
+        });
+    }
+})();
+</script>

@@ -5,9 +5,24 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 
+from apps.notifications.services import notify
 from apps.reports.models import Report
 from .forms import MessageForm
 from .models import Conversation, Message
+
+
+def _other_participant(conversation, sender):
+    return conversation.report.reporter if sender == conversation.claimant else conversation.claimant
+
+
+def _notify_new_message(conversation, message):
+    recipient = _other_participant(conversation, message.sender)
+    notify(
+        recipient, 'message',
+        f'رسالة جديدة بخصوص: {conversation.report.title}',
+        message.body[:120],
+        reverse('messaging:conversation', args=[conversation.pk]),
+    )
 
 
 @login_required
@@ -23,9 +38,10 @@ def start_conversation(request, report_pk):
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
-            Message.objects.create(
+            message = Message.objects.create(
                 conversation=conversation, sender=request.user, body=form.cleaned_data['body']
             )
+            _notify_new_message(conversation, message)
 
     conversation_url = reverse('messaging:conversation', args=[conversation.pk])
     if is_ajax:
@@ -51,6 +67,7 @@ def conversation_detail(request, pk):
             message = Message.objects.create(
                 conversation=conversation, sender=request.user, body=form.cleaned_data['body']
             )
+            _notify_new_message(conversation, message)
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 html = render_to_string('messaging/_message.html', {'message': message, 'user': request.user})
                 return JsonResponse({'html': html})
@@ -59,6 +76,7 @@ def conversation_detail(request, pk):
         form = MessageForm()
 
     conversation.messages.exclude(sender=request.user).update(read=True)
+    request.user.notifications.filter(type='message', url=request.path, is_read=False).update(is_read=True)
 
     return render(request, 'messaging/conversation.html', {
         'conversation': conversation,

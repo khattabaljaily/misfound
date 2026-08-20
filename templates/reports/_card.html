@@ -1,4 +1,4 @@
-{% load i18n humanize %}
+{% load i18n humanize mf_extras %}
 <div class="col">
     <div class="card report-card h-100">
         <div class="position-relative report-card__media">
@@ -20,7 +20,7 @@
             <h5 class="card-title">{{ report.title }}</h5>
             <div class="report-card__meta">
                 <span><i class="bi bi-geo-alt"></i> {{ report.city.name|default:"" }}</span>
-                <span><i class="bi bi-clock"></i> {{ report.created_at|naturaltime }}</span>
+                <span><i class="bi bi-clock"></i> {{ report.created_at|naturaltime_ar }}</span>
             </div>
             <div class="mt-auto d-flex align-items-center justify-content-between">
                 <a href="{% url 'reports:detail' pk=report.pk %}" class="mf-card-link">

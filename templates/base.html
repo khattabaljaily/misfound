@@ -43,6 +43,15 @@
                     {% if user.is_authenticated %}
                         <a href="{% url 'reports:create' report_type='lost' %}" class="btn btn-outline-light btn-sm"><i class="bi bi-plus-lg"></i> {% trans "إعلان مفقود" %}</a>
                         <a href="{% url 'reports:create' report_type='found' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> {% trans "إعلان معثور عليه" %}</a>
+                        <div class="dropdown mf-notif-menu" id="mfNotifMenu">
+                            <button type="button" class="mf-user-trigger position-relative" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{% trans 'الإشعارات' %}" id="mfNotifTrigger">
+                                <i class="bi bi-bell-fill"></i>
+                                <span class="mf-notif-badge d-none" id="mfNotifBadge">0</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end mf-notif-dropdown" id="mfNotifDropdown">
+                                <div class="text-center text-muted py-4 small">{% trans "جاري التحميل..." %}</div>
+                            </div>
+                        </div>
                         <div class="dropdown mf-user-menu">
                             <button type="button" class="mf-user-trigger" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{% trans 'قائمة المستخدم' %}" title="{{ user.username }}">
                                 <i class="bi bi-person-fill"></i>
@@ -135,6 +144,39 @@
                     onConfirm: function () { document.getElementById('mfLogoutForm').submit(); },
                 });
             });
+        }
+
+        var mfNotifTrigger = document.getElementById('mfNotifTrigger');
+        if (mfNotifTrigger) {
+            var mfNotifBadge = document.getElementById('mfNotifBadge');
+            var mfNotifDropdown = document.getElementById('mfNotifDropdown');
+            var mfNotifMenu = document.getElementById('mfNotifMenu');
+
+            function mfRefreshNotifCount() {
+                fetch("{% url 'notifications:unread_count' %}")
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.count > 0) {
+                            mfNotifBadge.textContent = data.count > 9 ? '9+' : data.count;
+                            mfNotifBadge.classList.remove('d-none');
+                        } else {
+                            mfNotifBadge.classList.add('d-none');
+                        }
+                    });
+            }
+
+            function mfLoadNotifDropdown() {
+                fetch("{% url 'notifications:dropdown' %}")
+                    .then(function (r) { return r.text(); })
+                    .then(function (html) {
+                        mfNotifDropdown.innerHTML = html;
+                        mfRefreshNotifCount();
+                    });
+            }
+
+            mfNotifMenu.addEventListener('show.bs.dropdown', mfLoadNotifDropdown);
+            mfRefreshNotifCount();
+            setInterval(mfRefreshNotifCount, 45000);
         }
     </script>
     {% block extra_js %}{% endblock %}

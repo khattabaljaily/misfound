@@ -5,6 +5,8 @@ import requests
 from django.conf import settings
 from django.db import IntegrityError
 
+from apps.notifications.services import notify
+
 from .models import Match, Report
 
 logger = logging.getLogger(__name__)
@@ -122,12 +124,25 @@ def find_and_save_matches(report):
             (report, candidate) if report.type == Report.LOST else (candidate, report)
         )
         try:
-            match, _ = Match.objects.update_or_create(
+            match, is_new = Match.objects.update_or_create(
                 lost_report=lost_report, found_report=found_report,
                 defaults={'score': min(score, 100), 'reason': str(entry.get('reason', ''))[:300]},
             )
             created.append(match)
         except IntegrityError:
             continue
+
+        if is_new and lost_report.reporter_id != found_report.reporter_id:
+            level = 'تطابق قوي' if match.score >= 70 else 'تطابق محتمل'
+            notify(
+                lost_report.reporter, 'match',
+                f'{level} ({match.score}%) لإعلانك: {lost_report.title}',
+                found_report.title, lost_report.get_absolute_url(),
+            )
+            notify(
+                found_report.reporter, 'match',
+                f'{level} ({match.score}%) لإعلانك: {found_report.title}',
+                lost_report.title, found_report.get_absolute_url(),
+            )
 
     return created
