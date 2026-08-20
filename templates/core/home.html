@@ -1,37 +1,51 @@
 {% extends "base.html" %}
 {% load i18n static humanize %}
 {% block content %}
-<div class="mf-hero mb-4">
+<div class="mf-home">
+<section class="mf-hero my-2">
     <div class="mf-hero-grid">
         <div class="mf-hero-content">
             <span class="mf-hero-eyebrow">
-                <i class="bi bi-search"></i> {% trans "منصة المفقودات والمعثورات" %}
+                <span class="mf-live-dot"></span> {% trans "مجتمع يعيد الأشياء إلى أصحابها" %}
             </span>
-            <h1>{% trans "فقدت شيئًا؟ أم عثرت على شيء يخص غيرك؟" %}</h1>
+            <h1>{% trans "ما تبحث عنه قد يكون أقرب مما تتخيل." %}</h1>
             <p>{% trans "منصة تجمع إعلانات المفقودات والمعثورات في مكان واحد. انشر إعلانك في دقائق، وتواصل مباشرة وبأمان مع الطرف الآخر حتى يعود كل غرض إلى صاحبه." %}</p>
 
-            <div class="mf-hero-trust">
-                <i class="bi bi-geo-alt-fill"></i> {% trans "تغطية أكثر من 469 مدينة عربية" %}
+            <div class="mf-hero-actions">
+                <a href="{% url 'reports:list' %}" class="btn btn-primary btn-lg"><i class="bi bi-arrow-left"></i> {% trans "اكتشف الإعلانات" %}</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'reports:create' report_type='lost' %}" class="btn btn-ghost-light btn-lg"><i class="bi bi-megaphone"></i> {% trans "أضف إعلانًا" %}</a>
+                {% else %}
+                <a href="{% url 'accounts:register' %}" class="btn btn-ghost-light btn-lg"><i class="bi bi-person-plus"></i> {% trans "ابدأ الآن" %}</a>
+                {% endif %}
+            </div>
+
+            <div class="mf-hero-stats">
+                <div><strong>469+</strong><span>{% trans "مدينة عربية" %}</span></div>
+                <div><strong><i class="bi bi-shield-check"></i></strong><span>{% trans "تواصل آمن" %}</span></div>
+                <div><strong><i class="bi bi-lightning-charge"></i></strong><span>{% trans "نشر سريع" %}</span></div>
             </div>
         </div>
 
         <div class="mf-hero-visual">
-            <div class="mf-radar-ring mf-radar-ring--1"></div>
-            <div class="mf-radar-ring mf-radar-ring--2"></div>
-            <div class="mf-radar-ring mf-radar-ring--3"></div>
-            <div class="mf-radar-sweep"></div>
-
-            <div class="mf-radar-core">
-                <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#0e101c" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.2" y2="16.2"></line></svg>
+            <div class="mf-radar" aria-hidden="true">
+                <span class="mf-radar__crosshair mf-radar__crosshair--horizontal"></span>
+                <span class="mf-radar__crosshair mf-radar__crosshair--vertical"></span>
+                <span class="mf-radar__ring mf-radar__ring--outer"></span>
+                <span class="mf-radar__ring mf-radar__ring--middle"></span>
+                <span class="mf-radar__ring mf-radar__ring--inner"></span>
+                <span class="mf-radar__sweep"></span>
+                <span class="mf-radar__core"><i class="bi bi-search"></i></span>
+                <span class="mf-radar__pin mf-radar__pin--one"></span>
+                <span class="mf-radar__pin mf-radar__pin--two"></span>
+                <span class="mf-radar__pin mf-radar__pin--three"></span>
             </div>
-
-            <span class="mf-radar-pin mf-radar-pin--1"></span>
-            <span class="mf-radar-pin mf-radar-pin--2"></span>
         </div>
     </div>
-</div>
+</section>
 
-<form action="{% url 'reports:list' %}" method="get" class="mf-search-pill mb-5">
+<form action="{% url 'reports:list' %}" method="get" class="mf-search-pill my-4">
+    <div class="mf-search-icon"><i class="bi bi-search"></i></div>
     <select name="category" class="form-select border-0 bg-transparent mf-pill-field mf-pill-field--select">
         <option value="">{% trans "كل التصنيفات" %}</option>
         {% for c in categories %}
@@ -45,37 +59,38 @@
     </button>
 </form>
 
-<div class="d-flex align-items-center justify-content-between mb-3">
-    <div class="d-flex align-items-center gap-2">
-        <span class="mf-section-icon mf-section-icon--lost"><i class="bi bi-exclamation-circle"></i></span>
-        <h2 class="h4 mb-0">{% trans "آخر المفقودات" %}</h2>
+<section class="mf-feed-section my-4">
+    <div class="mf-section-heading">
+        <div>
+            <span class="mf-section-kicker"><i class="bi bi-circle-fill"></i> {% trans "تحتاج مساعدة" %}</span>
+            <h2>{% trans "أحدث المفقودات" %}</h2>
+        </div>
+        <a href="{% url 'reports:list' %}?type=lost" class="mf-section-link">{% trans "كل المفقودات" %} <i class="bi bi-arrow-left"></i></a>
     </div>
-    <a href="{% url 'reports:list' %}?type=lost" class="mf-section-link">
-        {% trans "عرض الكل" %} <i class="bi bi-chevron-left"></i>
-    </a>
-</div>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 mb-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
     {% for report in latest_lost %}
         {% include "reports/_card.html" %}
     {% empty %}
     <div class="col-12 text-center text-muted py-4">{% trans "لا توجد إعلانات عن مفقودات حاليًا." %}</div>
     {% endfor %}
 </div>
+</section>
 
-<div class="d-flex align-items-center justify-content-between mb-3">
-    <div class="d-flex align-items-center gap-2">
-        <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-check-circle"></i></span>
-        <h2 class="h4 mb-0">{% trans "آخر المعثورات" %}</h2>
+<section class="mf-feed-section my-4">
+    <div class="mf-section-heading">
+        <div>
+            <span class="mf-section-kicker mf-section-kicker--found"><i class="bi bi-circle-fill"></i> {% trans "ربما لك" %}</span>
+            <h2>{% trans "أحدث المعثورات" %}</h2>
+        </div>
+        <a href="{% url 'reports:list' %}?type=found" class="mf-section-link">{% trans "كل المعثورات" %} <i class="bi bi-arrow-left"></i></a>
     </div>
-    <a href="{% url 'reports:list' %}?type=found" class="mf-section-link">
-        {% trans "عرض الكل" %} <i class="bi bi-chevron-left"></i>
-    </a>
-</div>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
     {% for report in latest_found %}
         {% include "reports/_card.html" %}
     {% empty %}
     <div class="col-12 text-center text-muted py-4">{% trans "لا توجد إعلانات عن معثورات حاليًا." %}</div>
     {% endfor %}
+</div>
+</section>
 </div>
 {% endblock %}

@@ -14,36 +14,46 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark mf-navbar mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'core:home' %}">
-                <img src="{% static 'img/logo_white.png' %}" alt="Misfound" height="32">
+    <nav class="navbar navbar-expand-lg navbar-dark mf-navbar">
+        <div class="container mf-navbar__inner">
+            <a class="navbar-brand mf-brand" href="{% url 'core:home' %}">
+                <img src="{% static 'img/logo_white.png' %}" alt="Misfound" class="mf-brand__logo">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            <button class="navbar-toggler mf-navbar__toggle" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="{% trans 'فتح القائمة' %}">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="nav">
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav mx-lg-auto mf-navbar__links">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'reports:list' %}?type=lost">{% trans "المفقودات" %}</a>
+                        <a class="nav-link" href="{% url 'reports:list' %}?type=lost"><i class="bi bi-search"></i> {% trans "المفقودات" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'reports:list' %}?type=found">{% trans "المعثورات" %}</a>
+                        <a class="nav-link" href="{% url 'reports:list' %}?type=found"><i class="bi bi-hand-thumbs-up"></i> {% trans "المعثورات" %}</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'reports:mine' %}">{% trans "إعلاناتي" %}</a>
+                        <a class="nav-link" href="{% url 'reports:mine' %}"><i class="bi bi-grid"></i> {% trans "إعلاناتي" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'messaging:inbox' %}">{% trans "الرسائل" %}</a>
+                        <a class="nav-link" href="{% url 'messaging:inbox' %}"><i class="bi bi-chat-dots"></i> {% trans "الرسائل" %}</a>
                     </li>
                     {% endif %}
                 </ul>
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2 mf-navbar__actions">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'reports:create' report_type='lost' %}" class="btn btn-outline-light btn-sm">{% trans "إعلان مفقود" %}</a>
-                        <a href="{% url 'reports:create' report_type='found' %}" class="btn btn-primary btn-sm">{% trans "إعلان معثور عليه" %}</a>
-                        <button type="button" class="btn btn-link btn-sm text-light" id="mfLogoutBtn">{% trans "تسجيل الخروج" %}</button>
+                        <a href="{% url 'reports:create' report_type='lost' %}" class="btn btn-outline-light btn-sm"><i class="bi bi-plus-lg"></i> {% trans "إعلان مفقود" %}</a>
+                        <a href="{% url 'reports:create' report_type='found' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> {% trans "إعلان معثور عليه" %}</a>
+                        <div class="dropdown mf-user-menu">
+                            <button type="button" class="mf-user-trigger" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{% trans 'قائمة المستخدم' %}" title="{{ user.username }}">
+                                <i class="bi bi-person-fill"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end mf-user-dropdown">
+                                <li class="mf-user-dropdown__heading"><i class="bi bi-person-circle"></i> {{ user.username }}</li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:mine' %}"><i class="bi bi-person"></i> {% trans "الملف الشخصي" %}</a></li>
+                                <li><button type="button" class="dropdown-item mf-logout-link" id="mfLogoutBtn"><i class="bi bi-box-arrow-right"></i> {% trans "تسجيل الخروج" %}</button></li>
+                            </ul>
+                        </div>
                         <form action="{% url 'accounts:logout' %}" method="post" id="mfLogoutForm" class="d-none">
                             {% csrf_token %}
                         </form>
@@ -56,22 +66,33 @@
         </div>
     </nav>
 
-    <div class="container mb-5 flex-grow-1">
+    <main class="container my-4 flex-grow-1">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
     <footer class="mf-footer mt-auto">
-        <div class="container py-3">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                <a href="{% url 'core:home' %}" class="d-inline-flex">
-                    <img src="{% static 'img/logo_white.png' %}" alt="Misfound" height="22">
-                </a>
-                <div class="d-flex flex-wrap align-items-center gap-3 small mf-footer-links">
+        <div class="container">
+            <div class="mf-footer__main">
+                <div class="mf-footer__intro">
+                    <a href="{% url 'core:home' %}" class="mf-brand mf-brand--footer">
+                        <img src="{% static 'img/logo_white.png' %}" alt="Misfound" class="mf-brand__logo">
+                    </a>
+                    <p>{% trans "نساعد الأشياء على العودة إلى أصحابها، بخطوة بسيطة وتواصل آمن." %}</p>
+                </div>
+                <div class="mf-footer__column">
+                    <span class="mf-footer__label">{% trans "استكشف" %}</span>
+                    <a href="{% url 'reports:list' %}?type=lost">{% trans "المفقودات" %}</a>
+                    <a href="{% url 'reports:list' %}?type=found">{% trans "المعثورات" %}</a>
+                </div>
+                <div class="mf-footer__column">
+                    <span class="mf-footer__label">{% trans "معلومات" %}</span>
                     <a href="{% url 'core:privacy' %}">{% trans "سياسة الخصوصية" %}</a>
                     <a href="{% url 'core:terms' %}">{% trans "الشروط والأحكام" %}</a>
-                    <span>&copy; {% now "Y" %} Misfound</span>
-                    <span>{% trans "تم التطوير بواسطة" %} <a href="https://khattabaljaily.com" target="_blank" rel="noopener">خطاب الجعيلي</a></span>
                 </div>
+            </div>
+            <div class="mf-footer__bottom">
+                <span>&copy; {% now "Y" %} Misfound</span>
+                <span>{% trans "تم التطوير بواسطة" %} <a href="https://khattabaljaily.com" target="_blank" rel="noopener">خطاب الجعيلي</a></span>
             </div>
         </div>
     </footer>
