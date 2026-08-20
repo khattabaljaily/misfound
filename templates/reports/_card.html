@@ -2,12 +2,13 @@
 <div class="col">
     <div class="card report-card h-100">
         <div class="position-relative report-card__media">
-            {% if report.image %}
-                <div class="report-card__media-fill" style="background-image: url('{{ report.image.url }}');"></div>
-                <img src="{{ report.image.url }}" class="card-img-top" alt="">
-            {% else %}
-                <div class="card-img-placeholder"><i class="bi {{ report.category.icon|default:'bi-search' }}"></i></div>
-            {% endif %}
+            <div class="report-card__media-circle">
+                {% if report.image %}
+                    <img src="{{ report.image.url }}" alt="">
+                {% else %}
+                    <i class="bi {{ report.category.icon|default:'bi-search' }}"></i>
+                {% endif %}
+            </div>
             <span class="badge {% if report.type == 'lost' %}badge-lost{% else %}badge-found{% endif %} mf-card-badge">
                 <i class="bi {% if report.type == 'lost' %}bi-exclamation-circle{% else %}bi-check-circle{% endif %}"></i>
                 {{ report.get_type_display }}
