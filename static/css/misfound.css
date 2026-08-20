@@ -550,10 +550,12 @@ input.mf-pill-field {
     border-radius: 16px;
     background: #fff;
     isolation: isolate;
+    border: 1px solid rgba(18, 38, 58, 0.08);
+    box-shadow: 0 12px 26px rgba(18, 38, 58, 0.16);
 }
 
 /* "Stacked papers" effect: a second sheet peeking out from behind,
-   slightly larger than the visible (top) card. */
+   offset uniformly (no rotation) so the gap reads as a clean, even strip. */
 .report-card::before {
     content: "";
     position: absolute;
@@ -583,11 +585,12 @@ input.mf-pill-field {
     position: relative;
     z-index: 1;
     display: block;
-    height: 160px;
+    height: 178px;
     width: calc(100% - 28px);
     margin: 14px;
     border-radius: 10px;
     object-fit: contain;
+    background: #fff;
     transition: transform 0.35s ease;
 }
 
@@ -612,7 +615,7 @@ input.mf-pill-field {
 }
 
 .report-card .card-img-placeholder {
-    height: 160px;
+    height: 178px;
     margin: 14px;
     width: calc(100% - 28px);
     border-radius: 10px;
@@ -1065,7 +1068,7 @@ input.mf-pill-field {
 .mf-section-kicker i { font-size: 0.42rem; vertical-align: middle; margin-inline-end: 0.25rem; }
 .mf-section-link { color: var(--mf-text-muted); font-size: 0.78rem; }
 
-.report-card { border: 1px solid rgba(18, 38, 58, 0.08); border-radius: 18px; box-shadow: 0 12px 26px rgba(18, 38, 58, 0.16); }
+.report-card { border-radius: 18px; }
 .report-card__media { min-height: 188px; }
 .report-card__media { background: #fff; }
 .report-card__body { padding: 1rem 1.1rem 1.1rem; }
