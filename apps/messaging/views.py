@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
@@ -9,6 +10,8 @@ from apps.notifications.services import notify
 from apps.reports.models import Report
 from .forms import MessageForm
 from .models import Conversation, Message
+
+INBOX_PAGE_SIZE = 15
 
 
 def _other_participant(conversation, sender):
@@ -86,7 +89,8 @@ def conversation_detail(request, pk):
 
 @login_required
 def inbox(request):
-    conversations = Conversation.objects.filter(
+    qs = Conversation.objects.filter(
         Q(claimant=request.user) | Q(report__reporter=request.user)
     ).select_related('report', 'claimant').distinct()
-    return render(request, 'messaging/inbox.html', {'conversations': conversations})
+    page_obj = Paginator(qs, INBOX_PAGE_SIZE).get_page(request.GET.get('page'))
+    return render(request, 'messaging/inbox.html', {'conversations': page_obj, 'page_obj': page_obj})

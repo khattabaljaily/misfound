@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db.models import F
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -8,6 +9,9 @@ from apps.locations.models import City, Country
 from .forms import ReportForm
 from .matching import find_and_save_matches
 from .models import Category, Match, Report
+
+REPORTS_PAGE_SIZE = 16
+MINE_PAGE_SIZE = 12
 
 
 def report_list(request):
@@ -21,11 +25,23 @@ def report_list(request):
     if category_id:
         qs = qs.filter(category_id=category_id)
 
-    country_id = request.GET.get('country')
+    # Default the location filters to the user's own country/city so the feed
+    # starts out relevant to them, but only when they haven't touched the
+    # location filters themselves (the filter form always submits 'country',
+    # even as an empty value, once the user has interacted with it).
+    default_country_id = ''
+    default_city_id = ''
+    if 'country' not in request.GET and request.user.is_authenticated:
+        if request.user.country_id:
+            default_country_id = str(request.user.country_id)
+        if request.user.city_id:
+            default_city_id = str(request.user.city_id)
+
+    country_id = request.GET.get('country', default_country_id)
     if country_id:
         qs = qs.filter(country_id=country_id)
 
-    city_id = request.GET.get('city')
+    city_id = request.GET.get('city', default_city_id)
     if city_id:
         qs = qs.filter(city_id=city_id)
 
@@ -33,8 +49,16 @@ def report_list(request):
     if q:
         qs = qs.filter(title__icontains=q) | qs.filter(description__icontains=q)
 
+    paginator = Paginator(qs, REPORTS_PAGE_SIZE)
+    page_obj = paginator.get_page(request.GET.get('page'))
+
+    querystring = request.GET.copy()
+    querystring.pop('page', None)
+
     context = {
-        'reports': qs[:100],
+        'reports': page_obj,
+        'page_obj': page_obj,
+        'base_qs': querystring.urlencode(),
         'categories': Category.objects.all(),
         'countries': Country.objects.all(),
         'cities': City.objects.filter(country_id=country_id) if country_id else City.objects.none(),
@@ -112,8 +136,9 @@ def report_create(request, report_type):
 
 @login_required
 def my_reports(request):
-    reports = Report.objects.filter(reporter=request.user).select_related('category', 'city')
-    return render(request, 'reports/mine.html', {'reports': reports})
+    qs = Report.objects.filter(reporter=request.user).select_related('category', 'city')
+    page_obj = Paginator(qs, MINE_PAGE_SIZE).get_page(request.GET.get('page'))
+    return render(request, 'reports/mine.html', {'reports': page_obj, 'page_obj': page_obj})
 
 
 @login_required

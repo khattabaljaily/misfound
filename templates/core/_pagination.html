@@ -1,0 +1,36 @@
+{% load i18n mf_extras %}
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="mf-pagination" aria-label="{% trans 'تصفح الصفحات' %}">
+    {% if page_obj.has_previous %}
+    <a href="?{{ base_qs }}{% if base_qs %}&{% endif %}page={{ page_obj.previous_page_number }}" class="mf-pagination__link mf-pagination__link--nav">
+        <i class="bi bi-arrow-right"></i> {% trans "السابق" %}
+    </a>
+    {% else %}
+    <span class="mf-pagination__link mf-pagination__link--nav mf-pagination__link--disabled">
+        <i class="bi bi-arrow-right"></i> {% trans "السابق" %}
+    </span>
+    {% endif %}
+
+    <div class="mf-pagination__pages">
+        {% for num in page_obj|page_range %}
+            {% if num == page_obj.number %}
+            <span class="mf-pagination__link mf-pagination__link--active">{{ num }}</span>
+            {% elif num %}
+            <a href="?{{ base_qs }}{% if base_qs %}&{% endif %}page={{ num }}" class="mf-pagination__link">{{ num }}</a>
+            {% else %}
+            <span class="mf-pagination__ellipsis">…</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_next %}
+    <a href="?{{ base_qs }}{% if base_qs %}&{% endif %}page={{ page_obj.next_page_number }}" class="mf-pagination__link mf-pagination__link--nav">
+        {% trans "التالي" %} <i class="bi bi-arrow-left"></i>
+    </a>
+    {% else %}
+    <span class="mf-pagination__link mf-pagination__link--nav mf-pagination__link--disabled">
+        {% trans "التالي" %} <i class="bi bi-arrow-left"></i>
+    </span>
+    {% endif %}
+</nav>
+{% endif %}

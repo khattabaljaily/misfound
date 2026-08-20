@@ -102,6 +102,14 @@ initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}
         form.requestSubmit();
     });
 
+    results.addEventListener('click', function (e) {
+        var link = e.target.closest('.mf-pagination a');
+        if (!link) return;
+        e.preventDefault();
+        fetchResults(link.href, true);
+        results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
     window.addEventListener('popstate', function () {
         fetchResults(window.location.href, false);
     });
