@@ -151,11 +151,11 @@ function ajaxForm(form, options) {
                 var container = options.swapTarget ? document.querySelector(options.swapTarget) : form.parentElement;
                 container.innerHTML = result.html;
                 options.afterSwap && options.afterSwap(container);
-                showToast('error', 'في بيانات محتاجة مراجعة، شوف الحقول تحت.');
+                showToast('error', 'توجد بيانات تحتاج إلى مراجعة، يرجى التحقق من الحقول أدناه.');
             })
             .catch(function () {
                 mfSetButtonLoading(submitBtn, false);
-                showToast('error', 'حصل خطأ في الاتصال، حاول تاني.');
+                showToast('error', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.');
             });
     });
 }

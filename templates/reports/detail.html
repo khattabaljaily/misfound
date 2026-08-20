@@ -1,72 +1,79 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<div class="mf-panel">
-    <div class="row g-4">
-        <div class="col-md-5">
+<div class="mf-report-detail">
+    <div class="mf-report-detail__topline">
+        <a href="{% url 'reports:list' %}" class="mf-back-link"><i class="bi bi-arrow-right"></i> {% trans "العودة للإعلانات" %}</a>
+        <span class="mf-view-count"><i class="bi bi-eye"></i> {{ report.views }} {% trans "مشاهدة" %}</span>
+    </div>
+
+    <article class="mf-report-detail__shell">
+        <div class="mf-report-detail__media">
             {% if report.image %}
-            <img src="{{ report.image.url }}" class="img-fluid rounded-4 w-100" style="object-fit: cover; max-height: 420px;">
+            <img src="{{ report.image.url }}" alt="{{ report.title }}">
             {% else %}
-            <div class="card-img-placeholder rounded-4" style="height: 340px; font-size: 3rem;"><i class="bi {{ report.category.icon|default:'bi-search' }}"></i></div>
+            <div class="mf-detail-placeholder"><i class="bi {{ report.category.icon|default:'bi-search' }}"></i><span>{{ report.category.name }}</span></div>
             {% endif %}
         </div>
-        <div class="col-md-7">
-            <div class="d-flex align-items-center gap-2 mb-3">
-                <span class="badge {% if report.type == 'lost' %}badge-lost{% else %}badge-found{% endif %}">
-                    {{ report.get_type_display }}
-                </span>
-                <span class="badge bg-secondary" id="resolvedBadge" {% if report.status != 'resolved' %}hidden{% endif %}>
-                    {% trans "تم الاسترجاع" %}
-                </span>
+        <div class="mf-report-detail__content">
+            <div class="mf-report-detail__badges">
+                <span class="mf-detail-type {% if report.type == 'lost' %}mf-detail-type--lost{% else %}mf-detail-type--found{% endif %}"><i class="bi {% if report.type == 'lost' %}bi-search{% else %}bi-check2{% endif %}"></i> {{ report.get_type_display }}</span>
+                <span class="mf-detail-resolved" id="resolvedBadge" {% if report.status != 'resolved' %}hidden{% endif %}><i class="bi bi-check-circle"></i> {% trans "تم الاسترجاع" %}</span>
             </div>
-            <h1 class="h3 mb-3">{{ report.title }}</h1>
-            <div class="mf-detail-meta mb-3">
+            <h1>{{ report.title }}</h1>
+            <div class="mf-detail-meta">
                 <span><i class="bi {{ report.category.icon|default:'bi-tag' }}"></i> {{ report.category.name }}</span>
                 <span><i class="bi bi-geo-alt"></i> {{ report.city.name|default:"" }}{% if report.city %}، {% endif %}{{ report.country.name }}</span>
                 <span><i class="bi bi-calendar3"></i> {{ report.event_date }}</span>
             </div>
-            <p class="mf-detail-desc">{{ report.description }}</p>
+            <div class="mf-detail-description">
+                <span class="mf-detail-label">{% trans "التفاصيل" %}</span>
+                <p>{{ report.description }}</p>
+            </div>
             {% if report.location_details %}
-            <p class="mb-4"><i class="bi bi-pin-map text-muted"></i> <strong>{% trans "مكان الفقدان/العثور:" %}</strong> {{ report.location_details }}</p>
+            <div class="mf-detail-location"><i class="bi bi-pin-map"></i><div><span>{% trans "مكان الفقدان/العثور" %}</span><strong>{{ report.location_details }}</strong></div></div>
             {% endif %}
 
             {% if is_owner %}
                 {% if report.verification_question %}
-                <div class="alert alert-info d-flex align-items-start gap-2">
-                    <i class="bi bi-shield-lock mt-1"></i>
-                    <div><strong>{% trans "سؤال التحقق (يظهر لك فقط):" %}</strong> {{ report.verification_question }}</div>
+                <div class="mf-verification-box">
+                    <i class="bi bi-shield-lock"></i>
+                    <div><span>{% trans "سؤال التحقق الخاص بك" %}</span><strong>{{ report.verification_question }}</strong></div>
                 </div>
                 {% endif %}
-                <button class="btn btn-success" id="resolveBtn" {% if report.status != 'open' %}hidden{% endif %}>
+                <button class="btn btn-success mf-detail-action" id="resolveBtn" {% if report.status != 'open' %}hidden{% endif %}>
                     <i class="bi bi-check-circle"></i> {% trans "تم الاسترجاع" %}
                 </button>
             {% elif report.status == 'open' %}
                 {% if user.is_authenticated %}
-                <form action="{% url 'messaging:start' report_pk=report.pk %}" method="post" id="claimForm">
+                <div class="mf-contact-box">
+                    <div class="mf-contact-box__heading"><i class="bi bi-chat-heart"></i><div><strong>{% trans "هل هذا الإعلان يخصك؟" %}</strong><span>{% trans "أرسل رسالة لصاحب الإعلان" %}</span></div></div>
+                    <form action="{% url 'messaging:start' report_pk=report.pk %}" method="post" id="claimForm">
                     {% csrf_token %}
-                    <textarea name="body" class="form-control mb-2" rows="2" placeholder="{% trans 'اكتب رسالتك...' %}" required></textarea>
-                    <button class="btn btn-primary" type="submit">
+                    <textarea name="body" class="form-control" rows="3" placeholder="{% trans 'اكتب رسالتك...' %}" required></textarea>
+                    <button class="btn btn-primary mf-detail-action" type="submit">
                         <i class="bi bi-send"></i>
                         {% if report.type == 'lost' %}{% trans "أعتقد أنني وجدتها" %}{% else %}{% trans "أعتقد أنها لي" %}{% endif %}
                     </button>
-                </form>
+                    </form>
+                </div>
                 {% else %}
-                <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn btn-primary">
+                <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn btn-primary mf-detail-action">
                     <i class="bi bi-box-arrow-in-left"></i> {% trans "يرجى تسجيل الدخول للتواصل" %}
                 </a>
                 {% endif %}
             {% endif %}
         </div>
-    </div>
-</div>
+        </div>
+    </article>
 
 {% if matched_reports %}
-<div class="mt-4">
-    <div class="d-flex align-items-center gap-2 mb-3">
-        <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-stars"></i></span>
-        <h2 class="h5 mb-0">{% trans "إعلانات قد تكون مطابقة" %}</h2>
+<section class="mf-matches-section">
+    <div class="mf-detail-section-heading">
+        <div><span>{% trans "اقتراحات لك" %}</span><h2>{% trans "إعلانات قد تكون مطابقة" %}</h2></div>
+        <i class="bi bi-stars"></i>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
         {% for matched_report, score, reason in matched_reports %}
         <div class="col">
             <a href="{% url 'reports:detail' pk=matched_report.pk %}" class="card report-card h-100 text-decoration-none">
@@ -91,7 +98,9 @@
         {% endfor %}
     </div>
 </div>
+</section>
 {% endif %}
+</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -123,7 +132,7 @@ if (resolveBtn) {
                     })
                     .catch(function () {
                         mfSetButtonLoading(resolveBtn, false);
-                        showToast('error', 'حصل خطأ، حاول تاني.');
+                        showToast('error', 'حدث خطأ، يرجى المحاولة مرة أخرى.');
                     });
             },
         });
