@@ -4,7 +4,12 @@
 <div class="mf-report-detail">
     <div class="mf-report-detail__topline">
         <a href="{% url 'reports:list' %}" class="mf-back-link"><i class="bi bi-arrow-right"></i> {% trans "العودة للإعلانات" %}</a>
-        <span class="mf-view-count"><i class="bi bi-eye"></i> {{ report.views }} {% trans "مشاهدة" %}</span>
+        <div class="mf-topline-actions">
+            <a href="{{ whatsapp_share_url }}" target="_blank" rel="noopener" class="mf-share-whatsapp">
+                <i class="bi bi-whatsapp"></i> {% trans "مشاركة" %}
+            </a>
+            <span class="mf-view-count"><i class="bi bi-eye"></i> {{ report.views }} {% trans "مشاهدة" %}</span>
+        </div>
     </div>
 
     <article class="mf-report-detail__shell">
@@ -66,6 +71,16 @@
                 </a>
                 {% endif %}
             {% endif %}
+
+            {% if user.is_authenticated and not is_owner %}
+            <div class="mf-flag-row">
+                {% if already_flagged %}
+                <span class="mf-flag-link mf-flag-link--done"><i class="bi bi-flag-fill"></i> {% trans "تم إبلاغك عن هذا الإعلان مسبقًا" %}</span>
+                {% else %}
+                <button type="button" class="mf-flag-link" id="flagReportBtn"><i class="bi bi-flag"></i> {% trans "الإبلاغ عن هذا الإعلان" %}</button>
+                {% endif %}
+            </div>
+            {% endif %}
         </div>
         </div>
     </article>
@@ -104,6 +119,38 @@
 </section>
 {% endif %}
 </div>
+
+{% if user.is_authenticated and not is_owner and not already_flagged %}
+<div class="modal fade" id="mfFlagModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <h5 class="mb-3"><i class="bi bi-flag text-danger"></i> {% trans "الإبلاغ عن هذا الإعلان" %}</h5>
+                <form id="flagForm">
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "سبب الإبلاغ" %}</label>
+                        <select name="reason" class="form-select" required>
+                            <option value="">{% trans "اختر السبب" %}</option>
+                            <option value="offensive">{% trans "محتوى مسيء أو غير لائق" %}</option>
+                            <option value="misleading">{% trans "معلومات مضللة أو غير صحيحة" %}</option>
+                            <option value="duplicate">{% trans "إعلان مكرر" %}</option>
+                            <option value="other">{% trans "سبب آخر" %}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "ملاحظة إضافية (اختياري)" %}</label>
+                        <textarea name="note" class="form-control" rows="3" maxlength="300"></textarea>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{% trans "إلغاء" %}</button>
+                        <button type="submit" class="btn btn-danger">{% trans "إرسال البلاغ" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block extra_js %}
@@ -145,6 +192,43 @@ if (resolveBtn) {
 var claimForm = document.getElementById('claimForm');
 if (claimForm) {
     ajaxForm(claimForm, {});
+}
+
+var flagReportBtn = document.getElementById('flagReportBtn');
+var flagModalEl = document.getElementById('mfFlagModal');
+if (flagReportBtn && flagModalEl) {
+    var flagModal = new bootstrap.Modal(flagModalEl);
+    flagReportBtn.addEventListener('click', function () { flagModal.show(); });
+
+    var flagForm = document.getElementById('flagForm');
+    flagForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var submitBtn = flagForm.querySelector('button[type="submit"]');
+        mfSetButtonLoading(submitBtn, true);
+        fetch("{% url 'reports:flag' pk=report.pk %}", {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': mfGetCookie('csrftoken'),
+            },
+            body: new FormData(flagForm),
+        })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                mfSetButtonLoading(submitBtn, false);
+                flagModal.hide();
+                if (data.success) {
+                    showToast('success', data.message);
+                    flagReportBtn.outerHTML = '<span class="mf-flag-link mf-flag-link--done"><i class="bi bi-flag-fill"></i> {% trans "تم إبلاغك عن هذا الإعلان مسبقًا" %}</span>';
+                } else {
+                    showToast('error', data.message);
+                }
+            })
+            .catch(function () {
+                mfSetButtonLoading(submitBtn, false);
+                showToast('error', 'حدث خطأ، يرجى المحاولة مرة أخرى.');
+            });
+    });
 }
 </script>
 {% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "لوحة الإحصائيات" %} | Misfound{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center gap-2 mb-4">
+    <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-bar-chart-line"></i></span>
+    <h1 class="h4 mb-0">{% trans "لوحة الإحصائيات" %}</h1>
+</div>
+
+<div class="mf-stat-grid mb-4">
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ total_reports }}</span>
+        <span class="mf-stat-tile__label">{% trans "إجمالي الإعلانات" %}</span>
+    </div>
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ resolved_rate }}%</span>
+        <span class="mf-stat-tile__label">{% trans "نسبة الاسترجاع" %}</span>
+    </div>
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{% if avg_resolve_days is not None %}{{ avg_resolve_days }}{% else %}-{% endif %}</span>
+        <span class="mf-stat-tile__label">{% trans "متوسط أيام الحل" %}</span>
+    </div>
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ total_matches }}</span>
+        <span class="mf-stat-tile__label">{% trans "تطابقات اكتُشفت" %}</span>
+    </div>
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ total_users }}</span>
+        <span class="mf-stat-tile__label">{% trans "إجمالي المستخدمين" %}</span>
+    </div>
+    <div class="mf-stat-tile {% if pending_flags > 0 %}mf-stat-tile--alert{% endif %}">
+        <span class="mf-stat-tile__value">{{ pending_flags }}</span>
+        <span class="mf-stat-tile__label">{% trans "بلاغات بانتظار المراجعة" %}</span>
+    </div>
+</div>
+
+<div class="mf-panel mb-4">
+    <h2 class="h6 mb-3">{% trans "توزيع الإعلانات: مفقود مقابل معثور عليه" %}</h2>
+    {% if total_reports %}
+    <div class="mf-split-bar">
+        <div class="mf-split-bar__lost" style="width: {% widthratio lost_count total_reports 100 %}%"></div>
+        <div class="mf-split-bar__found" style="width: {% widthratio found_count total_reports 100 %}%"></div>
+    </div>
+    <div class="mf-split-legend">
+        <span><i class="mf-split-dot mf-split-dot--lost"></i> {% trans "مفقود" %} ({{ lost_count }})</span>
+        <span><i class="mf-split-dot mf-split-dot--found"></i> {% trans "معثور عليه" %} ({{ found_count }})</span>
+    </div>
+    {% else %}
+    <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
+    {% endif %}
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="mf-panel h-100">
+            <h2 class="h6 mb-3">{% trans "أكثر التصنيفات نشاطًا" %}</h2>
+            {% for c in top_categories %}
+            <div class="mf-rank-row">
+                <span class="mf-rank-row__label">{{ c.name_ar }}</span>
+                <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio c.report_count max_category_count 100 %}%"></div></div>
+                <span class="mf-rank-row__value">{{ c.report_count }}</span>
+            </div>
+            {% empty %}
+            <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mf-panel h-100">
+            <h2 class="h6 mb-3">{% trans "أكثر الدول نشاطًا" %}</h2>
+            {% for c in top_countries %}
+            <div class="mf-rank-row">
+                <span class="mf-rank-row__label">{{ c.name_ar }}</span>
+                <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio c.report_count max_country_count 100 %}%"></div></div>
+                <span class="mf-rank-row__value">{{ c.report_count }}</span>
+            </div>
+            {% empty %}
+            <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

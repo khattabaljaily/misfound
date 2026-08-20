@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -8,7 +10,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from apps.locations.models import City, Country
 from .forms import ReportForm
 from .matching import find_and_save_matches
-from .models import Category, Match, Report
+from .models import Category, Match, Report, ReportFlag
 
 REPORTS_PAGE_SIZE = 16
 MINE_PAGE_SIZE = 12
@@ -103,8 +105,19 @@ def report_detail(request, pk):
         )
         matched_reports = [(m.lost_report, m.score, m.reason) for m in matches]
 
+    already_flagged = (
+        request.user.is_authenticated
+        and ReportFlag.objects.filter(report=report, reporter=request.user).exists()
+    )
+
+    absolute_url = request.build_absolute_uri(report.get_absolute_url())
+    share_text = f'{report.get_type_display()}: {report.title}\n{absolute_url}'
+
     return render(request, 'reports/detail.html', {
         'report': report, 'is_owner': is_owner, 'matched_reports': matched_reports,
+        'already_flagged': already_flagged,
+        'absolute_url': absolute_url,
+        'whatsapp_share_url': 'https://wa.me/?text=' + quote(share_text),
     })
 
 
@@ -143,6 +156,36 @@ def my_reports(request):
     qs = Report.objects.filter(reporter=request.user).select_related('category', 'city')
     page_obj = Paginator(qs, MINE_PAGE_SIZE).get_page(request.GET.get('page'))
     return render(request, 'reports/mine.html', {'reports': page_obj, 'page_obj': page_obj})
+
+
+@login_required
+def flag_report(request, pk):
+    report = get_object_or_404(Report, pk=pk)
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if request.method != 'POST':
+        raise Http404
+
+    if report.reporter == request.user:
+        if is_ajax:
+            return JsonResponse({'success': False, 'message': 'لا يمكنك الإبلاغ عن إعلانك الخاص.'}, status=400)
+        raise Http404
+
+    reason = request.POST.get('reason')
+    if reason not in dict(ReportFlag.REASON_CHOICES):
+        if is_ajax:
+            return JsonResponse({'success': False, 'message': 'يرجى اختيار سبب الإبلاغ.'}, status=400)
+        raise Http404
+
+    _, created = ReportFlag.objects.get_or_create(
+        report=report, reporter=request.user,
+        defaults={'reason': reason, 'note': request.POST.get('note', '')[:300]},
+    )
+    message = 'تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة.' if created else 'سبق أن أبلغت عن هذا الإعلان.'
+    if is_ajax:
+        return JsonResponse({'success': True, 'message': message})
+    messages.success(request, message)
+    return redirect('reports:detail', pk=pk)
 
 
 @login_required

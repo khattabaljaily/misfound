@@ -82,6 +82,9 @@ class Report(models.Model):
     views = models.PositiveIntegerField(default=0, verbose_name='عدد المشاهدات')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاريخ الإنشاء')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='تاريخ التحديث')
+    last_reminder_sent_at = models.DateTimeField(
+        null=True, blank=True, verbose_name='تاريخ آخر تذكير'
+    )
 
     class Meta:
         ordering = ['-created_at']
@@ -93,6 +96,43 @@ class Report(models.Model):
 
     def get_absolute_url(self):
         return reverse('reports:detail', args=[self.pk])
+
+
+class ReportFlag(models.Model):
+    """A user-submitted flag asking staff to review a report (abuse, spam,
+    misleading info, etc.)."""
+
+    OFFENSIVE = 'offensive'
+    MISLEADING = 'misleading'
+    DUPLICATE = 'duplicate'
+    OTHER = 'other'
+    REASON_CHOICES = [
+        (OFFENSIVE, 'محتوى مسيء أو غير لائق'),
+        (MISLEADING, 'معلومات مضللة أو غير صحيحة'),
+        (DUPLICATE, 'إعلان مكرر'),
+        (OTHER, 'سبب آخر'),
+    ]
+
+    report = models.ForeignKey(
+        Report, on_delete=models.CASCADE, related_name='flags', verbose_name='الإعلان'
+    )
+    reporter = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='report_flags',
+        verbose_name='مقدّم البلاغ'
+    )
+    reason = models.CharField(max_length=20, choices=REASON_CHOICES, verbose_name='السبب')
+    note = models.CharField(max_length=300, blank=True, verbose_name='ملاحظة إضافية')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاريخ الإبلاغ')
+    resolved = models.BooleanField(default=False, verbose_name='تمت المراجعة')
+
+    class Meta:
+        unique_together = ['report', 'reporter']
+        ordering = ['-created_at']
+        verbose_name = 'إبلاغ عن إعلان'
+        verbose_name_plural = 'بلاغات الإعلانات'
+
+    def __str__(self):
+        return f'{self.report} — {self.get_reason_display()}'
 
 
 class Match(models.Model):

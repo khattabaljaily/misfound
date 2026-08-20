@@ -10,4 +10,5 @@ urlpatterns = [
     path('new/<str:report_type>/', views.report_create, name='create'),
     path('<int:pk>/', views.report_detail, name='detail'),
     path('<int:pk>/resolve/', views.report_resolve, name='resolve'),
+    path('<int:pk>/flag/', views.flag_report, name='flag'),
 ]

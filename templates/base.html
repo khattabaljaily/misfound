@@ -60,6 +60,9 @@
                                 <li class="mf-user-dropdown__heading"><i class="bi bi-person-circle"></i> {{ user.username }}</li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'reports:mine' %}"><i class="bi bi-person"></i> {% trans "الملف الشخصي" %}</a></li>
+                                {% if user.is_staff %}
+                                <li><a class="dropdown-item" href="{% url 'core:admin_stats' %}"><i class="bi bi-bar-chart-line"></i> {% trans "لوحة الإحصائيات" %}</a></li>
+                                {% endif %}
                                 <li><button type="button" class="dropdown-item mf-logout-link" id="mfLogoutBtn"><i class="bi bi-box-arrow-right"></i> {% trans "تسجيل الخروج" %}</button></li>
                             </ul>
                         </div>

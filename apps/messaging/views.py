@@ -84,6 +84,7 @@ def conversation_detail(request, pk):
     return render(request, 'messaging/conversation.html', {
         'conversation': conversation,
         'form': form,
+        'other_participant': _other_participant(conversation, request.user),
     })
 
 
