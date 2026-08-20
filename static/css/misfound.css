@@ -582,8 +582,11 @@ input.mf-pill-field {
 .report-card img {
     position: relative;
     z-index: 1;
-    height: 178px;
-    width: 100%;
+    display: block;
+    height: 160px;
+    width: calc(100% - 28px);
+    margin: 14px;
+    border-radius: 10px;
     object-fit: contain;
     transition: transform 0.35s ease;
 }
@@ -609,7 +612,10 @@ input.mf-pill-field {
 }
 
 .report-card .card-img-placeholder {
-    height: 178px;
+    height: 160px;
+    margin: 14px;
+    width: calc(100% - 28px);
+    border-radius: 10px;
 }
 
 .badge-lost {
@@ -1060,7 +1066,7 @@ input.mf-pill-field {
 .mf-section-link { color: var(--mf-text-muted); font-size: 0.78rem; }
 
 .report-card { border: 1px solid rgba(18, 38, 58, 0.06); border-radius: 18px; box-shadow: 0 10px 28px rgba(18, 38, 58, 0.055); }
-.report-card__media, .report-card img, .report-card .card-img-placeholder { height: 190px; }
+.report-card__media { min-height: 188px; }
 .report-card__media { background: #fff; }
 .report-card__body { padding: 1rem 1.1rem 1.1rem; }
 .report-card .card-title { font-size: 1.04rem; letter-spacing: -0.01em; }
