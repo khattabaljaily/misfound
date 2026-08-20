@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Report
+from .models import Category, Match, Report
 
 
 @admin.register(Category)
@@ -15,3 +15,11 @@ class ReportAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'reporter__username']
     autocomplete_fields = ['reporter']
     date_hierarchy = 'created_at'
+
+
+@admin.register(Match)
+class MatchAdmin(admin.ModelAdmin):
+    list_display = ['lost_report', 'found_report', 'score', 'created_at']
+    list_filter = ['score']
+    search_fields = ['lost_report__title', 'found_report__title', 'reason']
+    autocomplete_fields = ['lost_report', 'found_report']

@@ -6,7 +6,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.locations.models import City, Country
 from .forms import ReportForm
-from .models import Category, Report
+from .matching import find_and_save_matches
+from .models import Category, Match, Report
 
 
 def report_list(request):
@@ -62,7 +63,21 @@ def report_detail(request, pk):
     )
     Report.objects.filter(pk=pk).update(views=F('views') + 1)
     is_owner = request.user.is_authenticated and request.user == report.reporter
-    return render(request, 'reports/detail.html', {'report': report, 'is_owner': is_owner})
+
+    if report.type == Report.LOST:
+        matches = Match.objects.filter(lost_report=report).select_related(
+            'found_report', 'found_report__category', 'found_report__city'
+        )
+        matched_reports = [(m.found_report, m.score, m.reason) for m in matches]
+    else:
+        matches = Match.objects.filter(found_report=report).select_related(
+            'lost_report', 'lost_report__category', 'lost_report__city'
+        )
+        matched_reports = [(m.lost_report, m.score, m.reason) for m in matches]
+
+    return render(request, 'reports/detail.html', {
+        'report': report, 'is_owner': is_owner, 'matched_reports': matched_reports,
+    })
 
 
 @login_required
@@ -79,6 +94,7 @@ def report_create(request, report_type):
             report.type = report_type
             report.reporter = request.user
             report.save()
+            find_and_save_matches(report)
             if is_ajax:
                 return JsonResponse({'success': True, 'redirect': report.get_absolute_url()})
             messages.success(request, 'تم نشر الإعلان بنجاح.')

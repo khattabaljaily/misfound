@@ -89,3 +89,29 @@ class Report(models.Model):
 
     def get_absolute_url(self):
         return reverse('reports:detail', args=[self.pk])
+
+
+class Match(models.Model):
+    """An AI-suggested pairing between a lost report and a found report
+    that plausibly describe the same item."""
+
+    lost_report = models.ForeignKey(
+        Report, on_delete=models.CASCADE, related_name='matches_as_lost',
+        limit_choices_to={'type': Report.LOST}, verbose_name='الإعلان المفقود'
+    )
+    found_report = models.ForeignKey(
+        Report, on_delete=models.CASCADE, related_name='matches_as_found',
+        limit_choices_to={'type': Report.FOUND}, verbose_name='الإعلان المعثور عليه'
+    )
+    score = models.PositiveSmallIntegerField(verbose_name='نسبة التطابق')
+    reason = models.CharField(max_length=300, blank=True, verbose_name='سبب التطابق')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاريخ الاكتشاف')
+
+    class Meta:
+        unique_together = ['lost_report', 'found_report']
+        ordering = ['-score']
+        verbose_name = 'تطابق محتمل'
+        verbose_name_plural = 'التطابقات المحتملة'
+
+    def __str__(self):
+        return f'{self.lost_report} ↔ {self.found_report} ({self.score}%)'
