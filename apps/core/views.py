@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from apps.locations.models import City, Country
 from apps.reports.models import Category, Report
 
 
@@ -11,6 +12,15 @@ def home(request):
         'latest_found': latest_found,
         'categories': Category.objects.all(),
     })
+
+
+def about(request):
+    stats = {
+        'cities': City.objects.count(),
+        'countries': Country.objects.count(),
+        'resolved': Report.objects.filter(status=Report.RESOLVED).count(),
+    }
+    return render(request, 'core/about.html', {'stats': stats})
 
 
 def privacy_policy(request):

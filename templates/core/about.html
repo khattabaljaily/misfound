@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "عن الخدمة" %} | Misfound{% endblock %}
+{% block content %}
+<div class="mf-panel" style="max-width: 900px; margin: 0 auto;">
+    <h1 class="h3 mb-3">{% trans "عن Misfound" %}</h1>
+    <p class="lead text-muted">
+        {% trans "منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل غرض على العودة إلى صاحبه." %}
+    </p>
+
+    <div class="row row-cols-2 row-cols-md-3 g-3 my-4 text-center">
+        <div class="col">
+            <div class="mf-panel py-3 mb-0">
+                <div class="h4 mb-0 text-primary">{{ stats.countries }}+</div>
+                <div class="small text-muted">{% trans "دولة عربية" %}</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mf-panel py-3 mb-0">
+                <div class="h4 mb-0 text-primary">{{ stats.cities }}+</div>
+                <div class="small text-muted">{% trans "مدينة مغطاة" %}</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mf-panel py-3 mb-0">
+                <div class="h4 mb-0 text-primary">{{ stats.resolved }}</div>
+                <div class="small text-muted">{% trans "غرض عاد لصاحبه" %}</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h5 mt-4">{% trans "لماذا Misfound؟" %}</h2>
+    <p>
+        {% trans "كل يوم يفقد أحدهم شيئًا يهمه — محفظة، مفتاح، هاتف، أو حتى وثيقة رسمية — بينما يعثر شخص آخر على هذا الغرض بالضبط دون أن يعرف كيف يوصله لصاحبه. Misfound يجمع الطرفين في مكان واحد بدلاً من الاعتماد على الحظ أو منشورات متفرقة على وسائل التواصل." %}
+    </p>
+
+    <h2 class="h5 mt-4">{% trans "كيف تعمل المنصة؟" %}</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-3 my-2">
+        <div class="col">
+            <div class="d-flex align-items-start gap-2">
+                <span class="mf-section-icon mf-section-icon--lost flex-shrink-0"><i class="bi bi-megaphone"></i></span>
+                <div>
+                    <strong>{% trans "١. انشر إعلانك" %}</strong>
+                    <p class="text-muted small mb-0">{% trans "بلّغ عن غرض فقدته أو عثرت عليه في دقائق، مع صورة ووصف ومكان." %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="d-flex align-items-start gap-2">
+                <span class="mf-section-icon mf-section-icon--found flex-shrink-0"><i class="bi bi-stars"></i></span>
+                <div>
+                    <strong>{% trans "٢. نبحث عن تطابق" %}</strong>
+                    <p class="text-muted small mb-0">{% trans "نظام ذكي يقارن إعلانك تلقائيًا بالإعلانات المقابلة ويقترح ما قد يطابقه." %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="d-flex align-items-start gap-2">
+                <span class="mf-section-icon mf-section-icon--lost flex-shrink-0"><i class="bi bi-shield-check"></i></span>
+                <div>
+                    <strong>{% trans "٣. تواصل بأمان" %}</strong>
+                    <p class="text-muted small mb-0">{% trans "تراسل الطرف الآخر داخل المنصة مباشرة، وتتحقق من الملكية قبل التسليم." %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h5 mt-4">{% trans "التزامنا" %}</h2>
+    <ul>
+        <li>{% trans "لا نشارك رقم هاتفك أو بريدك الإلكتروني مع أي مستخدم آخر." %}</li>
+        <li>{% trans "المنصة مجانية بالكامل للاستخدام." %}</li>
+        <li>{% trans "نغطي كل الدول العربية بواجهة عربية أولاً." %}</li>
+    </ul>
+
+    <div class="d-flex gap-2 mt-4">
+        <a href="{% url 'reports:list' %}" class="btn btn-primary"><i class="bi bi-search"></i> {% trans "تصفح الإعلانات" %}</a>
+        <a href="{% url 'core:privacy' %}" class="btn btn-outline-secondary">{% trans "سياسة الخصوصية" %}</a>
+    </div>
+</div>
+{% endblock %}
