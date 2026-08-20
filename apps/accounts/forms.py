@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import gettext_lazy as _
 
 from apps.locations.models import City
 from .models import User
@@ -14,7 +15,7 @@ class RegisterForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             if isinstance(field, forms.ModelChoiceField):
-                field.empty_label = f'اختر {field.label}'
+                field.empty_label = _('اختر %(field)s') % {'field': field.label}
 
         country_id = self.data.get('country') or self.initial.get('country')
         self.fields['city'].queryset = (

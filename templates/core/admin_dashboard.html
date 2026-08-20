@@ -53,7 +53,7 @@
             <h2 class="h6 mb-3">{% trans "أكثر التصنيفات نشاطًا" %}</h2>
             {% for c in top_categories %}
             <div class="mf-rank-row">
-                <span class="mf-rank-row__label">{{ c.name_ar }}</span>
+                <span class="mf-rank-row__label">{{ c.name }}</span>
                 <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio c.report_count max_category_count 100 %}%"></div></div>
                 <span class="mf-rank-row__value">{{ c.report_count }}</span>
             </div>
@@ -67,7 +67,7 @@
             <h2 class="h6 mb-3">{% trans "أكثر الدول نشاطًا" %}</h2>
             {% for c in top_countries %}
             <div class="mf-rank-row">
-                <span class="mf-rank-row__label">{{ c.name_ar }}</span>
+                <span class="mf-rank-row__label">{{ c.name }}</span>
                 <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio c.report_count max_country_count 100 %}%"></div></div>
                 <span class="mf-rank-row__value">{{ c.report_count }}</span>
             </div>

@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.http import Http404
+from django.utils.translation import gettext_lazy as _
 
-admin.site.site_header = 'إدارة موقع Misfound'
-admin.site.site_title = 'إدارة Misfound'
-admin.site.index_title = 'لوحة التحكم'
+admin.site.site_header = _('إدارة موقع Misfound')
+admin.site.site_title = _('إدارة Misfound')
+admin.site.index_title = _('لوحة التحكم')
 
 
 def _disabled_admin_login(request, extra_context=None):

@@ -1,16 +1,16 @@
 from django.db import models
-from django.utils.translation import get_language
+from django.utils.translation import get_language, gettext_lazy as _
 
 
 class Country(models.Model):
-    name_ar = models.CharField(max_length=100, verbose_name='الاسم بالعربية')
-    name_en = models.CharField(max_length=100, verbose_name='الاسم بالإنجليزية')
-    code = models.CharField(max_length=2, unique=True, verbose_name='رمز الدولة')  # ISO 3166-1 alpha-2
+    name_ar = models.CharField(max_length=100, verbose_name=_('الاسم بالعربية'))
+    name_en = models.CharField(max_length=100, verbose_name=_('الاسم بالإنجليزية'))
+    code = models.CharField(max_length=2, unique=True, verbose_name=_('رمز الدولة'))  # ISO 3166-1 alpha-2
 
     class Meta:
         ordering = ['name_ar']
-        verbose_name = 'دولة'
-        verbose_name_plural = 'الدول'
+        verbose_name = _('دولة')
+        verbose_name_plural = _('الدول')
 
     @property
     def name(self):
@@ -22,15 +22,15 @@ class Country(models.Model):
 
 class City(models.Model):
     country = models.ForeignKey(
-        Country, on_delete=models.CASCADE, related_name='cities', verbose_name='الدولة'
+        Country, on_delete=models.CASCADE, related_name='cities', verbose_name=_('الدولة')
     )
-    name_ar = models.CharField(max_length=100, verbose_name='الاسم بالعربية')
-    name_en = models.CharField(max_length=100, verbose_name='الاسم بالإنجليزية')
+    name_ar = models.CharField(max_length=100, verbose_name=_('الاسم بالعربية'))
+    name_en = models.CharField(max_length=100, verbose_name=_('الاسم بالإنجليزية'))
 
     class Meta:
         ordering = ['name_ar']
-        verbose_name = 'مدينة'
-        verbose_name_plural = 'المدن'
+        verbose_name = _('مدينة')
+        verbose_name_plural = _('المدن')
 
     @property
     def name(self):

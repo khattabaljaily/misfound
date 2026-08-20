@@ -1,3 +1,12 @@
+/**
+ * Reads a translated UI string from window.MF_I18N (populated by base.html
+ * via {% trans %} for the active session language), falling back to the
+ * Arabic literal if the key is missing.
+ */
+function mfI18n(key, fallback) {
+    return (window.MF_I18N && window.MF_I18N[key]) || fallback;
+}
+
 /* =================================================================
    Toasts
    ================================================================= */
@@ -27,7 +36,7 @@ function showToast(type, message) {
     toast.innerHTML =
         '<i class="bi ' + MF_TOAST_ICONS[type] + ' mf-toast__icon"></i>' +
         '<div class="mf-toast__body"></div>' +
-        '<button type="button" class="mf-toast__close" aria-label="إغلاق">&times;</button>';
+        '<button type="button" class="mf-toast__close" aria-label="' + mfI18n('close', 'إغلاق') + '">&times;</button>';
     toast.querySelector('.mf-toast__body').textContent = message;
 
     container.appendChild(toast);
@@ -64,11 +73,11 @@ function mfConfirm(options) {
     var modalEl = document.getElementById('mfConfirmModal');
     if (!modalEl) return;
 
-    modalEl.querySelector('.mf-confirm-title').textContent = options.title || 'تأكيد العملية';
-    modalEl.querySelector('.mf-confirm-message').textContent = options.message || 'هل أنت متأكد؟';
+    modalEl.querySelector('.mf-confirm-title').textContent = options.title || mfI18n('confirmTitle', 'تأكيد العملية');
+    modalEl.querySelector('.mf-confirm-message').textContent = options.message || mfI18n('confirmMessage', 'هل أنت متأكد؟');
 
     var confirmBtn = modalEl.querySelector('.mf-confirm-btn');
-    confirmBtn.textContent = options.confirmLabel || 'تأكيد';
+    confirmBtn.textContent = options.confirmLabel || mfI18n('confirmLabel', 'تأكيد');
     confirmBtn.className = 'btn mf-confirm-btn ' + (options.confirmVariant || 'btn-primary');
 
     var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
@@ -96,7 +105,7 @@ function mfSetButtonLoading(btn, loading) {
     if (loading) {
         btn.dataset.originalHtml = btn.innerHTML;
         btn.disabled = true;
-        btn.innerHTML = '<span class="mf-spinner"></span> ' + (btn.dataset.loadingText || 'جاري التنفيذ...');
+        btn.innerHTML = '<span class="mf-spinner"></span> ' + (btn.dataset.loadingText || mfI18n('loading', 'جاري التنفيذ...'));
     } else {
         btn.disabled = false;
         if (btn.dataset.originalHtml) btn.innerHTML = btn.dataset.originalHtml;
@@ -151,11 +160,11 @@ function ajaxForm(form, options) {
                 var container = options.swapTarget ? document.querySelector(options.swapTarget) : form.parentElement;
                 container.innerHTML = result.html;
                 options.afterSwap && options.afterSwap(container);
-                showToast('error', 'توجد بيانات تحتاج إلى مراجعة، يرجى التحقق من الحقول أدناه.');
+                showToast('error', mfI18n('reviewNeeded', 'توجد بيانات تحتاج إلى مراجعة، يرجى التحقق من الحقول أدناه.'));
             })
             .catch(function () {
                 mfSetButtonLoading(submitBtn, false);
-                showToast('error', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.');
+                showToast('error', mfI18n('connectionError', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.'));
             });
     });
 }
@@ -168,10 +177,10 @@ function misfoundChoicesConfig() {
         searchEnabled: true,
         shouldSort: false,
         itemSelectText: '',
-        searchPlaceholderValue: 'اكتب للبحث...',
-        noResultsText: 'لا توجد نتائج',
-        noChoicesText: 'لا توجد خيارات',
-        loadingText: 'جاري التحميل...',
+        searchPlaceholderValue: mfI18n('searchPlaceholder', 'اكتب للبحث...'),
+        noResultsText: mfI18n('noResults', 'لا توجد نتائج'),
+        noChoicesText: mfI18n('noChoices', 'لا توجد خيارات'),
+        loadingText: mfI18n('loadingText', 'جاري التحميل...'),
         removeItemButton: false,
     };
 }
@@ -180,12 +189,13 @@ function misfoundChoicesConfig() {
  * Choices.js ships full RTL styling (arrow side, text padding, dropdown
  * alignment) but only activates it when the `.choices` wrapper itself has
  * dir="rtl" — it doesn't inherit that from an ancestor like normal CSS, so
- * we set it explicitly on every instance we create.
+ * we set it explicitly on every instance we create, matching the page's
+ * actual direction rather than assuming RTL.
  */
 function mfNewChoices(selectEl, config) {
     var instance = new Choices(selectEl, config || misfoundChoicesConfig());
     var wrapper = selectEl.closest('.choices');
-    if (wrapper) wrapper.setAttribute('dir', 'rtl');
+    if (wrapper) wrapper.setAttribute('dir', document.documentElement.dir || 'rtl');
     return instance;
 }
 
@@ -205,7 +215,7 @@ function initCityCascade(countrySelectId, citySelectId, citiesUrl, emptyLabel) {
     var countryEl = document.getElementById(countrySelectId);
     var cityEl = document.getElementById(citySelectId);
     if (!countryEl || !cityEl) return;
-    emptyLabel = emptyLabel || 'اختر المدينة';
+    emptyLabel = emptyLabel || mfI18n('chooseCity', 'اختر المدينة');
 
     var initialCountry = countryEl.value;
     var initialCity = cityEl.value;
@@ -227,7 +237,7 @@ function initCityCascade(countrySelectId, citySelectId, citiesUrl, emptyLabel) {
         cities.forEach(function (city) {
             options.push({
                 value: String(city.id),
-                label: city.name_ar,
+                label: city.name,
                 selected: String(city.id) === String(selectedId),
             });
         });

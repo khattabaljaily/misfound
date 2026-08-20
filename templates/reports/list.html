@@ -82,7 +82,7 @@ initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}
                 results.classList.remove('mf-loading');
                 spinner.classList.add('d-none');
                 label.classList.remove('d-none');
-                showToast('error', 'حدث خطأ في تحميل النتائج، يرجى المحاولة مرة أخرى.');
+                showToast('error', '{% trans "حدث خطأ في تحميل النتائج، يرجى المحاولة مرة أخرى." %}');
             });
     }
 

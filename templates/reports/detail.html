@@ -28,7 +28,7 @@
             <h1>{{ report.title }}</h1>
             <div class="mf-detail-meta">
                 <span><i class="bi {{ report.category.icon|default:'bi-tag' }}"></i> {{ report.category.name }}</span>
-                <span><i class="bi bi-geo-alt"></i> {{ report.city.name|default:"" }}{% if report.city %}، {% endif %}{{ report.country.name }}</span>
+                <span><i class="bi bi-geo-alt"></i> {{ report.city.name|default:"" }}{% if report.city %}{% trans "، " %}{% endif %}{{ report.country.name }}</span>
                 <span><i class="bi bi-calendar3"></i> {{ report.event_date }}</span>
             </div>
             <div class="mf-detail-description">
@@ -182,7 +182,7 @@ if (resolveBtn) {
                     })
                     .catch(function () {
                         mfSetButtonLoading(resolveBtn, false);
-                        showToast('error', 'حدث خطأ، يرجى المحاولة مرة أخرى.');
+                        showToast('error', '{% trans "حدث خطأ، يرجى المحاولة مرة أخرى." %}');
                     });
             },
         });

@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.db.models import F
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import get_language, gettext as _
 
 from apps.locations.models import City, Country
 from .forms import ReportForm
@@ -83,8 +84,9 @@ def report_list(request):
 
 def cities_for_country(request):
     country_id = request.GET.get('country')
-    cities = City.objects.filter(country_id=country_id).order_by('name_ar').values('id', 'name_ar')
-    return JsonResponse(list(cities), safe=False)
+    order_field = 'name_ar' if get_language() == 'ar' else 'name_en'
+    cities = City.objects.filter(country_id=country_id).order_by(order_field)
+    return JsonResponse([{'id': c.id, 'name': c.name} for c in cities], safe=False)
 
 
 def report_detail(request, pk):
@@ -138,7 +140,7 @@ def report_create(request, report_type):
             find_and_save_matches(report)
             if is_ajax:
                 return JsonResponse({'success': True, 'redirect': report.get_absolute_url()})
-            messages.success(request, 'تم نشر الإعلان بنجاح.')
+            messages.success(request, _('تم نشر الإعلان بنجاح.'))
             return redirect('reports:detail', pk=report.pk)
 
         if is_ajax:
@@ -168,20 +170,20 @@ def flag_report(request, pk):
 
     if report.reporter == request.user:
         if is_ajax:
-            return JsonResponse({'success': False, 'message': 'لا يمكنك الإبلاغ عن إعلانك الخاص.'}, status=400)
+            return JsonResponse({'success': False, 'message': _('لا يمكنك الإبلاغ عن إعلانك الخاص.')}, status=400)
         raise Http404
 
     reason = request.POST.get('reason')
     if reason not in dict(ReportFlag.REASON_CHOICES):
         if is_ajax:
-            return JsonResponse({'success': False, 'message': 'يرجى اختيار سبب الإبلاغ.'}, status=400)
+            return JsonResponse({'success': False, 'message': _('يرجى اختيار سبب الإبلاغ.')}, status=400)
         raise Http404
 
-    _, created = ReportFlag.objects.get_or_create(
+    existing_flag, created = ReportFlag.objects.get_or_create(
         report=report, reporter=request.user,
         defaults={'reason': reason, 'note': request.POST.get('note', '')[:300]},
     )
-    message = 'تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة.' if created else 'سبق أن أبلغت عن هذا الإعلان.'
+    message = _('تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة.') if created else _('سبق أن أبلغت عن هذا الإعلان.')
     if is_ajax:
         return JsonResponse({'success': True, 'message': message})
     messages.success(request, message)
@@ -195,6 +197,6 @@ def report_resolve(request, pk):
         report.status = Report.RESOLVED
         report.save(update_fields=['status'])
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return JsonResponse({'success': True, 'message': 'تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح.'})
-        messages.success(request, 'تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح.')
+            return JsonResponse({'success': True, 'message': _('تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح.')})
+        messages.success(request, _('تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح.'))
     return redirect('reports:detail', pk=report.pk)

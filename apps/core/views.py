@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.db.models import Avg, Count, DurationField, ExpressionWrapper, F
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.utils.translation import gettext as _
 
 from apps.locations.models import City, Country
 from apps.reports.models import Category, Match, Report, ReportFlag
@@ -103,8 +104,8 @@ def admin_flags(request):
 @staff_member_required(login_url='accounts:login')
 def admin_flag_resolve(request, pk):
     if request.method != 'POST':
-        return JsonResponse({'success': False, 'message': 'طلب غير صالح.'}, status=405)
+        return JsonResponse({'success': False, 'message': _('طلب غير صالح.')}, status=405)
     flag = get_object_or_404(ReportFlag, pk=pk)
     flag.resolved = True
     flag.save(update_fields=['resolved'])
-    return JsonResponse({'success': True, 'message': 'تم وسم البلاغ كمُراجَع.'})
+    return JsonResponse({'success': True, 'message': _('تم وسم البلاغ كمُراجَع.')})

@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from apps.locations.models import City
 from django.db.models import Case, When, Value, IntegerField
@@ -21,7 +22,7 @@ class ReportForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             if isinstance(field, forms.ModelChoiceField):
-                field.empty_label = f'اختر {field.label}'
+                field.empty_label = _('اختر %(field)s') % {'field': field.label}
 
         country_id = self.data.get('country') or self.initial.get('country')
         self.fields['city'].queryset = (
@@ -51,6 +52,6 @@ class ReportForm(forms.ModelForm):
             self.fields['verification_question'].widget = forms.HiddenInput()
             self.fields['verification_question'].required = False
         else:
-            self.fields['verification_question'].help_text = (
+            self.fields['verification_question'].help_text = _(
                 'سؤال يُستخدم للتحقق من أن المتواصل معك هو صاحب الغرض فعلاً (لن يظهر للعامة)'
             )

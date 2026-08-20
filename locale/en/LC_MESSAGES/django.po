@@ -1,0 +1,906 @@
+# Misfound English translation catalog.
+# Arabic is the platform's base language; this file translates it to English.
+msgid ""
+msgstr ""
+"Project-Id-Version: Misfound\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-20 20:15+0300\n"
+"PO-Revision-Date: 2026-08-20 20:15+0300\n"
+"Last-Translator: Misfound\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "معلومات إضافية"
+msgstr "Additional information"
+
+#, python-format
+msgid "اختر %(field)s"
+msgstr "Choose %(field)s"
+
+msgid "رقم الهاتف"
+msgstr "Phone number"
+
+msgid "الدولة"
+msgstr "Country"
+
+msgid "المدينة"
+msgstr "City"
+
+msgid "مستخدم"
+msgstr "User"
+
+msgid "المستخدمون"
+msgstr "Users"
+
+msgid "إدارة موقع Misfound"
+msgstr "Misfound Site Administration"
+
+msgid "إدارة Misfound"
+msgstr "Misfound Admin"
+
+msgid "لوحة التحكم"
+msgstr "Dashboard"
+
+msgid "طلب غير صالح."
+msgstr "Invalid request."
+
+msgid "تم وسم البلاغ كمُراجَع."
+msgstr "Report marked as reviewed."
+
+msgid "الاسم بالعربية"
+msgstr "Arabic name"
+
+msgid "الاسم بالإنجليزية"
+msgstr "English name"
+
+msgid "رمز الدولة"
+msgstr "Country code"
+
+msgid "دولة"
+msgstr "Country"
+
+msgid "الدول"
+msgstr "Countries"
+
+msgid "مدينة"
+msgstr "City"
+
+msgid "المدن"
+msgstr "Cities"
+
+msgid "اكتب رسالتك..."
+msgstr "Type your message..."
+
+msgid "الإعلان"
+msgstr "Report"
+
+msgid "المدّعي"
+msgstr "Claimant"
+
+msgid "المستخدم الذي يدّعي ملكية الغرض"
+msgstr "The user claiming ownership of the item"
+
+msgid "تاريخ البدء"
+msgstr "Started on"
+
+msgid "محادثة"
+msgstr "Conversation"
+
+msgid "المحادثات"
+msgstr "Conversations"
+
+msgid "المحادثة"
+msgstr "Conversation"
+
+msgid "المرسل"
+msgstr "Sender"
+
+msgid "نص الرسالة"
+msgstr "Message text"
+
+msgid "تاريخ الإرسال"
+msgstr "Sent on"
+
+msgid "تمت القراءة"
+msgstr "Read"
+
+msgid "رسالة"
+msgstr "Message"
+
+msgid "الرسائل"
+msgstr "Messages"
+
+msgid "تطابق محتمل"
+msgstr "Possible match"
+
+msgid "رسالة جديدة"
+msgstr "New message"
+
+msgid "تذكير بالاسترجاع"
+msgstr "Recovery reminder"
+
+msgid "المستخدم"
+msgstr "User"
+
+msgid "النوع"
+msgstr "Type"
+
+msgid "العنوان"
+msgstr "Title"
+
+msgid "التفاصيل"
+msgstr "Details"
+
+msgid "الرابط"
+msgstr "Link"
+
+msgid "تاريخ الإنشاء"
+msgstr "Created on"
+
+msgid "إشعار"
+msgstr "Notification"
+
+msgid "الإشعارات"
+msgstr "Notifications"
+
+msgid ""
+"سؤال يُستخدم للتحقق من أن المتواصل معك هو صاحب الغرض فعلاً (لن يظهر للعامة)"
+msgstr "A question used to verify that whoever contacts you is the item's real owner (not shown publicly)"
+
+msgid "الأيقونة"
+msgstr "Icon"
+
+msgid "ترتيب"
+msgstr "Display order"
+
+msgid "تصنيف"
+msgstr "Category"
+
+msgid "التصنيفات"
+msgstr "Categories"
+
+msgid "مفقود"
+msgstr "Lost"
+
+msgid "معثور عليه"
+msgstr "Found"
+
+msgid "قائم"
+msgstr "Open"
+
+msgid "تم الاسترجاع"
+msgstr "Resolved"
+
+msgid "نوع الإعلان"
+msgstr "Report type"
+
+msgid "الحالة"
+msgstr "Status"
+
+msgid "صاحب الإعلان"
+msgstr "Reporter"
+
+msgid "التصنيف"
+msgstr "Category"
+
+msgid "الوصف"
+msgstr "Description"
+
+msgid "رقم المعرف"
+msgstr "Reference number"
+
+msgid ""
+"رقم مميز للغرض إن وجد، مثل الرقم التسلسلي للإلكترونيات أو رقم المستند "
+"للوثائق. غير إجباري، لكنه يسهّل البحث والتأكد من الملكية."
+msgstr "A unique number for the item if it has one — like a serial number for electronics or a document number for official papers. Optional, but it makes searching and verifying ownership easier."
+
+msgid "تفاصيل المكان"
+msgstr "Location details"
+
+msgid "مكان الفقدان/العثور بالتفصيل"
+msgstr "Detailed location of where the item was lost or found"
+
+msgid "الصورة"
+msgstr "Photo"
+
+msgid "تاريخ الفقدان أو العثور"
+msgstr "Date lost or found"
+
+msgid "سؤال التحقق"
+msgstr "Verification question"
+
+msgid "سؤال يُستخدم للتحقق من ملكية الغرض قبل التسليم (يظهر لصاحب الإعلان فقط)"
+msgstr "A question used to verify ownership of the item before handing it over (visible only to the reporter)"
+
+msgid "عدد المشاهدات"
+msgstr "View count"
+
+msgid "تاريخ التحديث"
+msgstr "Updated on"
+
+msgid "تاريخ آخر تذكير"
+msgstr "Last reminder sent on"
+
+msgid "إعلان"
+msgstr "Report"
+
+msgid "الإعلانات"
+msgstr "Reports"
+
+msgid "محتوى مسيء أو غير لائق"
+msgstr "Offensive or inappropriate content"
+
+msgid "معلومات مضللة أو غير صحيحة"
+msgstr "Misleading or incorrect information"
+
+msgid "إعلان مكرر"
+msgstr "Duplicate report"
+
+msgid "سبب آخر"
+msgstr "Other reason"
+
+msgid "مقدّم البلاغ"
+msgstr "Flagged by"
+
+msgid "السبب"
+msgstr "Reason"
+
+msgid "ملاحظة إضافية"
+msgstr "Additional note"
+
+msgid "تاريخ الإبلاغ"
+msgstr "Flagged on"
+
+msgid "تمت المراجعة"
+msgstr "Reviewed"
+
+msgid "إبلاغ عن إعلان"
+msgstr "Flag"
+
+msgid "بلاغات الإعلانات"
+msgstr "Flags"
+
+msgid "الإعلان المفقود"
+msgstr "Lost report"
+
+msgid "الإعلان المعثور عليه"
+msgstr "Found report"
+
+msgid "نسبة التطابق"
+msgstr "Match score"
+
+msgid "سبب التطابق"
+msgstr "Match reason"
+
+msgid "تاريخ الاكتشاف"
+msgstr "Detected on"
+
+msgid "التطابقات المحتملة"
+msgstr "Possible matches"
+
+msgid "تم نشر الإعلان بنجاح."
+msgstr "Your report was posted successfully."
+
+msgid "لا يمكنك الإبلاغ عن إعلانك الخاص."
+msgstr "You can't flag your own report."
+
+msgid "يرجى اختيار سبب الإبلاغ."
+msgstr "Please choose a reason for the flag."
+
+msgid "تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة."
+msgstr "Your flag has been received — thanks for helping keep the platform trustworthy."
+
+msgid "سبق أن أبلغت عن هذا الإعلان."
+msgstr "You've already flagged this report."
+
+msgid "تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح."
+msgstr "The report's status was updated to “Resolved”."
+
+msgid "تسجيل الدخول"
+msgstr "Log in"
+
+msgid "إنشاء الحساب"
+msgstr "Create account"
+
+msgid "ليس لديك حساب؟ أنشئ حسابًا جديدًا"
+msgstr "Don't have an account? Create one"
+
+msgid "إنشاء حساب جديد"
+msgstr "Create a new account"
+
+msgid "لديك حساب بالفعل؟ سجّل الدخول"
+msgstr "Already have an account? Log in"
+
+msgid "المفقودات والمعثورات"
+msgstr "Lost & Found"
+
+msgid "فتح القائمة"
+msgstr "Open menu"
+
+msgid "المفقودات"
+msgstr "Lost items"
+
+msgid "المعثورات"
+msgstr "Found items"
+
+msgid "إعلاناتي"
+msgstr "My reports"
+
+msgid "تبديل اللغة"
+msgstr "Switch language"
+
+msgid "إعلان مفقود"
+msgstr "Report Lost Item"
+
+msgid "إعلان معثور عليه"
+msgstr "Report Found Item"
+
+msgid "جاري التحميل..."
+msgstr "Loading..."
+
+msgid "قائمة المستخدم"
+msgstr "User menu"
+
+msgid "الملف الشخصي"
+msgstr "Profile"
+
+msgid "لوحة الإحصائيات"
+msgstr "Stats dashboard"
+
+msgid "تسجيل الخروج"
+msgstr "Log out"
+
+msgid "حساب جديد"
+msgstr "Sign up"
+
+msgid "نساعد الأشياء على العودة إلى أصحابها، بخطوة بسيطة وتواصل آمن."
+msgstr "We help lost things find their way home, through one simple step and a safe conversation."
+
+msgid "استكشف"
+msgstr "Explore"
+
+msgid "معلومات"
+msgstr "Info"
+
+msgid "عن الخدمة"
+msgstr "About"
+
+msgid "سياسة الخصوصية"
+msgstr "Privacy Policy"
+
+msgid "الشروط والأحكام"
+msgstr "Terms & Conditions"
+
+msgid "تم التطوير بواسطة"
+msgstr "Built by"
+
+msgid "تأكيد العملية"
+msgstr "Confirm action"
+
+msgid "هل أنت متأكد؟"
+msgstr "Are you sure?"
+
+msgid "إلغاء"
+msgstr "Cancel"
+
+msgid "تأكيد"
+msgstr "Confirm"
+
+msgid "إغلاق"
+msgstr "Close"
+
+msgid "جاري التنفيذ..."
+msgstr "Working..."
+
+msgid "توجد بيانات تحتاج إلى مراجعة، يرجى التحقق من الحقول أدناه."
+msgstr "Some fields need your attention — please check the form below."
+
+msgid "حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى."
+msgstr "A connection error occurred. Please try again."
+
+msgid "اكتب للبحث..."
+msgstr "Type to search..."
+
+msgid "لا توجد نتائج"
+msgstr "No results found"
+
+msgid "لا توجد خيارات"
+msgstr "No options available"
+
+msgid "اختر المدينة"
+msgstr "Choose a city"
+
+msgid "هل تريد تسجيل الخروج من حسابك؟"
+msgstr "Do you want to log out of your account?"
+
+msgid "تصفح الصفحات"
+msgstr "Page navigation"
+
+msgid "السابق"
+msgstr "Previous"
+
+msgid "التالي"
+msgstr "Next"
+
+msgid "عن Misfound"
+msgstr "About Misfound"
+
+msgid ""
+"منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل غرض على "
+"العودة إلى صاحبه."
+msgstr "A platform for the Arab world that brings lost and found reports together in one place, helping every item find its way back to its owner."
+
+msgid "دولة عربية"
+msgstr "Arab countries"
+
+msgid "مدينة مغطاة"
+msgstr "cities covered"
+
+msgid "غرض عاد لصاحبه"
+msgstr "items reunited with owners"
+
+msgid "لماذا Misfound؟"
+msgstr "Why Misfound?"
+
+msgid ""
+"كل يوم يفقد أحدهم شيئًا يهمه — محفظة، مفتاح، هاتف، أو حتى وثيقة رسمية — بينما "
+"يعثر شخص آخر على هذا الغرض بالضبط دون أن يعرف كيف يوصله لصاحبه. Misfound "
+"يجمع الطرفين في مكان واحد بدلاً من الاعتماد على الحظ أو منشورات متفرقة على "
+"وسائل التواصل."
+msgstr "Every day, someone loses something that matters to them — a wallet, a key, a phone, even an official document — while someone else finds that exact item without knowing how to return it. Misfound brings both sides together in one place, instead of leaving it to luck or scattered social media posts."
+
+msgid "كيف تعمل المنصة؟"
+msgstr "How does it work?"
+
+msgid "١. انشر إعلانك"
+msgstr "1. Post your report"
+
+msgid "بلّغ عن غرض فقدته أو عثرت عليه في دقائق، مع صورة ووصف ومكان."
+msgstr "Report something you've lost or found in minutes, with a photo, description, and location."
+
+msgid "٢. نبحث عن تطابق"
+msgstr "2. We look for a match"
+
+msgid "نظام ذكي يقارن إعلانك تلقائيًا بالإعلانات المقابلة ويقترح ما قد يطابقه."
+msgstr "A smart system automatically compares your report against matching ones and suggests possible matches."
+
+msgid "٣. تواصل بأمان"
+msgstr "3. Connect safely"
+
+msgid "تراسل الطرف الآخر داخل المنصة مباشرة، وتتحقق من الملكية قبل التسليم."
+msgstr "Message the other party directly within the platform, and verify ownership before handing anything over."
+
+msgid "التزامنا"
+msgstr "Our commitment"
+
+msgid "لا نشارك رقم هاتفك أو بريدك الإلكتروني مع أي مستخدم آخر."
+msgstr "We never share your phone number or email with other users."
+
+msgid "المنصة مجانية بالكامل للاستخدام."
+msgstr "The platform is completely free to use."
+
+msgid "نغطي كل الدول العربية بواجهة عربية أولاً."
+msgstr "We cover every Arab country with an Arabic-first experience."
+
+msgid "تصفح الإعلانات"
+msgstr "Explore reports"
+
+msgid "نظرة عامة"
+msgstr "Overview"
+
+msgid "البلاغات"
+msgstr "Flags"
+
+msgid "لوحة إدارة Django"
+msgstr "Django Admin"
+
+msgid "العودة إلى الموقع"
+msgstr "Back to site"
+
+msgid "إجمالي الإعلانات"
+msgstr "Total reports"
+
+msgid "نسبة الاسترجاع"
+msgstr "Resolution rate"
+
+msgid "متوسط أيام الحل"
+msgstr "Avg. days to resolve"
+
+msgid "تطابقات اكتُشفت"
+msgstr "Matches found"
+
+msgid "إجمالي المستخدمين"
+msgstr "Total users"
+
+msgid "بلاغات بانتظار المراجعة"
+msgstr "Flags awaiting review"
+
+msgid "توزيع الإعلانات: مفقود مقابل معثور عليه"
+msgstr "Report breakdown: lost vs. found"
+
+msgid "لا توجد بيانات كافية بعد."
+msgstr "Not enough data yet."
+
+msgid "أكثر التصنيفات نشاطًا"
+msgstr "Most active categories"
+
+msgid "أكثر الدول نشاطًا"
+msgstr "Most active countries"
+
+msgid "بانتظار المراجعة"
+msgstr "Awaiting review"
+
+msgid "تمت مراجعتها"
+msgstr "Reviewed"
+
+msgid "بواسطة"
+msgstr "By"
+
+msgid "وسم كمُراجَع"
+msgstr "Mark as reviewed"
+
+msgid "لا توجد بلاغات تمت مراجعتها."
+msgstr "No reviewed flags yet."
+
+msgid "لا توجد بلاغات بانتظار المراجعة."
+msgstr "No flags awaiting review."
+
+msgid "حدث خطأ، يرجى المحاولة مرة أخرى."
+msgstr "Something went wrong. Please try again."
+
+msgid "مجتمع يعيد الأشياء إلى أصحابها"
+msgstr "A community that reunites things with their owners"
+
+msgid "ما تبحث عنه قد يكون أقرب مما تتخيل."
+msgstr "What you're looking for might be closer than you think."
+
+msgid ""
+"منصة تجمع إعلانات المفقودات والمعثورات في مكان واحد. انشر إعلانك في دقائق، "
+"وتواصل مباشرة وبأمان مع الطرف الآخر حتى يعود كل غرض إلى صاحبه."
+msgstr "A platform that brings lost and found reports together in one place. Post your report in minutes, and connect directly and safely with the other party until every item finds its way back to its owner."
+
+msgid "اكتشف الإعلانات"
+msgstr "Discover reports"
+
+msgid "أضف إعلانًا"
+msgstr "Post a report"
+
+msgid "ابدأ الآن"
+msgstr "Get started"
+
+msgid "مدينة عربية"
+msgstr "Arab cities"
+
+msgid "تواصل آمن"
+msgstr "Safe communication"
+
+msgid "نشر سريع"
+msgstr "Quick posting"
+
+msgid "كل التصنيفات"
+msgstr "All categories"
+
+msgid "مثال: محفظة جلد بني، آيفون 13..."
+msgstr "e.g. brown leather wallet, iPhone 13..."
+
+msgid "بحث"
+msgstr "Search"
+
+msgid "تحتاج مساعدة"
+msgstr "Need help?"
+
+msgid "أحدث المفقودات"
+msgstr "Latest lost items"
+
+msgid "كل المفقودات"
+msgstr "All lost items"
+
+msgid "لا توجد إعلانات عن مفقودات حاليًا."
+msgstr "No lost item reports right now."
+
+msgid "ربما لك"
+msgstr "Could be yours"
+
+msgid "أحدث المعثورات"
+msgstr "Latest found items"
+
+msgid "كل المعثورات"
+msgstr "All found items"
+
+msgid "لا توجد إعلانات عن معثورات حاليًا."
+msgstr "No found item reports right now."
+
+msgid "آخر تحديث: أغسطس 2026"
+msgstr "Last updated: August 2026"
+
+msgid "١. مقدمة"
+msgstr "1. Introduction"
+
+msgid ""
+"توضّح هذه السياسة كيفية جمع منصة Misfound للبيانات واستخدامها وحمايتها عند "
+"استخدامك للموقع لنشر إعلانات المفقودات والمعثورات أو التواصل بشأنها."
+msgstr "This policy explains how the Misfound platform collects, uses, and protects your data when you use the site to post lost and found reports or communicate about them."
+
+msgid "٢. البيانات التي نجمعها"
+msgstr "2. Data we collect"
+
+msgid ""
+"بيانات الحساب: اسم المستخدم، البريد الإلكتروني، رقم الهاتف (اختياري)، الدولة "
+"والمدينة."
+msgstr "Account data: username, email address, phone number (optional), country, and city."
+
+msgid ""
+"محتوى الإعلانات: العنوان، الوصف، الصورة، الموقع، تاريخ الفقدان أو العثور، "
+"وسؤال التحقق الذي تضيفه."
+msgstr "Report content: title, description, photo, location, the date lost or found, and any verification question you add."
+
+msgid ""
+"الرسائل المتبادلة بينك وبين مستخدمين آخرين داخل المنصة بخصوص إعلان معيّن."
+msgstr "Messages exchanged between you and other users within the platform about a specific report."
+
+msgid ""
+"بيانات تقنية أساسية (مثل عنوان IP وسجلات الاستخدام) لأغراض الأمان ومنع إساءة "
+"الاستخدام."
+msgstr "Basic technical data (such as your IP address and usage logs) for security purposes and to prevent misuse."
+
+msgid "٣. كيف نستخدم بياناتك"
+msgstr "3. How we use your data"
+
+msgid "عرض إعلاناتك للمستخدمين الآخرين وتمكينهم من التواصل معك بخصوصها."
+msgstr "Showing your reports to other users and enabling them to contact you about them."
+
+msgid "تشغيل نظام التحقق قبل تسليم الأغراض وحماية حسابك."
+msgstr "Running the verification system before items are handed over, and protecting your account."
+
+msgid "تحسين المنصة والرد على استفساراتك."
+msgstr "Improving the platform and responding to your inquiries."
+
+msgid "٤. مشاركة البيانات"
+msgstr "4. Data sharing"
+
+msgid ""
+"لا نبيع بياناتك لأي طرف ثالث. لا يظهر بريدك الإلكتروني أو رقم هاتفك "
+"للمستخدمين الآخرين مباشرة؛ التواصل يتم عبر نظام الرسائل الداخلي بالمنصة. قد "
+"نُفصح عن بيانات محدودة إذا طُلب ذلك بموجب القانون."
+msgstr "We never sell your data to third parties. Your email address and phone number are never shown directly to other users — communication happens through the platform's internal messaging system. We may disclose limited data if legally required to do so."
+
+msgid "٥. أمان البيانات"
+msgstr "5. Data security"
+
+msgid ""
+"نتخذ إجراءات تقنية معقولة لحماية بياناتك، لكن لا يمكن ضمان أمان مطلق لأي "
+"نظام متصل بالإنترنت. يُرجى عدم مشاركة كلمة مرورك مع أي شخص."
+msgstr "We take reasonable technical measures to protect your data, but no system connected to the internet can guarantee absolute security. Please don't share your password with anyone."
+
+msgid "٦. حقوقك"
+msgstr "6. Your rights"
+
+msgid "يمكنك تعديل بيانات حسابك في أي وقت."
+msgstr "You can update your account details at any time."
+
+msgid "يمكنك طلب حذف حسابك وبياناتك بالتواصل معنا."
+msgstr "You can request deletion of your account and data by contacting us."
+
+msgid "يمكنك حذف أي إعلان نشرته بنفسك بعد استرجاع الغرض."
+msgstr "You can delete any report you've posted once the item has been recovered."
+
+msgid "٧. ملفات تعريف الارتباط"
+msgstr "7. Cookies"
+
+msgid ""
+"نستخدم ملفات تعريف ارتباط أساسية فقط للحفاظ على تسجيل دخولك وتفضيلاتك، ولا "
+"نستخدمها لأغراض إعلانية."
+msgstr "We use only essential cookies to keep you logged in and remember your preferences — never for advertising purposes."
+
+msgid "٨. التواصل معنا"
+msgstr "8. Contact us"
+
+msgid "لأي استفسار بخصوص خصوصيتك، راسلنا على"
+msgstr "For any questions about your privacy, reach us at"
+
+msgid "١. طبيعة الخدمة"
+msgstr "1. Nature of the service"
+
+msgid ""
+"Misfound منصة تتيح للمستخدمين نشر إعلانات عن أغراض مفقودة أو معثور عليها، "
+"والتواصل فيما بينهم بشأنها. المنصة وسيط للتواصل فقط، ولا تمتلك أو تتحقق من "
+"الأغراض المعلن عنها، ولا تضمن استرجاعها."
+msgstr "Misfound is a platform that lets users post reports about lost or found items and communicate with each other about them. The platform is only a communication intermediary — it does not own or verify the items reported, and does not guarantee their recovery."
+
+msgid "٢. مسؤوليات المستخدم"
+msgstr "2. User responsibilities"
+
+msgid "تقديم معلومات صحيحة عند نشر إعلان أو التواصل بشأنه."
+msgstr "Providing accurate information when posting a report or communicating about it."
+
+msgid "عدم نشر إعلانات وهمية أو مضلِّلة."
+msgstr "Not posting fake or misleading reports."
+
+msgid "عدم نشر محتوى يتعلق بأغراض غير قانونية أو محظورة."
+msgstr "Not posting content related to illegal or prohibited items."
+
+msgid "التعامل باحترام مع باقي المستخدمين وعدم إساءة استخدام نظام الرسائل."
+msgstr "Treating other users respectfully and not misusing the messaging system."
+
+msgid "٣. التحقق والتسليم"
+msgstr "3. Verification and handover"
+
+msgid ""
+"التحقق من هوية الطرف الآخر وملكيته الفعلية للغرض قبل التسليم هو مسؤولية "
+"المستخدمين أنفسهم. ننصح باستخدام سؤال التحقق المتاح، والاجتماع في أماكن عامة "
+"آمنة عند تسليم الأغراض. المنصة غير مسؤولة عن أي نزاع أو ضرر ينشأ عن عملية "
+"التسليم."
+msgstr "Verifying the other party's identity and actual ownership of the item before handover is the users' own responsibility. We recommend using the available verification question and meeting in safe public places when handing items over. The platform is not responsible for any dispute or harm arising from the handover process."
+
+msgid "٤. تعليق الحساب"
+msgstr "4. Account suspension"
+
+msgid ""
+"يحق لنا تعليق أو حذف أي حساب أو إعلان يخالف هذه الشروط أو يُستخدم بشكل مسيء، "
+"دون إشعار مسبق في الحالات الجسيمة."
+msgstr "We reserve the right to suspend or remove any account or report that violates these terms or is used abusively, without prior notice in serious cases."
+
+msgid "٥. حدود المسؤولية"
+msgstr "5. Limitation of liability"
+
+msgid ""
+"تُقدَّم المنصة «كما هي» دون أي ضمانات. لا تتحمل Misfound مسؤولية فقدان الأغراض، "
+"أو صحة الإعلانات المنشورة من المستخدمين، أو أي تعامل يتم خارج المنصة."
+msgstr "The platform is provided “as is” without any warranties. Misfound is not responsible for lost items, the accuracy of reports posted by users, or any dealings that take place outside the platform."
+
+msgid "٦. التعديلات"
+msgstr "6. Changes"
+
+msgid ""
+"قد نُحدّث هذه الشروط من وقت لآخر، وسيظل استمرارك في استخدام المنصة بعد التحديث "
+"بمثابة موافقة على الشروط الجديدة."
+msgstr "We may update these terms from time to time. Continuing to use the platform after an update constitutes acceptance of the new terms."
+
+msgid "٧. التواصل معنا"
+msgstr "7. Contact us"
+
+msgid "لأي استفسار بخصوص هذه الشروط، راسلنا على"
+msgstr "For any questions about these terms, reach us at"
+
+msgid "محادثة حول الإعلان"
+msgstr "Conversation about the report"
+
+msgid "رقم الهاتف مسجَّل لدى الطرف الآخر"
+msgstr "This user has a registered phone number"
+
+msgid "عرض الإعلان"
+msgstr "View report"
+
+msgid "إرسال الرسالة"
+msgstr "Send message"
+
+msgid "إرسال"
+msgstr "Send"
+
+msgid "محادثة خاصة وآمنة"
+msgstr "Private and secure conversation"
+
+msgid "تعذر إرسال الرسالة، يرجى المحاولة مرة أخرى."
+msgstr "Couldn't send the message. Please try again."
+
+msgid "تواصلك"
+msgstr "Your conversations"
+
+msgid "لا توجد محادثات بعد."
+msgstr "No conversations yet."
+
+msgid "تعليم الكل كمقروء"
+msgstr "Mark all as read"
+
+msgid "لا توجد إشعارات بعد."
+msgstr "No notifications yet."
+
+msgid "عرض كل الإشعارات"
+msgstr "View all notifications"
+
+msgid "نشر الإعلان"
+msgstr "Post report"
+
+msgid "لا توجد نتائج مطابقة."
+msgstr "No matching results."
+
+msgid "العودة للإعلانات"
+msgstr "Back to reports"
+
+msgid "مشاركة"
+msgstr "Share"
+
+msgid "مشاهدة"
+msgstr "views"
+
+msgid "، "
+msgstr ", "
+
+msgid "مكان الفقدان/العثور"
+msgstr "Where it was lost/found"
+
+msgid "سؤال التحقق الخاص بك"
+msgstr "Your verification question"
+
+msgid "هل هذا الإعلان يخصك؟"
+msgstr "Is this your report?"
+
+msgid "أرسل رسالة لصاحب الإعلان"
+msgstr "Send a message to the reporter"
+
+msgid "أعتقد أنني وجدتها"
+msgstr "I think I found it"
+
+msgid "أعتقد أنها لي"
+msgstr "I think it's mine"
+
+msgid "يرجى تسجيل الدخول للتواصل"
+msgstr "Please log in to get in touch"
+
+msgid "تم إبلاغك عن هذا الإعلان مسبقًا"
+msgstr "You've already flagged this report"
+
+msgid "الإبلاغ عن هذا الإعلان"
+msgstr "Flag this report"
+
+msgid "اقتراحات لك"
+msgstr "Suggestions for you"
+
+msgid "إعلانات قد تكون مطابقة"
+msgstr "Reports that might match"
+
+msgid "تطابق"
+msgstr "match"
+
+msgid "سبب الإبلاغ"
+msgstr "Reason for flagging"
+
+msgid "اختر السبب"
+msgstr "Choose a reason"
+
+msgid "ملاحظة إضافية (اختياري)"
+msgstr "Additional note (optional)"
+
+msgid "إرسال البلاغ"
+msgstr "Submit flag"
+
+msgid "تأكيد الاسترجاع"
+msgstr "Confirm recovery"
+
+msgid "هل استرجعت هذا الغرض فعلاً؟ سيتم وسم الإعلان كمنتهي."
+msgstr "Have you actually recovered this item? The report will be marked as closed."
+
+msgid "نعم، تم الاسترجاع"
+msgstr "Yes, it's recovered"
+
+msgid "نشر إعلان مفقود"
+msgstr "Post a Lost Item Report"
+
+msgid "نشر إعلان معثور عليه"
+msgstr "Post a Found Item Report"
+
+msgid "الكل"
+msgstr "All"
+
+msgid "جميع التصنيفات"
+msgstr "All categories"
+
+msgid "جميع الدول"
+msgstr "All countries"
+
+msgid "جميع المدن"
+msgstr "All cities"
+
+msgid "تصفية"
+msgstr "Filter"
+
+msgid "حدث خطأ في تحميل النتائج، يرجى المحاولة مرة أخرى."
+msgstr "Something went wrong loading the results. Please try again."
+
+msgid "لا توجد إعلانات حتى الآن."
+msgstr "No reports yet."
+
