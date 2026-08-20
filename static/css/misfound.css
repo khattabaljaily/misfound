@@ -579,40 +579,23 @@ input.mf-pill-field {
 .report-card .card-title { transition: color 0.2s ease; }
 .report-card:hover .card-title { color: var(--mf-teal-dark); }
 
-.report-card:hover .report-card__media-circle img { transform: scale(1.06); }
+.report-card img {
+    position: relative;
+    z-index: 1;
+    height: 178px;
+    width: 100%;
+    object-fit: contain;
+    transition: transform 0.35s ease;
+}
+
+.report-card:hover img { transform: scale(1.04); }
 
 .report-card__media {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
+    overflow: hidden;
+    background: var(--mf-surface, #fff);
     border-radius: inherit;
     border-end-end-radius: 0;
     border-end-start-radius: 0;
-}
-
-/* Image sits as a centered circular avatar, same background as the card
-   itself — no separate "framed" box behind it. */
-.report-card__media-circle {
-    width: 128px;
-    height: 128px;
-    margin: 1.4rem 0;
-    border-radius: 50%;
-    overflow: hidden;
-    background: var(--mf-teal-light);
-    color: var(--mf-teal-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    box-shadow: 0 10px 22px rgba(18, 38, 58, 0.1);
-}
-
-.report-card__media-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.35s ease;
 }
 
 .card-img-placeholder {
@@ -623,6 +606,10 @@ input.mf-pill-field {
     color: var(--mf-teal-dark);
     font-size: 2.1rem;
     opacity: 0.85;
+}
+
+.report-card .card-img-placeholder {
+    height: 178px;
 }
 
 .badge-lost {
@@ -1073,7 +1060,7 @@ input.mf-pill-field {
 .mf-section-link { color: var(--mf-text-muted); font-size: 0.78rem; }
 
 .report-card { border: 1px solid rgba(18, 38, 58, 0.06); border-radius: 18px; box-shadow: 0 10px 28px rgba(18, 38, 58, 0.055); }
-.report-card__media { min-height: 190px; }
+.report-card__media, .report-card img, .report-card .card-img-placeholder { height: 190px; }
 .report-card__media { background: #fff; }
 .report-card__body { padding: 1rem 1.1rem 1.1rem; }
 .report-card .card-title { font-size: 1.04rem; letter-spacing: -0.01em; }

@@ -71,13 +71,11 @@
         <div class="col">
             <a href="{% url 'reports:detail' pk=matched_report.pk %}" class="card report-card h-100 text-decoration-none">
                 <div class="position-relative report-card__media">
-                    <div class="report-card__media-circle">
-                        {% if matched_report.image %}
-                            <img src="{{ matched_report.image.url }}" alt="">
-                        {% else %}
-                            <i class="bi {{ matched_report.category.icon|default:'bi-search' }}"></i>
-                        {% endif %}
-                    </div>
+                    {% if matched_report.image %}
+                        <img src="{{ matched_report.image.url }}" class="card-img-top" alt="">
+                    {% else %}
+                        <div class="card-img-placeholder"><i class="bi {{ matched_report.category.icon|default:'bi-search' }}"></i></div>
+                    {% endif %}
                     <span class="badge bg-success mf-card-badge">{% trans "تطابق" %} {{ score }}%</span>
                 </div>
                 <div class="card-body d-flex flex-column report-card__body">
