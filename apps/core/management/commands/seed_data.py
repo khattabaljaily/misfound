@@ -215,14 +215,16 @@ ARAB_COUNTRIES = [
 ]
 
 CATEGORIES = [
-    ('محافظ وأوراق ثبوتية', 'Wallets & IDs', 'bi-wallet2'),
-    ('هواتف وإلكترونيات', 'Phones & Electronics', 'bi-phone'),
-    ('مفاتيح', 'Keys', 'bi-key'),
-    ('حقائب وشنط', 'Bags', 'bi-bag'),
-    ('مجوهرات', 'Jewelry', 'bi-gem'),
-    ('حيوانات أليفة', 'Pets', 'bi-heart'),
-    ('ملابس وإكسسوارات', 'Clothing & Accessories', 'bi-bookmark'),
-    ('أخرى', 'Other', 'bi-three-dots'),
+    ('الهواتف والإلكترونيات', 'Phones & Electronics', 'bi-phone', 1),
+    ('الوثائق والبطاقات', 'Documents & Cards', 'bi-file-earmark-text', 2),
+    ('المركبات وملحقاتها', 'Vehicles & Accessories', 'bi-car-front', 3),
+    ('الحقائب والأمتعة', 'Bags & Luggage', 'bi-handbag', 4),
+    ('المفاتيح', 'Keys', 'bi-key', 5),
+    ('الملابس والإكسسوارات', 'Clothing & Accessories', 'bi-shirt', 6),
+    ('الحيوانات الأليفة', 'Pets', 'bi-paw', 7),
+    ('أغراض الأطفال', "Children's Items", 'bi-baby', 8),
+    ('النقود والمقتنيات الثمينة', 'Money & Valuables', 'bi-wallet2', 9),
+    ('أخرى', 'Other', 'bi-box-seam', 999),
 ]
 
 
@@ -240,8 +242,8 @@ class Command(BaseCommand):
                 )
         self.stdout.write(self.style.SUCCESS(f'تم تجهيز {len(ARAB_COUNTRIES)} دولة.'))
 
-        for name_ar, name_en, icon in CATEGORIES:
+        for name_ar, name_en, icon, priority in CATEGORIES:
             Category.objects.update_or_create(
-                name_ar=name_ar, defaults={'name_en': name_en, 'icon': icon}
+                name_ar=name_ar, defaults={'name_en': name_en, 'icon': icon, 'priority': priority}
             )
         self.stdout.write(self.style.SUCCESS(f'تم تجهيز {len(CATEGORIES)} تصنيف.'))
