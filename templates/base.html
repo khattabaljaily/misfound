@@ -21,14 +21,17 @@
         actually perceives as "loading".
     -->
     <style>
-        #mf-page-loader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: rgba(18, 38, 58, .55); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); opacity: 0; visibility: hidden; transition: opacity .18s ease; }
+        #mf-page-loader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: rgba(18, 38, 58, .8); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); opacity: 0; visibility: hidden; transition: opacity .18s ease; }
         #mf-page-loader.is-visible { opacity: 1; visibility: visible; }
-        .mf-page-loader__ring { position: relative; width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(from 0deg, #ff806f, #d95b50, #ff806f); padding: 4px; animation: mf-loader-spin 1s linear infinite; box-shadow: 0 10px 30px rgba(217,91,80,.35); }
+        .mf-page-loader__ring { position: relative; width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(from 0deg, #ff806f, #d95b50, #ff806f); padding: 4px; animation: mf-loader-spin 1s linear infinite; }
+        .mf-page-loader__ring::before, .mf-page-loader__ring::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #ff806f; opacity: 0; animation: mf-loader-pulse 1.8s ease-out infinite; }
+        .mf-page-loader__ring::after { animation-delay: .9s; }
         .mf-page-loader__inner { width: 100%; height: 100%; border-radius: 50%; background: #12263a; display: grid; place-items: center; }
         .mf-page-loader__logo { width: 40px; height: 40px; object-fit: contain; animation: mf-loader-spin-reverse 1s linear infinite; }
         @keyframes mf-loader-spin { to { transform: rotate(360deg); } }
         @keyframes mf-loader-spin-reverse { to { transform: rotate(-360deg); } }
-        @media (prefers-reduced-motion: reduce) { .mf-page-loader__ring, .mf-page-loader__logo { animation: none; } }
+        @keyframes mf-loader-pulse { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(1.75); opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) { .mf-page-loader__ring, .mf-page-loader__logo, .mf-page-loader__ring::before, .mf-page-loader__ring::after { animation: none; } }
     </style>
     <div id="mf-page-loader" class="is-visible" aria-hidden="true">
         <div class="mf-page-loader__ring">
