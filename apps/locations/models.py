@@ -26,6 +26,8 @@ class City(models.Model):
     )
     name_ar = models.CharField(max_length=100, verbose_name=_('الاسم بالعربية'))
     name_en = models.CharField(max_length=100, verbose_name=_('الاسم بالإنجليزية'))
+    lat = models.FloatField(null=True, blank=True, verbose_name=_('خط العرض'))
+    lng = models.FloatField(null=True, blank=True, verbose_name=_('خط الطول'))
 
     class Meta:
         ordering = ['name_ar']

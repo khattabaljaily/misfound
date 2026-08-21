@@ -4,7 +4,7 @@ from urllib.parse import quote
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import F
+from django.db.models import Count, F, Q
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -74,6 +74,28 @@ def report_list(request):
         sort = 'newest'
         qs = qs.order_by('-created_at')
 
+    map_rows = (
+        qs.order_by()
+        .exclude(city__isnull=True).exclude(city__lat__isnull=True)
+        .values('city_id', 'city__lat', 'city__lng', 'city__name_ar', 'city__name_en')
+        .annotate(
+            lost_count=Count('id', filter=Q(type=Report.LOST)),
+            found_count=Count('id', filter=Q(type=Report.FOUND)),
+        )
+    )
+    map_points = [
+        {
+            'id': row['city_id'],
+            'name': row['city__name_ar'] if get_language() == 'ar' else row['city__name_en'],
+            'lat': row['city__lat'],
+            'lng': row['city__lng'],
+            'lost': row['lost_count'],
+            'found': row['found_count'],
+            'url': f"{request.path}?city={row['city_id']}",
+        }
+        for row in map_rows
+    ]
+
     paginator = Paginator(qs, REPORTS_PAGE_SIZE)
     page_obj = paginator.get_page(request.GET.get('page'))
 
@@ -83,6 +105,7 @@ def report_list(request):
     context = {
         'reports': page_obj,
         'page_obj': page_obj,
+        'map_points': map_points,
         'base_qs': querystring.urlencode(),
         'categories': Category.objects.all(),
         'countries': Country.objects.all(),

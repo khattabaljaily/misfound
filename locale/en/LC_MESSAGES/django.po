@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 12:59+0300\n"
+"POT-Creation-Date: 2026-08-21 13:09+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -87,11 +87,19 @@ msgstr "Country"
 msgid "الدول"
 msgstr "Countries"
 
-#: apps/locations/models.py:32
+#: apps/locations/models.py:29
+msgid "خط العرض"
+msgstr "Latitude"
+
+#: apps/locations/models.py:30
+msgid "خط الطول"
+msgstr "Longitude"
+
+#: apps/locations/models.py:34
 msgid "مدينة"
 msgstr "City"
 
-#: apps/locations/models.py:33
+#: apps/locations/models.py:35
 msgid "المدن"
 msgstr "Cities"
 
@@ -262,12 +270,12 @@ msgid "التصنيفات"
 msgstr "Categories"
 
 #: apps/reports/models.py:33 templates/core/admin_dashboard.html:42
-#: templates/reports/list.html:13
+#: templates/reports/list.html:22 templates/reports/list.html:122
 msgid "مفقود"
 msgstr "Lost"
 
 #: apps/reports/models.py:34 templates/core/admin_dashboard.html:43
-#: templates/reports/list.html:14
+#: templates/reports/list.html:23 templates/reports/list.html:123
 msgid "معثور عليه"
 msgstr "Found"
 
@@ -428,29 +436,29 @@ msgstr "Detected on"
 msgid "التطابقات المحتملة"
 msgstr "Possible matches"
 
-#: apps/reports/views.py:163
+#: apps/reports/views.py:186
 msgid "تم نشر الإعلان بنجاح."
 msgstr "Your report was posted successfully."
 
-#: apps/reports/views.py:193
+#: apps/reports/views.py:216
 msgid "لا يمكنك الإبلاغ عن إعلانك الخاص."
 msgstr "You can't flag your own report."
 
-#: apps/reports/views.py:199
+#: apps/reports/views.py:222
 msgid "يرجى اختيار سبب الإبلاغ."
 msgstr "Please choose a reason for the flag."
 
-#: apps/reports/views.py:206
+#: apps/reports/views.py:229
 msgid "تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة."
 msgstr ""
 "Your flag has been received - thanks for helping keep the platform "
 "trustworthy."
 
-#: apps/reports/views.py:206
+#: apps/reports/views.py:229
 msgid "سبق أن أبلغت عن هذا الإعلان."
 msgstr "You've already flagged this report."
 
-#: apps/reports/views.py:220 apps/reports/views.py:221
+#: apps/reports/views.py:243 apps/reports/views.py:244
 msgid "تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح."
 msgstr "The report's status was updated to “Resolved”."
 
@@ -717,7 +725,7 @@ msgstr "The platform is completely free to use."
 msgid "نغطي كل الدول العربية بواجهة عربية أولاً."
 msgstr "We cover every Arab country with an Arabic-first experience."
 
-#: templates/core/about.html:76 templates/reports/list.html:6
+#: templates/core/about.html:76 templates/reports/list.html:10
 msgid "تصفح الإعلانات"
 msgstr "Explore reports"
 
@@ -862,7 +870,7 @@ msgstr "All countries"
 msgid "مثال: محفظة جلد بني، آيفون 13..."
 msgstr "e.g. brown leather wallet, iPhone 13..."
 
-#: templates/core/home.html:62 templates/reports/list.html:57
+#: templates/core/home.html:62 templates/reports/list.html:66
 msgid "بحث"
 msgstr "Search"
 
@@ -1378,55 +1386,63 @@ msgstr "Post a Lost Item Report"
 msgid "نشر إعلان معثور عليه"
 msgstr "Post a Found Item Report"
 
-#: templates/reports/list.html:12
+#: templates/reports/list.html:13
+msgid "قائمة"
+msgstr "List"
+
+#: templates/reports/list.html:14
+msgid "خريطة"
+msgstr "Map"
+
+#: templates/reports/list.html:21
 msgid "الكل"
 msgstr "All"
 
-#: templates/reports/list.html:19
+#: templates/reports/list.html:28
 msgid "جميع التصنيفات"
 msgstr "All categories"
 
-#: templates/reports/list.html:27
+#: templates/reports/list.html:36
 msgid "جميع الدول"
 msgstr "All countries"
 
-#: templates/reports/list.html:35 templates/reports/list.html:74
+#: templates/reports/list.html:44 templates/reports/list.html:87
 msgid "جميع المدن"
 msgstr "All cities"
 
-#: templates/reports/list.html:43
+#: templates/reports/list.html:52
 msgid "كل الأوقات"
 msgstr "All time"
 
-#: templates/reports/list.html:44
+#: templates/reports/list.html:53
 msgid "اليوم"
 msgstr "Today"
 
-#: templates/reports/list.html:45
+#: templates/reports/list.html:54
 msgid "هذا الأسبوع"
 msgstr "This week"
 
-#: templates/reports/list.html:46
+#: templates/reports/list.html:55
 msgid "هذا الشهر"
 msgstr "This month"
 
-#: templates/reports/list.html:51
+#: templates/reports/list.html:60
 msgid "الأحدث"
 msgstr "Newest"
 
-#: templates/reports/list.html:52
+#: templates/reports/list.html:61
 msgid "الأقدم"
 msgstr "Oldest"
 
-#: templates/reports/list.html:53
+#: templates/reports/list.html:62
 msgid "الأكثر مشاهدة"
 msgstr "Most viewed"
 
-#: templates/reports/list.html:62
+#: templates/reports/list.html:71
 msgid "تصفية"
 msgstr "Filter"
 
-#: templates/reports/list.html:100
+#: templates/reports/list.html:175
 msgid "حدث خطأ في تحميل النتائج، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong loading the results. Please try again."
 

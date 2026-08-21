@@ -1,9 +1,18 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block extra_head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+{% endblock %}
 {% block content %}
-<div class="d-flex align-items-center gap-2 mb-4">
-    <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-grid"></i></span>
-    <h1 class="h4 mb-0">{% trans "تصفح الإعلانات" %}</h1>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center gap-2">
+        <span class="mf-section-icon mf-section-icon--found"><i class="bi bi-grid"></i></span>
+        <h1 class="h4 mb-0">{% trans "تصفح الإعلانات" %}</h1>
+    </div>
+    <div class="mf-view-toggle" role="group">
+        <button type="button" class="mf-view-toggle__btn active" id="listViewBtn"><i class="bi bi-grid"></i> {% trans "قائمة" %}</button>
+        <button type="button" class="mf-view-toggle__btn" id="mapViewBtn"><i class="bi bi-geo-alt"></i> {% trans "خريطة" %}</button>
+    </div>
 </div>
 
 <form method="get" class="mf-filter-bar row g-2 mb-4" id="filterForm">
@@ -64,14 +73,79 @@
     </div>
 </form>
 
+<div id="mapContainer" class="mf-map-container" hidden>
+    <div id="reportsMap"></div>
+</div>
 <div id="results">
     {% include "reports/_results.html" %}
 </div>
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
 initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}", "{% trans 'جميع المدن' %}");
+
+(function () {
+    var mapContainer = document.getElementById('mapContainer');
+    var resultsEl = document.getElementById('results');
+    var listBtn = document.getElementById('listViewBtn');
+    var mapBtn = document.getElementById('mapViewBtn');
+    var map = null;
+    var markersLayer = null;
+
+    function ensureMap() {
+        if (map) return;
+        map = L.map('reportsMap').setView([24.5, 45], 4);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            maxZoom: 18,
+        }).addTo(map);
+        markersLayer = L.layerGroup().addTo(map);
+        updateMapMarkers();
+    }
+
+    function updateMapMarkers() {
+        if (!markersLayer) return;
+        markersLayer.clearLayers();
+        var el = document.getElementById('map-points');
+        var points = el ? JSON.parse(el.textContent) : [];
+        var bounds = [];
+        points.forEach(function (p) {
+            var total = p.lost + p.found;
+            var color = p.lost >= p.found ? '#ef7065' : '#16a37e';
+            var icon = L.divIcon({
+                className: 'mf-map-pin',
+                html: '<span style="background:' + color + '"><em>' + total + '</em></span>',
+                iconSize: [30, 30],
+            });
+            var popup = (p.lost ? ('{% trans "مفقود" %}: ' + p.lost + '<br>') : '')
+                + (p.found ? ('{% trans "معثور عليه" %}: ' + p.found + '<br>') : '')
+                + '<a href="' + p.url + '">' + p.name + '</a>';
+            L.marker([p.lat, p.lng], { icon: icon }).bindPopup(popup).addTo(markersLayer);
+            bounds.push([p.lat, p.lng]);
+        });
+        if (bounds.length) map.fitBounds(bounds, { padding: [30, 30], maxZoom: 10 });
+    }
+
+    listBtn.addEventListener('click', function () {
+        listBtn.classList.add('active');
+        mapBtn.classList.remove('active');
+        mapContainer.hidden = true;
+        resultsEl.hidden = false;
+    });
+
+    mapBtn.addEventListener('click', function () {
+        mapBtn.classList.add('active');
+        listBtn.classList.remove('active');
+        resultsEl.hidden = true;
+        mapContainer.hidden = false;
+        ensureMap();
+        setTimeout(function () { map.invalidateSize(); }, 50);
+    });
+
+    document.body.addEventListener('mf:resultsUpdated', updateMapMarkers);
+})();
 
 (function () {
     var form = document.getElementById('filterForm');
@@ -92,6 +166,7 @@ initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}
                 spinner.classList.add('d-none');
                 label.classList.remove('d-none');
                 if (pushState) window.history.pushState({}, '', url);
+                document.body.dispatchEvent(new Event('mf:resultsUpdated'));
             })
             .catch(function () {
                 results.classList.remove('mf-loading');
