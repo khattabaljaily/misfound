@@ -389,7 +389,9 @@ document.addEventListener('submit', function (e) {
  * mid-loading for any other reason.
  */
 window.addEventListener('pageshow', function () {
-    mfPageLoader.reset();
+    // TEMP-DIAGNOSTIC: reset() disabled on purpose to let the page loader bar
+    // stay visible permanently for a visual check. Revert this.
+    // mfPageLoader.reset();
 
     document.querySelectorAll('button[disabled]').forEach(function (btn) {
         if (btn.dataset.originalHtml) mfSetButtonLoading(btn, false);

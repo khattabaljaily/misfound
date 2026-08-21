@@ -18,7 +18,7 @@
         the network round-trip for the HTML document.
     -->
     <style>
-        #mf-page-loader { position: fixed; inset-inline: 0; top: 0; height: 3px; z-index: 2000; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+        #mf-page-loader { position: fixed; inset-inline: 0; top: 0; height: 10px; z-index: 2000; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity .25s ease; } /* TEMP-DIAGNOSTIC: height bumped from 3px, revert */
         #mf-page-loader.is-active, #mf-page-loader.is-complete { opacity: 1; }
         .mf-page-loader__glow { display: block; position: absolute; inset-block: 0; width: 35%; inset-inline-start: -35%; background: linear-gradient(90deg, transparent, #d95b50, #ff806f, transparent); box-shadow: 0 0 8px rgba(255,128,111,.6); }
         #mf-page-loader.is-active .mf-page-loader__glow { animation: mf-loader-sweep 1s ease-in-out infinite; }
@@ -36,11 +36,13 @@
                 bar.classList.add('is-complete');
                 setTimeout(function () { bar.classList.remove('is-complete'); }, 220);
             }
-            if (document.readyState === 'complete') {
-                settle();
-            } else {
-                window.addEventListener('load', settle);
-            }
+            // TEMP-DIAGNOSTIC: settle() disabled on purpose so the bar stays
+            // visible permanently, to confirm it renders at all. Revert this.
+            // if (document.readyState === 'complete') {
+            //     settle();
+            // } else {
+            //     window.addEventListener('load', settle);
+            // }
         })();
     </script>
 
