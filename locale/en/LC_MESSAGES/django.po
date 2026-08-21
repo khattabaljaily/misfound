@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 15:03+0300\n"
+"POT-Creation-Date: 2026-08-21 21:34+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -163,7 +163,7 @@ msgstr "Read"
 msgid "رسالة"
 msgstr "Message"
 
-#: apps/messaging/models.py:42 templates/base.html:86
+#: apps/messaging/models.py:42 templates/base.html:132
 #: templates/messaging/inbox.html:5
 msgid "الرسائل"
 msgstr "Messages"
@@ -240,7 +240,7 @@ msgstr "Created on"
 msgid "إشعار"
 msgstr "Notification"
 
-#: apps/notifications/models.py:39 templates/base.html:103
+#: apps/notifications/models.py:39 templates/base.html:149
 #: templates/notifications/_dropdown.html:3 templates/notifications/list.html:3
 #: templates/notifications/list.html:5
 msgid "الإشعارات"
@@ -436,7 +436,7 @@ msgstr "Detected on"
 msgid "التطابقات المحتملة"
 msgstr "Possible matches"
 
-#: apps/reports/views.py:107 templates/base.html:76 templates/base.html:152
+#: apps/reports/views.py:107 templates/base.html:122 templates/base.html:198
 msgid "المفقودات"
 msgstr "Lost items"
 
@@ -447,7 +447,7 @@ msgstr ""
 "Browse the latest lost item reports across the Arab world and help reunite "
 "them with their owners."
 
-#: apps/reports/views.py:110 templates/base.html:79 templates/base.html:153
+#: apps/reports/views.py:110 templates/base.html:125 templates/base.html:199
 msgid "المعثورات"
 msgstr "Found items"
 
@@ -455,10 +455,10 @@ msgstr "Found items"
 msgid ""
 "تصفح أحدث إعلانات المعثورات في الوطن العربي وساعد في إيصالها إلى أصحابها."
 msgstr ""
-"Browse the latest found item reports across the Arab world and help get "
-"them to their owners."
+"Browse the latest found item reports across the Arab world and help get them "
+"to their owners."
 
-#: apps/reports/views.py:113 templates/404.html:12 templates/core/about.html:76
+#: apps/reports/views.py:113 templates/404.html:12 templates/core/about.html:75
 #: templates/reports/list.html:11
 msgid "تصفح الإعلانات"
 msgstr "Explore reports"
@@ -533,7 +533,7 @@ msgid "نعتذر، حدث خطأ من جانبنا. يرجى المحاولة �
 msgstr "Sorry, something went wrong on our end. Please try again shortly."
 
 #: templates/accounts/_login_form.html:12 templates/accounts/login.html:7
-#: templates/base.html:129
+#: templates/base.html:175
 msgid "تسجيل الدخول"
 msgstr "Log in"
 
@@ -557,148 +557,147 @@ msgstr "Already have an account? Log in"
 msgid "المفقودات والمعثورات"
 msgstr "Lost & Found"
 
-#: templates/base.html:9
+#: templates/base.html:56
 msgid ""
 "منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب "
-"غرض على الوصول إلى غرضه. تواصل آمن ومنصة مجانية بالكامل."
+"غرض على الوصول إلى غرضه بتواصل آمن."
 msgstr ""
 "A platform for the Arab world that brings lost and found reports together in "
-"one place, helping every owner reach their item. Safe communication, and "
-"completely free."
+"one place, helping every owner reach their item through safe communication."
 
-#: templates/base.html:70
+#: templates/base.html:116
 msgid "فتح القائمة"
 msgstr "Open menu"
 
-#: templates/base.html:83 templates/reports/mine.html:6
+#: templates/base.html:129 templates/reports/mine.html:6
 msgid "إعلاناتي"
 msgstr "My reports"
 
-#: templates/base.html:95
+#: templates/base.html:141
 msgid "تبديل اللغة"
 msgstr "Switch language"
 
-#: templates/base.html:100
+#: templates/base.html:146
 msgid "إعلان مفقود"
 msgstr "Report Lost Item"
 
-#: templates/base.html:101
+#: templates/base.html:147
 msgid "إعلان معثور عليه"
 msgstr "Report Found Item"
 
-#: templates/base.html:108 templates/base.html:204
+#: templates/base.html:154 templates/base.html:250
 msgid "جاري التحميل..."
 msgstr "Loading..."
 
-#: templates/base.html:112
+#: templates/base.html:158
 msgid "قائمة المستخدم"
 msgstr "User menu"
 
-#: templates/base.html:118
+#: templates/base.html:164
 msgid "الملف الشخصي"
 msgstr "Profile"
 
-#: templates/base.html:120
+#: templates/base.html:166
 msgid "لوحة الإحصائيات"
 msgstr "Stats dashboard"
 
-#: templates/base.html:122 templates/base.html:216 templates/base.html:218
+#: templates/base.html:168 templates/base.html:262 templates/base.html:264
 msgid "تسجيل الخروج"
 msgstr "Log out"
 
-#: templates/base.html:130
+#: templates/base.html:176
 msgid "حساب جديد"
 msgstr "Sign up"
 
-#: templates/base.html:148
+#: templates/base.html:194
 msgid "نساعد كل صاحب غرض على الوصول إلى غرضه، بخطوة بسيطة وتواصل آمن."
 msgstr ""
 "We help every owner reach their item, through one simple step and a safe "
 "conversation."
 
-#: templates/base.html:151
+#: templates/base.html:197
 msgid "استكشف"
 msgstr "Explore"
 
-#: templates/base.html:156
+#: templates/base.html:202
 msgid "معلومات"
 msgstr "Info"
 
-#: templates/base.html:157 templates/core/about.html:3
+#: templates/base.html:203 templates/core/about.html:3
 msgid "عن الخدمة"
 msgstr "About"
 
-#: templates/base.html:158 templates/core/about.html:77
+#: templates/base.html:204 templates/core/about.html:76
 #: templates/core/privacy_policy.html:3 templates/core/privacy_policy.html:6
 msgid "سياسة الخصوصية"
 msgstr "Privacy Policy"
 
-#: templates/base.html:159 templates/core/terms.html:3
+#: templates/base.html:205 templates/core/terms.html:3
 #: templates/core/terms.html:6
 msgid "الشروط والأحكام"
 msgstr "Terms & Conditions"
 
-#: templates/base.html:164
+#: templates/base.html:210
 msgid "تم التطوير بواسطة"
 msgstr "Developed by"
 
-#: templates/base.html:164
+#: templates/base.html:210
 msgid "خطاب الجيلي"
 msgstr "Khattab Aljaily"
 
-#: templates/base.html:181 templates/base.html:195
+#: templates/base.html:227 templates/base.html:241
 msgid "تأكيد العملية"
 msgstr "Confirm action"
 
-#: templates/base.html:182 templates/base.html:196
+#: templates/base.html:228 templates/base.html:242
 msgid "هل أنت متأكد؟"
 msgstr "Are you sure?"
 
-#: templates/base.html:184 templates/reports/detail.html:147
+#: templates/base.html:230 templates/reports/detail.html:147
 msgid "إلغاء"
 msgstr "Cancel"
 
-#: templates/base.html:185 templates/base.html:197
+#: templates/base.html:231 templates/base.html:243
 msgid "تأكيد"
 msgstr "Confirm"
 
-#: templates/base.html:194
+#: templates/base.html:240
 msgid "إغلاق"
 msgstr "Close"
 
-#: templates/base.html:198
+#: templates/base.html:244
 msgid "جاري التنفيذ..."
 msgstr "Working..."
 
-#: templates/base.html:199
+#: templates/base.html:245
 msgid "توجد بيانات تحتاج إلى مراجعة، يرجى التحقق من الحقول أدناه."
 msgstr "Some fields need your attention - please check the form below."
 
-#: templates/base.html:200
+#: templates/base.html:246
 msgid "حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى."
 msgstr "A connection error occurred. Please try again."
 
-#: templates/base.html:201
+#: templates/base.html:247
 msgid "اكتب للبحث..."
 msgstr "Type to search..."
 
-#: templates/base.html:202
+#: templates/base.html:248
 msgid "لا توجد نتائج"
 msgstr "No results found"
 
-#: templates/base.html:203
+#: templates/base.html:249
 msgid "لا توجد خيارات"
 msgstr "No options available"
 
-#: templates/base.html:205
+#: templates/base.html:251
 msgid "اختر المدينة"
 msgstr "Choose a city"
 
-#: templates/base.html:217
+#: templates/base.html:263
 msgid "هل تريد تسجيل الخروج من حسابك؟"
 msgstr "Do you want to log out of your account?"
 
-#: templates/base.html:256
+#: templates/base.html:301
 msgid "تعذّر تحميل الإشعارات."
 msgstr "Couldn't load notifications."
 
@@ -797,10 +796,6 @@ msgid "لا نشارك رقم هاتفك أو بريدك الإلكتروني م
 msgstr "We never share your phone number or email with other users."
 
 #: templates/core/about.html:71
-msgid "المنصة مجانية بالكامل للاستخدام."
-msgstr "The platform is completely free to use."
-
-#: templates/core/about.html:72
 msgid "نغطي كل الدول العربية بواجهة عربية أولاً."
 msgstr "We cover every Arab country with an Arabic-first experience."
 
@@ -1030,12 +1025,12 @@ msgstr ""
 "quickly."
 
 #: templates/core/home.html:166
-msgid "مجاني بالكامل"
-msgstr "Completely free"
+msgid "خصوصية بياناتك محمية"
+msgstr "Your data privacy is protected"
 
 #: templates/core/home.html:167
-msgid "نشر الإعلانات والبحث والتواصل، كل ذلك مجانًا وبدون أي رسوم خفية."
-msgstr "Posting, searching, and messaging - all free, with no hidden fees."
+msgid "لا نشارك رقم هاتفك أو بريدك الإلكتروني مع أي مستخدم آخر دون موافقتك."
+msgstr "We never share your phone number or email with another user without your consent."
 
 #: templates/core/privacy_policy.html:7 templates/core/terms.html:7
 msgid "آخر تحديث: أغسطس 2026"
@@ -1518,7 +1513,7 @@ msgstr "Most viewed"
 msgid "تصفية"
 msgstr "Filter"
 
-#: templates/reports/list.html:190
+#: templates/reports/list.html:188
 msgid "حدث خطأ في تحميل النتائج، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong loading the results. Please try again."
 

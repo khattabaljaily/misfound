@@ -53,7 +53,7 @@
         })();
     </script>
 
-    {% blocktrans asvar mf_default_description %}منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب غرض على الوصول إلى غرضه. تواصل آمن ومنصة مجانية بالكامل.{% endblocktrans %}
+    {% blocktrans asvar mf_default_description %}منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب غرض على الوصول إلى غرضه بتواصل آمن.{% endblocktrans %}
     {% static 'img/og-default.jpg' as mf_og_default_path %}
     {% with mf_origin=request.scheme|add:"://"|add:request.get_host %}
     {% with mf_canonical=mf_origin|add:request.path mf_og_default_full=mf_origin|add:mf_og_default_path %}
