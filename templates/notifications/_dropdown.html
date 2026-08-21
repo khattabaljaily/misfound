@@ -32,15 +32,20 @@
     if (btn) {
         btn.addEventListener('click', function (e) {
             e.preventDefault();
+            mfSetButtonLoading(btn, true);
             fetch("{% url 'notifications:mark_all_read' %}", {
                 method: 'POST',
                 headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': mfGetCookie('csrftoken') },
-            }).then(function () {
+            }).then(function (r) {
+                if (!r.ok) throw new Error('request failed');
                 document.querySelectorAll('.mf-notif-item--unread').forEach(function (el) {
                     el.classList.remove('mf-notif-item--unread');
                 });
                 btn.remove();
                 document.getElementById('mfNotifBadge').classList.add('d-none');
+            }).catch(function () {
+                mfSetButtonLoading(btn, false);
+                showToast('error', mfI18n('connectionError', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.'));
             });
         });
     }

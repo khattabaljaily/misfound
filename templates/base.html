@@ -18,6 +18,7 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
+    <div id="mf-page-loader" aria-hidden="true"><span class="mf-page-loader__glow"></span></div>
     <nav class="navbar navbar-expand-lg navbar-dark mf-navbar">
         <div class="container mf-navbar__inner">
             <a class="navbar-brand mf-brand" href="{% url 'core:home' %}">
@@ -194,16 +195,24 @@
                         } else {
                             mfNotifBadge.classList.add('d-none');
                         }
-                    });
+                    })
+                    .catch(function () { /* silent — this polls every 45s, next tick will retry */ });
             }
 
             function mfLoadNotifDropdown() {
+                mfNotifDropdown.innerHTML = '<div class="text-center text-muted py-4"><span class="mf-spinner"></span></div>';
+                mfPageLoader.start();
                 fetch("{% url 'notifications:dropdown' %}")
                     .then(function (r) { return r.text(); })
                     .then(function (html) {
                         mfNotifDropdown.innerHTML = html;
                         mfRefreshNotifCount();
-                    });
+                    })
+                    .catch(function () {
+                        mfNotifDropdown.innerHTML = '<div class="text-center text-muted py-4 small">'
+                            + '{% trans "تعذّر تحميل الإشعارات." %}</div>';
+                    })
+                    .finally(function () { mfPageLoader.done(); });
             }
 
             mfNotifMenu.addEventListener('show.bs.dropdown', mfLoadNotifDropdown);

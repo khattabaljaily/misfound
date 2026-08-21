@@ -152,27 +152,47 @@ initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}
     var results = document.getElementById('results');
     var spinner = form.querySelector('.mf-filter-spinner');
     var label = form.querySelector('.mf-filter-label');
+    var currentRequest = null;
+
+    function setLoading(loading) {
+        if (loading) {
+            spinner.classList.remove('d-none');
+            label.classList.add('d-none');
+            results.classList.add('mf-loading');
+            mfPageLoader.start();
+        } else {
+            spinner.classList.add('d-none');
+            label.classList.remove('d-none');
+            results.classList.remove('mf-loading');
+            mfPageLoader.done();
+        }
+    }
 
     function fetchResults(url, pushState) {
-        spinner.classList.remove('d-none');
-        label.classList.add('d-none');
-        results.classList.add('mf-loading');
+        // Cancel any still-in-flight request first, so a slow earlier
+        // response can never land after a newer one and show stale results.
+        if (currentRequest) currentRequest.abort();
+        var controller = new AbortController();
+        currentRequest = controller;
 
-        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        setLoading(true);
+
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }, signal: controller.signal })
             .then(function (r) { return r.text(); })
             .then(function (html) {
                 results.innerHTML = html;
-                results.classList.remove('mf-loading');
-                spinner.classList.add('d-none');
-                label.classList.remove('d-none');
                 if (pushState) window.history.pushState({}, '', url);
                 document.body.dispatchEvent(new Event('mf:resultsUpdated'));
             })
-            .catch(function () {
-                results.classList.remove('mf-loading');
-                spinner.classList.add('d-none');
-                label.classList.remove('d-none');
+            .catch(function (err) {
+                if (err.name === 'AbortError') return;
                 showToast('error', '{% trans "حدث خطأ في تحميل النتائج، يرجى المحاولة مرة أخرى." %}');
+            })
+            .finally(function () {
+                if (currentRequest === controller) {
+                    currentRequest = null;
+                    setLoading(false);
+                }
             });
     }
 

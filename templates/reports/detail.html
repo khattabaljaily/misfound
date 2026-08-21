@@ -178,6 +178,9 @@ if (resolveBtn) {
                             showToast('success', data.message);
                             resolveBtn.hidden = true;
                             document.getElementById('resolvedBadge').hidden = false;
+                        } else {
+                            mfSetButtonLoading(resolveBtn, false);
+                            showToast('error', data.message || '{% trans "حدث خطأ، يرجى المحاولة مرة أخرى." %}');
                         }
                     })
                     .catch(function () {

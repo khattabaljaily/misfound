@@ -93,6 +93,55 @@ function mfConfirm(options) {
 }
 
 /* =================================================================
+   Global page loader — a single, ref-counted "is anything loading right
+   now" signal. Every button spinner and section dimmer below reports into
+   it, so there's one top-of-page bar reflecting all of them at once, and
+   one `reset()` that the pageshow handler (further down) can call to
+   recover from any stuck state — including ones this file didn't cause.
+   ================================================================= */
+var mfPageLoader = (function () {
+    var activeCount = 0;
+    var hideTimer = null;
+
+    function el() {
+        return document.getElementById('mf-page-loader');
+    }
+
+    function start() {
+        activeCount++;
+        clearTimeout(hideTimer);
+        var bar = el();
+        if (bar) {
+            bar.classList.remove('is-complete');
+            bar.classList.add('is-active');
+        }
+    }
+
+    function done() {
+        activeCount = Math.max(0, activeCount - 1);
+        if (activeCount > 0) return;
+        var bar = el();
+        if (!bar) return;
+        bar.classList.remove('is-active');
+        bar.classList.add('is-complete');
+        hideTimer = setTimeout(function () {
+            bar.classList.remove('is-complete');
+        }, 220);
+    }
+
+    /** Forces the counter and bar back to idle, regardless of how many
+     * start() calls are outstanding. Used as the bfcache/pageshow safety net. */
+    function reset() {
+        activeCount = 0;
+        clearTimeout(hideTimer);
+        var bar = el();
+        if (bar) bar.classList.remove('is-active', 'is-complete');
+    }
+
+    return { start: start, done: done, reset: reset };
+})();
+
+/* =================================================================
    AJAX helpers
    ================================================================= */
 function mfGetCookie(name) {
@@ -100,15 +149,27 @@ function mfGetCookie(name) {
     return match ? decodeURIComponent(match[2]) : null;
 }
 
+/**
+ * Puts a button into (or out of) a loading state: swaps its content for the
+ * branded spinner, disables it so it can't be double-submitted, and reports
+ * into the global page loader. Also arms a watchdog timeout so that if some
+ * code path forgets to call this with `loading: false` (a bug class this
+ * exists specifically to contain), the button un-sticks itself instead of
+ * spinning forever.
+ */
 function mfSetButtonLoading(btn, loading) {
     if (!btn) return;
+    clearTimeout(btn._mfWatchdog);
     if (loading) {
         btn.dataset.originalHtml = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '<span class="mf-spinner"></span> ' + (btn.dataset.loadingText || mfI18n('loading', 'جاري التنفيذ...'));
+        mfPageLoader.start();
+        btn._mfWatchdog = setTimeout(function () { mfSetButtonLoading(btn, false); }, 20000);
     } else {
         btn.disabled = false;
         if (btn.dataset.originalHtml) btn.innerHTML = btn.dataset.originalHtml;
+        mfPageLoader.done();
     }
 }
 
@@ -263,9 +324,14 @@ function initCityCascade(countrySelectId, citySelectId, citiesUrl, emptyLabel) {
             setCityOptions([]);
             return;
         }
+        mfPageLoader.start();
         fetch(citiesUrl + '?country=' + encodeURIComponent(countryId))
             .then(function (r) { return r.json(); })
-            .then(function (cities) { setCityOptions(cities, selectedCityId); });
+            .then(function (cities) { setCityOptions(cities, selectedCityId); })
+            .catch(function () {
+                showToast('error', mfI18n('connectionError', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.'));
+            })
+            .finally(function () { mfPageLoader.done(); });
     }
 
     countryEl.addEventListener('change', function () { loadCities(this.value); });
@@ -276,6 +342,70 @@ function initCityCascade(countrySelectId, citySelectId, citiesUrl, emptyLabel) {
         setCityDisabled(true);
     }
 }
+
+/* =================================================================
+   Sitewide navigation feedback
+   ================================================================= */
+
+/**
+ * Shows the top page loader for a real, full-page navigation triggered by
+ * clicking an <a>. Deliberately skips links a page has already handled
+ * itself (checked via e.defaultPrevented, which will already be true by the
+ * time this runs if a closer listener — e.g. AJAX pagination — called
+ * preventDefault(), since bubbling always reaches the target's own
+ * listeners before this document-level one), new-tab opens, in-page
+ * anchors, and non-http(s) links.
+ */
+document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var link = e.target.closest('a[href]');
+    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+
+    var href = link.getAttribute('href');
+    if (!href || href.charAt(0) === '#' || /^(mailto|tel|javascript):/i.test(href)) return;
+    if (link.origin && link.origin !== window.location.origin) return;
+
+    mfPageLoader.start();
+});
+
+/**
+ * Same idea for plain (non-AJAX) form submits — every AJAX form in this app
+ * calls preventDefault() in its own submit handler before this document-level
+ * one runs, so this only ever fires for forms that are genuinely about to
+ * navigate the page away (e.g. the ownership-verify and rating forms).
+ */
+document.addEventListener('submit', function (e) {
+    if (e.defaultPrevented) return;
+    mfPageLoader.start();
+});
+
+/**
+ * `pageshow` fires on every page display — a fresh load, AND a browser
+ * back/forward restore from bfcache. That second case is exactly the bug
+ * this exists to close: bfcache freezes the DOM (and any spinner/dimmed
+ * state) exactly as it was the moment the user navigated away, and nothing
+ * else in this app would ever re-run to clear it. This is the single
+ * recovery point for that — plus a general safety net for anything left
+ * mid-loading for any other reason.
+ */
+window.addEventListener('pageshow', function () {
+    mfPageLoader.reset();
+
+    document.querySelectorAll('button[disabled]').forEach(function (btn) {
+        if (btn.dataset.originalHtml) mfSetButtonLoading(btn, false);
+    });
+
+    document.querySelectorAll('.mf-loading').forEach(function (el) {
+        el.classList.remove('mf-loading');
+    });
+
+    document.querySelectorAll('.mf-filter-spinner').forEach(function (spinner) {
+        spinner.classList.add('d-none');
+    });
+    document.querySelectorAll('.mf-filter-label').forEach(function (label) {
+        label.classList.remove('d-none');
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     initChoicesOn(document);

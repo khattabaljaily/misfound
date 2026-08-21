@@ -1033,18 +1033,74 @@ input.mf-pill-field {
     pointer-events: none;
 }
 
+/* Radar-sweep button/inline spinner — echoes the hero radar's conic-gradient
+   sweep so "loading" reads as "still searching" rather than a generic spinner. */
 .mf-spinner {
     display: inline-block;
     width: 1em;
     height: 1em;
-    border: 2px solid currentColor;
-    border-inline-end-color: transparent;
     border-radius: 50%;
-    animation: mf-spin 0.6s linear infinite;
+    background: conic-gradient(from 0deg, transparent, var(--mf-teal-dark) 20%, var(--mf-teal) 50%, transparent 55%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
+    animation: mf-spin 0.75s linear infinite;
 }
 
 @keyframes mf-spin {
     to { transform: rotate(360deg); }
+}
+
+/* Global top-of-page loading bar: shown for real page navigations and as a
+   sitewide companion to any button/section spinner. Ref-counted in JS so it
+   only hides once every concurrent operation has finished, and is force-reset
+   on `pageshow` (including bfcache restores) so it can never stay stuck. */
+#mf-page-loader {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    height: 3px;
+    z-index: 2000;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+#mf-page-loader.is-active,
+#mf-page-loader.is-complete {
+    opacity: 1;
+}
+
+.mf-page-loader__glow {
+    display: block;
+    position: absolute;
+    inset-block: 0;
+    width: 35%;
+    inset-inline-start: -35%;
+    background: linear-gradient(90deg, transparent, var(--mf-teal-dark), var(--mf-teal), transparent);
+    box-shadow: 0 0 8px rgba(255, 128, 111, 0.6);
+}
+
+#mf-page-loader.is-active .mf-page-loader__glow {
+    animation: mf-loader-sweep 1s ease-in-out infinite;
+}
+
+#mf-page-loader.is-complete .mf-page-loader__glow {
+    animation: none;
+    width: 100%;
+    inset-inline-start: 0;
+    background: linear-gradient(90deg, var(--mf-teal-dark), var(--mf-teal));
+    transition: width 0.2s ease, inset-inline-start 0.2s ease;
+}
+
+@keyframes mf-loader-sweep {
+    0% { inset-inline-start: -35%; }
+    100% { inset-inline-start: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mf-spinner { animation-duration: 1.4s; }
+    #mf-page-loader.is-active .mf-page-loader__glow { animation-duration: 1.8s; }
 }
 
 .mf-pagination {
