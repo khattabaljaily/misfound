@@ -160,12 +160,10 @@ initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}
             spinner.classList.remove('d-none');
             label.classList.add('d-none');
             results.classList.add('mf-loading');
-            mfPageLoader.start();
         } else {
             spinner.classList.add('d-none');
             label.classList.remove('d-none');
             results.classList.remove('mf-loading');
-            mfPageLoader.done();
         }
     }
 

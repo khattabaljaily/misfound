@@ -7,18 +7,16 @@
     <title>{% block title %}{% trans "المفقودات والمعثورات" %} | Misfound{% endblock %}</title>
 
     <!--
-        TEMP DIAGNOSTIC: forced permanently visible (class="is-visible" baked
-        in, and the JS that would ever hide it is disabled below) so it can
-        be checked by eye before wiring it to real loading state. Revert both
-        once approved.
-
-        Lives here in <head>, inline, not loaded from the external
-        stylesheet/image lazily — on a real full-page navigation the *old*
-        page's overlay only ever exists for the moment before the browser
-        commits to the new document, so the *new* page has to be able to
-        show it again from its own very first paint to cover its own load
+        The loader overlay lives here in <head>, inline, and starts visible
+        by default (class="is-visible" baked in below) rather than being
+        turned on by JS after the fact — on a real full-page navigation the
+        *old* page's overlay only ever exists for the moment before the
+        browser commits to the new document, so the *new* page has to show
+        it again itself from its own very first paint to cover its own load
         time (styles/scripts/fonts arriving), which is the part a user
-        actually perceives as "loading".
+        actually perceives as "loading". It settles itself out on `load`,
+        below. Same reasoning applies to why this can't be in the external
+        stylesheet: it has to render before that stylesheet has even loaded.
     -->
     <style>
         #mf-page-loader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: rgba(18, 38, 58, .8); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); opacity: 0; visibility: hidden; transition: opacity .18s ease; }
@@ -47,12 +45,11 @@
                 if (!overlay) return;
                 overlay.classList.remove('is-visible');
             }
-            // TEMP DIAGNOSTIC: disabled on purpose, see comment above. Revert.
-            // if (document.readyState === 'complete') {
-            //     settle();
-            // } else {
-            //     window.addEventListener('load', settle);
-            // }
+            if (document.readyState === 'complete') {
+                settle();
+            } else {
+                window.addEventListener('load', settle);
+            }
         })();
     </script>
 
@@ -293,7 +290,6 @@
 
             function mfLoadNotifDropdown() {
                 mfNotifDropdown.innerHTML = '<div class="text-center text-muted py-4"><span class="mf-spinner"></span></div>';
-                mfPageLoader.start();
                 fetch("{% url 'notifications:dropdown' %}")
                     .then(function (r) { return r.text(); })
                     .then(function (html) {
@@ -303,8 +299,7 @@
                     .catch(function () {
                         mfNotifDropdown.innerHTML = '<div class="text-center text-muted py-4 small">'
                             + '{% trans "تعذّر تحميل الإشعارات." %}</div>';
-                    })
-                    .finally(function () { mfPageLoader.done(); });
+                    });
             }
 
             mfNotifMenu.addEventListener('show.bs.dropdown', mfLoadNotifDropdown);

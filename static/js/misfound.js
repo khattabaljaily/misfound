@@ -93,15 +93,21 @@ function mfConfirm(options) {
 }
 
 /* =================================================================
-   Global page loader — a single, ref-counted "is anything loading right
-   now" signal. Every button spinner and section dimmer below reports into
-   it, so there's one top-of-page bar reflecting all of them at once, and
-   one `reset()` that the pageshow handler (further down) can call to
-   recover from any stuck state — including ones this file didn't cause.
+   Global page loader — the centered ring overlay. Ref-counted so several
+   concurrent operations don't hide it prematurely, and shown after a short
+   delay rather than instantly so a fast operation never just flashes it
+   (the same reasoning ELINK's version uses). Reserved for real full-page
+   navigations and genuinely significant waits (report submission, the
+   kind of AI-matching call that can take seconds) — deliberately NOT
+   wired to every small, frequent action (sending a chat message, opening
+   the notifications dropdown, tweaking a Browse filter), which keep their
+   own local button-spinner/dimming feedback instead so the screen isn't
+   blurred out for something that settles in well under a second.
    ================================================================= */
 var mfPageLoader = (function () {
+    var SHOW_DELAY = 150;
     var activeCount = 0;
-    var hideTimer = null;
+    var showTimer = null;
 
     function el() {
         return document.getElementById('mf-page-loader');
@@ -109,33 +115,29 @@ var mfPageLoader = (function () {
 
     function start() {
         activeCount++;
-        clearTimeout(hideTimer);
-        var bar = el();
-        if (bar) {
-            bar.classList.remove('is-complete');
-            bar.classList.add('is-active');
-        }
+        if (activeCount > 1) return;
+        clearTimeout(showTimer);
+        showTimer = setTimeout(function () {
+            var overlay = el();
+            if (overlay) overlay.classList.add('is-visible');
+        }, SHOW_DELAY);
     }
 
     function done() {
         activeCount = Math.max(0, activeCount - 1);
         if (activeCount > 0) return;
-        var bar = el();
-        if (!bar) return;
-        bar.classList.remove('is-active');
-        bar.classList.add('is-complete');
-        hideTimer = setTimeout(function () {
-            bar.classList.remove('is-complete');
-        }, 220);
+        clearTimeout(showTimer);
+        var overlay = el();
+        if (overlay) overlay.classList.remove('is-visible');
     }
 
-    /** Forces the counter and bar back to idle, regardless of how many
+    /** Forces the counter and overlay back to idle, regardless of how many
      * start() calls are outstanding. Used as the bfcache/pageshow safety net. */
     function reset() {
         activeCount = 0;
-        clearTimeout(hideTimer);
-        var bar = el();
-        if (bar) bar.classList.remove('is-active', 'is-complete');
+        clearTimeout(showTimer);
+        var overlay = el();
+        if (overlay) overlay.classList.remove('is-visible');
     }
 
     return { start: start, done: done, reset: reset };
@@ -151,11 +153,15 @@ function mfGetCookie(name) {
 
 /**
  * Puts a button into (or out of) a loading state: swaps its content for the
- * branded spinner, disables it so it can't be double-submitted, and reports
- * into the global page loader. Also arms a watchdog timeout so that if some
- * code path forgets to call this with `loading: false` (a bug class this
- * exists specifically to contain), the button un-sticks itself instead of
- * spinning forever.
+ * branded spinner and disables it so it can't be double-submitted. Also
+ * arms a watchdog timeout so that if some code path forgets to call this
+ * with `loading: false` (a bug class this exists specifically to contain),
+ * the button un-sticks itself instead of spinning forever.
+ *
+ * This is purely local to the button — it does not touch the big overlay
+ * (see mfPageLoader above for why). Callers that represent a real
+ * navigation-like transition (ajaxForm) trigger the overlay themselves
+ * alongside this.
  */
 function mfSetButtonLoading(btn, loading) {
     if (!btn) return;
@@ -164,12 +170,10 @@ function mfSetButtonLoading(btn, loading) {
         btn.dataset.originalHtml = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '<span class="mf-spinner"></span> ' + (btn.dataset.loadingText || mfI18n('loading', 'جاري التنفيذ...'));
-        mfPageLoader.start();
         btn._mfWatchdog = setTimeout(function () { mfSetButtonLoading(btn, false); }, 20000);
     } else {
         btn.disabled = false;
         if (btn.dataset.originalHtml) btn.innerHTML = btn.dataset.originalHtml;
-        mfPageLoader.done();
     }
 }
 
@@ -189,6 +193,12 @@ function ajaxForm(form, options) {
         e.preventDefault();
         var submitBtn = form.querySelector('button[type="submit"], button:not([type])');
         mfSetButtonLoading(submitBtn, true);
+        // These forms (login, register, "I think this is mine", report
+        // creation — the last one can genuinely take a few seconds for its
+        // AI matching call) represent a real transition, unlike the small
+        // frequent actions mfSetButtonLoading otherwise covers on its own,
+        // so the overlay is opted into explicitly here.
+        mfPageLoader.start();
 
         fetch(form.action || window.location.href, {
             method: form.method || 'POST',
@@ -207,17 +217,23 @@ function ajaxForm(form, options) {
                 if (result.data) {
                     if (result.data.success) {
                         if (result.data.redirect) {
+                            // Leave the overlay showing — a real navigation is
+                            // about to happen, and the destination page picks
+                            // up showing it itself from its own first paint.
                             window.location = result.data.redirect;
                         } else {
+                            mfPageLoader.done();
                             if (result.data.message) showToast('success', result.data.message);
                             options.onSuccess && options.onSuccess(result.data);
                         }
                     } else {
+                        mfPageLoader.done();
                         if (result.data.message) showToast('error', result.data.message);
                         options.onError && options.onError(result.data);
                     }
                     return;
                 }
+                mfPageLoader.done();
                 var container = options.swapTarget ? document.querySelector(options.swapTarget) : form.parentElement;
                 container.innerHTML = result.html;
                 options.afterSwap && options.afterSwap(container);
@@ -225,6 +241,7 @@ function ajaxForm(form, options) {
             })
             .catch(function () {
                 mfSetButtonLoading(submitBtn, false);
+                mfPageLoader.done();
                 showToast('error', mfI18n('connectionError', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.'));
             });
     });
@@ -324,14 +341,12 @@ function initCityCascade(countrySelectId, citySelectId, citiesUrl, emptyLabel) {
             setCityOptions([]);
             return;
         }
-        mfPageLoader.start();
         fetch(citiesUrl + '?country=' + encodeURIComponent(countryId))
             .then(function (r) { return r.json(); })
             .then(function (cities) { setCityOptions(cities, selectedCityId); })
             .catch(function () {
                 showToast('error', mfI18n('connectionError', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.'));
-            })
-            .finally(function () { mfPageLoader.done(); });
+            });
     }
 
     countryEl.addEventListener('change', function () { loadCities(this.value); });
@@ -348,8 +363,8 @@ function initCityCascade(countrySelectId, citySelectId, citiesUrl, emptyLabel) {
    ================================================================= */
 
 /**
- * Shows the top page loader for a real, full-page navigation triggered by
- * clicking an <a>. Deliberately skips links a page has already handled
+ * Shows the page loader overlay for a real, full-page navigation triggered
+ * by clicking an <a>. Deliberately skips links a page has already handled
  * itself (checked via e.defaultPrevented, which will already be true by the
  * time this runs if a closer listener — e.g. AJAX pagination — called
  * preventDefault(), since bubbling always reaches the target's own
@@ -389,9 +404,7 @@ document.addEventListener('submit', function (e) {
  * mid-loading for any other reason.
  */
 window.addEventListener('pageshow', function () {
-    // TEMP-DIAGNOSTIC: reset() disabled on purpose to let the page loader bar
-    // stay visible permanently for a visual check. Revert this.
-    // mfPageLoader.reset();
+    mfPageLoader.reset();
 
     document.querySelectorAll('button[disabled]').forEach(function (btn) {
         if (btn.dataset.originalHtml) mfSetButtonLoading(btn, false);
