@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-20 20:15+0300\n"
+"POT-Creation-Date: 2026-08-21 11:48+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -14,893 +14,1321 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: apps/accounts/admin.py:10
 msgid "معلومات إضافية"
 msgstr "Additional information"
 
+#: apps/accounts/forms.py:18 apps/reports/forms.py:25
 #, python-format
 msgid "اختر %(field)s"
 msgstr "Choose %(field)s"
 
+#: apps/accounts/models.py:7
 msgid "رقم الهاتف"
 msgstr "Phone number"
 
+#: apps/accounts/models.py:10 apps/locations/models.py:25
+#: apps/reports/models.py:57
 msgid "الدولة"
 msgstr "Country"
 
+#: apps/accounts/models.py:14 apps/reports/models.py:61
 msgid "المدينة"
 msgstr "City"
 
+#: apps/accounts/models.py:18
 msgid "مستخدم"
 msgstr "User"
 
+#: apps/accounts/models.py:19
 msgid "المستخدمون"
 msgstr "Users"
 
+#: apps/core/admin.py:5
 msgid "إدارة موقع Misfound"
 msgstr "Misfound Site Administration"
 
+#: apps/core/admin.py:6
 msgid "إدارة Misfound"
 msgstr "Misfound Admin"
 
+#: apps/core/admin.py:7 templates/core/admin_base.html:7
+#: templates/core/admin_base.html:22
 msgid "لوحة التحكم"
 msgstr "Dashboard"
 
+#: apps/core/views.py:108
 msgid "طلب غير صالح."
 msgstr "Invalid request."
 
+#: apps/core/views.py:112
 msgid "تم وسم البلاغ كمُراجَع."
 msgstr "Report marked as reviewed."
 
+#: apps/locations/models.py:6 apps/locations/models.py:27
+#: apps/reports/models.py:8
 msgid "الاسم بالعربية"
 msgstr "Arabic name"
 
+#: apps/locations/models.py:7 apps/locations/models.py:28
+#: apps/reports/models.py:9
 msgid "الاسم بالإنجليزية"
 msgstr "English name"
 
+#: apps/locations/models.py:8
 msgid "رمز الدولة"
 msgstr "Country code"
 
+#: apps/locations/models.py:12
 msgid "دولة"
 msgstr "Country"
 
+#: apps/locations/models.py:13
 msgid "الدول"
 msgstr "Countries"
 
+#: apps/locations/models.py:32
 msgid "مدينة"
 msgstr "City"
 
+#: apps/locations/models.py:33
 msgid "المدن"
 msgstr "Cities"
 
+#: apps/messaging/forms.py:11 templates/reports/detail.html:61
 msgid "اكتب رسالتك..."
 msgstr "Type your message..."
 
+#: apps/messaging/models.py:9 apps/reports/models.py:117
 msgid "الإعلان"
 msgstr "Report"
 
+#: apps/messaging/models.py:13
 msgid "المدّعي"
 msgstr "Claimant"
 
+#: apps/messaging/models.py:13
 msgid "المستخدم الذي يدّعي ملكية الغرض"
 msgstr "The user claiming ownership of the item"
 
+#: apps/messaging/models.py:15
 msgid "تاريخ البدء"
 msgstr "Started on"
 
+#: apps/messaging/models.py:20
 msgid "محادثة"
 msgstr "Conversation"
 
+#: apps/messaging/models.py:21
 msgid "المحادثات"
 msgstr "Conversations"
 
+#: apps/messaging/models.py:29
 msgid "المحادثة"
 msgstr "Conversation"
 
+#: apps/messaging/models.py:32
 msgid "المرسل"
 msgstr "Sender"
 
+#: apps/messaging/models.py:34
 msgid "نص الرسالة"
 msgstr "Message text"
 
+#: apps/messaging/models.py:35
 msgid "تاريخ الإرسال"
 msgstr "Sent on"
 
+#: apps/messaging/models.py:36 apps/notifications/models.py:30
 msgid "تمت القراءة"
 msgstr "Read"
 
+#: apps/messaging/models.py:40
 msgid "رسالة"
 msgstr "Message"
 
+#: apps/messaging/models.py:41 templates/base.html:42
+#: templates/messaging/inbox.html:5
 msgid "الرسائل"
 msgstr "Messages"
 
+#: apps/notifications/models.py:11 apps/reports/models.py:157
 msgid "تطابق محتمل"
 msgstr "Possible match"
 
+#: apps/notifications/models.py:12
 msgid "رسالة جديدة"
 msgstr "New message"
 
+#: apps/notifications/models.py:13
 msgid "تذكير بالاسترجاع"
 msgstr "Recovery reminder"
 
+#: apps/notifications/models.py:24
 msgid "المستخدم"
 msgstr "User"
 
+#: apps/notifications/models.py:26
 msgid "النوع"
 msgstr "Type"
 
+#: apps/notifications/models.py:27 apps/reports/models.py:64
 msgid "العنوان"
 msgstr "Title"
 
+#: apps/notifications/models.py:28 templates/reports/detail.html:35
 msgid "التفاصيل"
 msgstr "Details"
 
+#: apps/notifications/models.py:29
 msgid "الرابط"
 msgstr "Link"
 
+#: apps/notifications/models.py:31 apps/reports/models.py:83
 msgid "تاريخ الإنشاء"
 msgstr "Created on"
 
+#: apps/notifications/models.py:35
 msgid "إشعار"
 msgstr "Notification"
 
+#: apps/notifications/models.py:36 templates/base.html:59
+#: templates/notifications/_dropdown.html:3 templates/notifications/list.html:3
+#: templates/notifications/list.html:5
 msgid "الإشعارات"
 msgstr "Notifications"
 
+#: apps/reports/forms.py:56
 msgid ""
 "سؤال يُستخدم للتحقق من أن المتواصل معك هو صاحب الغرض فعلاً (لن يظهر للعامة)"
-msgstr "A question used to verify that whoever contacts you is the item's real owner (not shown publicly)"
+msgstr ""
+"A question used to verify that whoever contacts you is the item's real owner "
+"(not shown publicly)"
 
+#: apps/reports/models.py:11
 msgid "الأيقونة"
 msgstr "Icon"
 
+#: apps/reports/models.py:14
 msgid "ترتيب"
 msgstr "Display order"
 
+#: apps/reports/models.py:18
 msgid "تصنيف"
 msgstr "Category"
 
+#: apps/reports/models.py:19
 msgid "التصنيفات"
 msgstr "Categories"
 
+#: apps/reports/models.py:33 templates/core/admin_dashboard.html:42
+#: templates/reports/list.html:13
 msgid "مفقود"
 msgstr "Lost"
 
+#: apps/reports/models.py:34 templates/core/admin_dashboard.html:43
+#: templates/reports/list.html:14
 msgid "معثور عليه"
 msgstr "Found"
 
+#: apps/reports/models.py:40
 msgid "قائم"
 msgstr "Open"
 
+#: apps/reports/models.py:41 templates/reports/_card.html:15
+#: templates/reports/detail.html:26 templates/reports/detail.html:53
 msgid "تم الاسترجاع"
 msgstr "Resolved"
 
+#: apps/reports/models.py:44
 msgid "نوع الإعلان"
 msgstr "Report type"
 
+#: apps/reports/models.py:46
 msgid "الحالة"
 msgstr "Status"
 
+#: apps/reports/models.py:51
 msgid "صاحب الإعلان"
 msgstr "Reporter"
 
+#: apps/reports/models.py:54
 msgid "التصنيف"
 msgstr "Category"
 
+#: apps/reports/models.py:65
 msgid "الوصف"
 msgstr "Description"
 
+#: apps/reports/models.py:67 templates/reports/detail.html:39
 msgid "رقم المعرف"
 msgstr "Reference number"
 
+#: apps/reports/models.py:68
 msgid ""
 "رقم مميز للغرض إن وجد، مثل الرقم التسلسلي للإلكترونيات أو رقم المستند "
 "للوثائق. غير إجباري، لكنه يسهّل البحث والتأكد من الملكية."
-msgstr "A unique number for the item if it has one — like a serial number for electronics or a document number for official papers. Optional, but it makes searching and verifying ownership easier."
+msgstr ""
+"A unique number for the item if it has one - like a serial number for "
+"electronics or a document number for official papers. Optional, but it makes "
+"searching and verifying ownership easier."
 
+#: apps/reports/models.py:71
 msgid "تفاصيل المكان"
 msgstr "Location details"
 
+#: apps/reports/models.py:72
 msgid "مكان الفقدان/العثور بالتفصيل"
 msgstr "Detailed location of where the item was lost or found"
 
+#: apps/reports/models.py:74
 msgid "الصورة"
 msgstr "Photo"
 
+#: apps/reports/models.py:75
 msgid "تاريخ الفقدان أو العثور"
 msgstr "Date lost or found"
 
+#: apps/reports/models.py:78
 msgid "سؤال التحقق"
 msgstr "Verification question"
 
+#: apps/reports/models.py:79
 msgid "سؤال يُستخدم للتحقق من ملكية الغرض قبل التسليم (يظهر لصاحب الإعلان فقط)"
-msgstr "A question used to verify ownership of the item before handing it over (visible only to the reporter)"
+msgstr ""
+"A question used to verify ownership of the item before handing it over "
+"(visible only to the reporter)"
 
+#: apps/reports/models.py:82
 msgid "عدد المشاهدات"
 msgstr "View count"
 
+#: apps/reports/models.py:84
 msgid "تاريخ التحديث"
 msgstr "Updated on"
 
+#: apps/reports/models.py:86
 msgid "تاريخ آخر تذكير"
 msgstr "Last reminder sent on"
 
+#: apps/reports/models.py:91
 msgid "إعلان"
 msgstr "Report"
 
+#: apps/reports/models.py:92
 msgid "الإعلانات"
 msgstr "Reports"
 
+#: apps/reports/models.py:110 templates/reports/detail.html:134
 msgid "محتوى مسيء أو غير لائق"
 msgstr "Offensive or inappropriate content"
 
+#: apps/reports/models.py:111 templates/reports/detail.html:135
 msgid "معلومات مضللة أو غير صحيحة"
 msgstr "Misleading or incorrect information"
 
+#: apps/reports/models.py:112 templates/reports/detail.html:136
 msgid "إعلان مكرر"
 msgstr "Duplicate report"
 
+#: apps/reports/models.py:113 templates/reports/detail.html:137
 msgid "سبب آخر"
 msgstr "Other reason"
 
+#: apps/reports/models.py:121
 msgid "مقدّم البلاغ"
 msgstr "Flagged by"
 
+#: apps/reports/models.py:123
 msgid "السبب"
 msgstr "Reason"
 
+#: apps/reports/models.py:124
 msgid "ملاحظة إضافية"
 msgstr "Additional note"
 
+#: apps/reports/models.py:125
 msgid "تاريخ الإبلاغ"
 msgstr "Flagged on"
 
+#: apps/reports/models.py:126 templates/core/admin_flags.html:28
+#: templates/core/admin_flags.html:61
 msgid "تمت المراجعة"
 msgstr "Reviewed"
 
+#: apps/reports/models.py:131
 msgid "إبلاغ عن إعلان"
 msgstr "Flag"
 
+#: apps/reports/models.py:132
 msgid "بلاغات الإعلانات"
 msgstr "Flags"
 
+#: apps/reports/models.py:144
 msgid "الإعلان المفقود"
 msgstr "Lost report"
 
+#: apps/reports/models.py:148
 msgid "الإعلان المعثور عليه"
 msgstr "Found report"
 
+#: apps/reports/models.py:150
 msgid "نسبة التطابق"
 msgstr "Match score"
 
+#: apps/reports/models.py:151
 msgid "سبب التطابق"
 msgstr "Match reason"
 
+#: apps/reports/models.py:152
 msgid "تاريخ الاكتشاف"
 msgstr "Detected on"
 
+#: apps/reports/models.py:158
 msgid "التطابقات المحتملة"
 msgstr "Possible matches"
 
+#: apps/reports/views.py:143
 msgid "تم نشر الإعلان بنجاح."
 msgstr "Your report was posted successfully."
 
+#: apps/reports/views.py:173
 msgid "لا يمكنك الإبلاغ عن إعلانك الخاص."
 msgstr "You can't flag your own report."
 
+#: apps/reports/views.py:179
 msgid "يرجى اختيار سبب الإبلاغ."
 msgstr "Please choose a reason for the flag."
 
+#: apps/reports/views.py:186
 msgid "تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة."
-msgstr "Your flag has been received — thanks for helping keep the platform trustworthy."
+msgstr ""
+"Your flag has been received - thanks for helping keep the platform "
+"trustworthy."
 
+#: apps/reports/views.py:186
 msgid "سبق أن أبلغت عن هذا الإعلان."
 msgstr "You've already flagged this report."
 
+#: apps/reports/views.py:200 apps/reports/views.py:201
 msgid "تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح."
 msgstr "The report's status was updated to “Resolved”."
 
+#: templates/accounts/_login_form.html:12 templates/accounts/login.html:7
+#: templates/base.html:85
 msgid "تسجيل الدخول"
 msgstr "Log in"
 
+#: templates/accounts/_register_form.html:13
 msgid "إنشاء الحساب"
 msgstr "Create account"
 
+#: templates/accounts/login.html:14
 msgid "ليس لديك حساب؟ أنشئ حسابًا جديدًا"
 msgstr "Don't have an account? Create one"
 
+#: templates/accounts/register.html:7
 msgid "إنشاء حساب جديد"
 msgstr "Create a new account"
 
+#: templates/accounts/register.html:14
 msgid "لديك حساب بالفعل؟ سجّل الدخول"
 msgstr "Already have an account? Log in"
 
+#: templates/base.html:7
 msgid "المفقودات والمعثورات"
 msgstr "Lost & Found"
 
+#: templates/base.html:26
 msgid "فتح القائمة"
 msgstr "Open menu"
 
+#: templates/base.html:32 templates/base.html:108
 msgid "المفقودات"
 msgstr "Lost items"
 
+#: templates/base.html:35 templates/base.html:109
 msgid "المعثورات"
 msgstr "Found items"
 
+#: templates/base.html:39 templates/reports/mine.html:6
 msgid "إعلاناتي"
 msgstr "My reports"
 
+#: templates/base.html:51
 msgid "تبديل اللغة"
 msgstr "Switch language"
 
+#: templates/base.html:56
 msgid "إعلان مفقود"
 msgstr "Report Lost Item"
 
+#: templates/base.html:57
 msgid "إعلان معثور عليه"
 msgstr "Report Found Item"
 
+#: templates/base.html:64 templates/base.html:160
 msgid "جاري التحميل..."
 msgstr "Loading..."
 
+#: templates/base.html:68
 msgid "قائمة المستخدم"
 msgstr "User menu"
 
+#: templates/base.html:74
 msgid "الملف الشخصي"
 msgstr "Profile"
 
+#: templates/base.html:76
 msgid "لوحة الإحصائيات"
 msgstr "Stats dashboard"
 
+#: templates/base.html:78 templates/base.html:172 templates/base.html:174
 msgid "تسجيل الخروج"
 msgstr "Log out"
 
+#: templates/base.html:86
 msgid "حساب جديد"
 msgstr "Sign up"
 
+#: templates/base.html:104
 msgid "نساعد الأشياء على العودة إلى أصحابها، بخطوة بسيطة وتواصل آمن."
-msgstr "We help lost things find their way home, through one simple step and a safe conversation."
+msgstr ""
+"We help lost things find their way home, through one simple step and a safe "
+"conversation."
 
+#: templates/base.html:107
 msgid "استكشف"
 msgstr "Explore"
 
+#: templates/base.html:112
 msgid "معلومات"
 msgstr "Info"
 
+#: templates/base.html:113 templates/core/about.html:3
 msgid "عن الخدمة"
 msgstr "About"
 
+#: templates/base.html:114 templates/core/about.html:77
+#: templates/core/privacy_policy.html:3 templates/core/privacy_policy.html:6
 msgid "سياسة الخصوصية"
 msgstr "Privacy Policy"
 
+#: templates/base.html:115 templates/core/terms.html:3
+#: templates/core/terms.html:6
 msgid "الشروط والأحكام"
 msgstr "Terms & Conditions"
 
+#: templates/base.html:120
 msgid "تم التطوير بواسطة"
 msgstr "Built by"
 
+#: templates/base.html:137 templates/base.html:151
 msgid "تأكيد العملية"
 msgstr "Confirm action"
 
+#: templates/base.html:138 templates/base.html:152
 msgid "هل أنت متأكد؟"
 msgstr "Are you sure?"
 
+#: templates/base.html:140 templates/reports/detail.html:145
 msgid "إلغاء"
 msgstr "Cancel"
 
+#: templates/base.html:141 templates/base.html:153
 msgid "تأكيد"
 msgstr "Confirm"
 
+#: templates/base.html:150
 msgid "إغلاق"
 msgstr "Close"
 
+#: templates/base.html:154
 msgid "جاري التنفيذ..."
 msgstr "Working..."
 
+#: templates/base.html:155
 msgid "توجد بيانات تحتاج إلى مراجعة، يرجى التحقق من الحقول أدناه."
-msgstr "Some fields need your attention — please check the form below."
+msgstr "Some fields need your attention - please check the form below."
 
+#: templates/base.html:156
 msgid "حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى."
 msgstr "A connection error occurred. Please try again."
 
+#: templates/base.html:157
 msgid "اكتب للبحث..."
 msgstr "Type to search..."
 
+#: templates/base.html:158
 msgid "لا توجد نتائج"
 msgstr "No results found"
 
+#: templates/base.html:159
 msgid "لا توجد خيارات"
 msgstr "No options available"
 
+#: templates/base.html:161
 msgid "اختر المدينة"
 msgstr "Choose a city"
 
+#: templates/base.html:173
 msgid "هل تريد تسجيل الخروج من حسابك؟"
 msgstr "Do you want to log out of your account?"
 
+#: templates/core/_pagination.html:3
 msgid "تصفح الصفحات"
 msgstr "Page navigation"
 
+#: templates/core/_pagination.html:6 templates/core/_pagination.html:10
 msgid "السابق"
 msgstr "Previous"
 
+#: templates/core/_pagination.html:28 templates/core/_pagination.html:32
 msgid "التالي"
 msgstr "Next"
 
+#: templates/core/about.html:6
 msgid "عن Misfound"
 msgstr "About Misfound"
 
+#: templates/core/about.html:8
 msgid ""
 "منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل غرض على "
 "العودة إلى صاحبه."
-msgstr "A platform for the Arab world that brings lost and found reports together in one place, helping every item find its way back to its owner."
+msgstr ""
+"A platform for the Arab world that brings lost and found reports together in "
+"one place, helping every item find its way back to its owner."
 
+#: templates/core/about.html:15
 msgid "دولة عربية"
 msgstr "Arab countries"
 
+#: templates/core/about.html:21
 msgid "مدينة مغطاة"
 msgstr "cities covered"
 
+#: templates/core/about.html:27
 msgid "غرض عاد لصاحبه"
 msgstr "items reunited with owners"
 
+#: templates/core/about.html:32 templates/core/home.html:115
 msgid "لماذا Misfound؟"
 msgstr "Why Misfound?"
 
+#: templates/core/about.html:34
 msgid ""
 "كل يوم يفقد أحدهم شيئًا يهمه — محفظة، مفتاح، هاتف، أو حتى وثيقة رسمية — بينما "
 "يعثر شخص آخر على هذا الغرض بالضبط دون أن يعرف كيف يوصله لصاحبه. Misfound "
 "يجمع الطرفين في مكان واحد بدلاً من الاعتماد على الحظ أو منشورات متفرقة على "
 "وسائل التواصل."
-msgstr "Every day, someone loses something that matters to them — a wallet, a key, a phone, even an official document — while someone else finds that exact item without knowing how to return it. Misfound brings both sides together in one place, instead of leaving it to luck or scattered social media posts."
+msgstr ""
+"Every day, someone loses something that matters to them - a wallet, a key, a "
+"phone, even an official document - while someone else finds that exact item "
+"without knowing how to return it. Misfound brings both sides together in one "
+"place, instead of leaving it to luck or scattered social media posts."
 
+#: templates/core/about.html:37
 msgid "كيف تعمل المنصة؟"
 msgstr "How does it work?"
 
+#: templates/core/about.html:43
 msgid "١. انشر إعلانك"
 msgstr "1. Post your report"
 
+#: templates/core/about.html:44
 msgid "بلّغ عن غرض فقدته أو عثرت عليه في دقائق، مع صورة ووصف ومكان."
-msgstr "Report something you've lost or found in minutes, with a photo, description, and location."
+msgstr ""
+"Report something you've lost or found in minutes, with a photo, description, "
+"and location."
 
+#: templates/core/about.html:52
 msgid "٢. نبحث عن تطابق"
 msgstr "2. We look for a match"
 
+#: templates/core/about.html:53
 msgid "نظام ذكي يقارن إعلانك تلقائيًا بالإعلانات المقابلة ويقترح ما قد يطابقه."
-msgstr "A smart system automatically compares your report against matching ones and suggests possible matches."
+msgstr ""
+"A smart system automatically compares your report against matching ones and "
+"suggests possible matches."
 
+#: templates/core/about.html:61
 msgid "٣. تواصل بأمان"
 msgstr "3. Connect safely"
 
+#: templates/core/about.html:62
 msgid "تراسل الطرف الآخر داخل المنصة مباشرة، وتتحقق من الملكية قبل التسليم."
-msgstr "Message the other party directly within the platform, and verify ownership before handing anything over."
+msgstr ""
+"Message the other party directly within the platform, and verify ownership "
+"before handing anything over."
 
+#: templates/core/about.html:68
 msgid "التزامنا"
 msgstr "Our commitment"
 
+#: templates/core/about.html:70
 msgid "لا نشارك رقم هاتفك أو بريدك الإلكتروني مع أي مستخدم آخر."
 msgstr "We never share your phone number or email with other users."
 
+#: templates/core/about.html:71
 msgid "المنصة مجانية بالكامل للاستخدام."
 msgstr "The platform is completely free to use."
 
+#: templates/core/about.html:72
 msgid "نغطي كل الدول العربية بواجهة عربية أولاً."
 msgstr "We cover every Arab country with an Arabic-first experience."
 
+#: templates/core/about.html:76 templates/reports/list.html:6
 msgid "تصفح الإعلانات"
 msgstr "Explore reports"
 
+#: templates/core/admin_base.html:26 templates/core/admin_dashboard.html:3
+#: templates/core/admin_dashboard.html:5
 msgid "نظرة عامة"
 msgstr "Overview"
 
+#: templates/core/admin_base.html:29 templates/core/admin_flags.html:3
+#: templates/core/admin_flags.html:6
 msgid "البلاغات"
 msgstr "Flags"
 
+#: templates/core/admin_base.html:35
 msgid "لوحة إدارة Django"
 msgstr "Django Admin"
 
+#: templates/core/admin_base.html:37
 msgid "العودة إلى الموقع"
 msgstr "Back to site"
 
+#: templates/core/admin_dashboard.html:10
 msgid "إجمالي الإعلانات"
 msgstr "Total reports"
 
+#: templates/core/admin_dashboard.html:14
 msgid "نسبة الاسترجاع"
 msgstr "Resolution rate"
 
+#: templates/core/admin_dashboard.html:18
 msgid "متوسط أيام الحل"
 msgstr "Avg. days to resolve"
 
+#: templates/core/admin_dashboard.html:22
 msgid "تطابقات اكتُشفت"
 msgstr "Matches found"
 
+#: templates/core/admin_dashboard.html:26
 msgid "إجمالي المستخدمين"
 msgstr "Total users"
 
+#: templates/core/admin_dashboard.html:30
 msgid "بلاغات بانتظار المراجعة"
 msgstr "Flags awaiting review"
 
+#: templates/core/admin_dashboard.html:35
 msgid "توزيع الإعلانات: مفقود مقابل معثور عليه"
 msgstr "Report breakdown: lost vs. found"
 
+#: templates/core/admin_dashboard.html:46
+#: templates/core/admin_dashboard.html:61
+#: templates/core/admin_dashboard.html:75
 msgid "لا توجد بيانات كافية بعد."
 msgstr "Not enough data yet."
 
+#: templates/core/admin_dashboard.html:53
 msgid "أكثر التصنيفات نشاطًا"
 msgstr "Most active categories"
 
+#: templates/core/admin_dashboard.html:67
 msgid "أكثر الدول نشاطًا"
 msgstr "Most active countries"
 
+#: templates/core/admin_flags.html:8
 msgid "بانتظار المراجعة"
 msgstr "Awaiting review"
 
+#: templates/core/admin_flags.html:9
 msgid "تمت مراجعتها"
 msgstr "Reviewed"
 
+#: templates/core/admin_flags.html:21
 msgid "بواسطة"
 msgstr "By"
 
+#: templates/core/admin_flags.html:25
 msgid "وسم كمُراجَع"
 msgstr "Mark as reviewed"
 
+#: templates/core/admin_flags.html:34
 msgid "لا توجد بلاغات تمت مراجعتها."
 msgstr "No reviewed flags yet."
 
+#: templates/core/admin_flags.html:34
 msgid "لا توجد بلاغات بانتظار المراجعة."
 msgstr "No flags awaiting review."
 
+#: templates/core/admin_flags.html:69 templates/reports/detail.html:185
 msgid "حدث خطأ، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong. Please try again."
 
+#: templates/core/home.html:9
 msgid "مجتمع يعيد الأشياء إلى أصحابها"
 msgstr "A community that reunites things with their owners"
 
-msgid "ما تبحث عنه قد يكون أقرب مما تتخيل."
-msgstr "What you're looking for might be closer than you think."
+#: templates/core/home.html:11
+msgid "فقدت شيئًا؟ وجدت شيئًا؟ لنعيده إلى صاحبه."
+msgstr "Lost something? Found something? Let's reunite it with its owner."
 
+#: templates/core/home.html:12
 msgid ""
 "منصة تجمع إعلانات المفقودات والمعثورات في مكان واحد. انشر إعلانك في دقائق، "
 "وتواصل مباشرة وبأمان مع الطرف الآخر حتى يعود كل غرض إلى صاحبه."
-msgstr "A platform that brings lost and found reports together in one place. Post your report in minutes, and connect directly and safely with the other party until every item finds its way back to its owner."
+msgstr ""
+"A platform that brings lost and found reports together in one place. Post "
+"your report in minutes, and connect directly and safely with the other party "
+"until every item finds its way back to its owner."
 
-msgid "اكتشف الإعلانات"
-msgstr "Discover reports"
+#: templates/core/home.html:15
+msgid "فقدت شيئًا"
+msgstr "I Lost Something"
 
-msgid "أضف إعلانًا"
-msgstr "Post a report"
+#: templates/core/home.html:16
+msgid "وجدت شيئًا"
+msgstr "I Found Something"
 
-msgid "ابدأ الآن"
-msgstr "Get started"
+#: templates/core/home.html:18
+msgid "أو تصفح كل الإعلانات"
+msgstr "Or browse all reports"
 
+#: templates/core/home.html:21
 msgid "مدينة عربية"
 msgstr "Arab cities"
 
+#: templates/core/home.html:22
 msgid "تواصل آمن"
 msgstr "Safe communication"
 
+#: templates/core/home.html:23
 msgid "نشر سريع"
 msgstr "Quick posting"
 
+#: templates/core/home.html:47
 msgid "كل التصنيفات"
 msgstr "All categories"
 
+#: templates/core/home.html:54
+msgid "كل الدول"
+msgstr "All countries"
+
+#: templates/core/home.html:60
 msgid "مثال: محفظة جلد بني، آيفون 13..."
 msgstr "e.g. brown leather wallet, iPhone 13..."
 
+#: templates/core/home.html:62 templates/reports/list.html:42
 msgid "بحث"
 msgstr "Search"
 
+#: templates/core/home.html:69
 msgid "تحتاج مساعدة"
 msgstr "Need help?"
 
+#: templates/core/home.html:70
 msgid "أحدث المفقودات"
 msgstr "Latest lost items"
 
+#: templates/core/home.html:72
 msgid "كل المفقودات"
 msgstr "All lost items"
 
-msgid "لا توجد إعلانات عن مفقودات حاليًا."
-msgstr "No lost item reports right now."
+#: templates/core/home.html:81
+msgid "لا توجد إعلانات عن مفقودات في منطقتك حتى الآن."
+msgstr "No lost item reports in your area yet."
 
+#: templates/core/home.html:82 templates/core/home.html:105
+msgid "كن أول من ينشر"
+msgstr "Be the first to post"
+
+#: templates/core/home.html:92
 msgid "ربما لك"
 msgstr "Could be yours"
 
+#: templates/core/home.html:93
 msgid "أحدث المعثورات"
 msgstr "Latest found items"
 
+#: templates/core/home.html:95
 msgid "كل المعثورات"
 msgstr "All found items"
 
-msgid "لا توجد إعلانات عن معثورات حاليًا."
-msgstr "No found item reports right now."
+#: templates/core/home.html:104
+msgid "لا توجد إعلانات عن معثورات في منطقتك حتى الآن."
+msgstr "No found item reports in your area yet."
 
+#: templates/core/home.html:116
+msgid "منصة آمنة تحمي بياناتك وخصوصيتك"
+msgstr "A safe platform that protects your data and privacy"
+
+#: templates/core/home.html:122
+msgid "تواصل آمن داخل المنصة"
+msgstr "Safe in-app messaging"
+
+#: templates/core/home.html:123
+msgid ""
+"راسل الطرف الآخر مباشرة من داخل المنصة دون الحاجة لمشاركة رقم هاتفك قبل أن "
+"تثق به."
+msgstr ""
+"Message the other party directly within the platform - no need to share "
+"your phone number until you trust them."
+
+#: templates/core/home.html:127
+msgid "تحقق من الملكية"
+msgstr "Verify ownership"
+
+#: templates/core/home.html:128
+msgid ""
+"صف الغرض بتفاصيله الدقيقة أو رقمه التسلسلي للتأكد أن من يتواصل معك هو صاحبه "
+"الحقيقي."
+msgstr ""
+"Describe the item's exact details or serial number to confirm whoever "
+"contacts you is its real owner."
+
+#: templates/core/home.html:132
+msgid "إبلاغ ومراجعة"
+msgstr "Report & review"
+
+#: templates/core/home.html:133
+msgid ""
+"يمكنك الإبلاغ عن أي إعلان مشبوه، ويقوم فريقنا بمراجعته والتعامل معه بسرعة."
+msgstr ""
+"You can flag any suspicious report, and our team will review and handle it "
+"quickly."
+
+#: templates/core/home.html:137
+msgid "مجاني بالكامل"
+msgstr "Completely free"
+
+#: templates/core/home.html:138
+msgid "نشر الإعلانات والبحث والتواصل، كل ذلك مجانًا وبدون أي رسوم خفية."
+msgstr "Posting, searching, and messaging - all free, with no hidden fees."
+
+#: templates/core/privacy_policy.html:7 templates/core/terms.html:7
 msgid "آخر تحديث: أغسطس 2026"
 msgstr "Last updated: August 2026"
 
+#: templates/core/privacy_policy.html:9
 msgid "١. مقدمة"
 msgstr "1. Introduction"
 
+#: templates/core/privacy_policy.html:10
 msgid ""
 "توضّح هذه السياسة كيفية جمع منصة Misfound للبيانات واستخدامها وحمايتها عند "
 "استخدامك للموقع لنشر إعلانات المفقودات والمعثورات أو التواصل بشأنها."
-msgstr "This policy explains how the Misfound platform collects, uses, and protects your data when you use the site to post lost and found reports or communicate about them."
+msgstr ""
+"This policy explains how the Misfound platform collects, uses, and protects "
+"your data when you use the site to post lost and found reports or "
+"communicate about them."
 
+#: templates/core/privacy_policy.html:12
 msgid "٢. البيانات التي نجمعها"
 msgstr "2. Data we collect"
 
+#: templates/core/privacy_policy.html:14
 msgid ""
 "بيانات الحساب: اسم المستخدم، البريد الإلكتروني، رقم الهاتف (اختياري)، الدولة "
 "والمدينة."
-msgstr "Account data: username, email address, phone number (optional), country, and city."
+msgstr ""
+"Account data: username, email address, phone number (optional), country, and "
+"city."
 
+#: templates/core/privacy_policy.html:15
 msgid ""
 "محتوى الإعلانات: العنوان، الوصف، الصورة، الموقع، تاريخ الفقدان أو العثور، "
 "وسؤال التحقق الذي تضيفه."
-msgstr "Report content: title, description, photo, location, the date lost or found, and any verification question you add."
+msgstr ""
+"Report content: title, description, photo, location, the date lost or found, "
+"and any verification question you add."
 
+#: templates/core/privacy_policy.html:16
 msgid ""
 "الرسائل المتبادلة بينك وبين مستخدمين آخرين داخل المنصة بخصوص إعلان معيّن."
-msgstr "Messages exchanged between you and other users within the platform about a specific report."
+msgstr ""
+"Messages exchanged between you and other users within the platform about a "
+"specific report."
 
+#: templates/core/privacy_policy.html:17
 msgid ""
 "بيانات تقنية أساسية (مثل عنوان IP وسجلات الاستخدام) لأغراض الأمان ومنع إساءة "
 "الاستخدام."
-msgstr "Basic technical data (such as your IP address and usage logs) for security purposes and to prevent misuse."
+msgstr ""
+"Basic technical data (such as your IP address and usage logs) for security "
+"purposes and to prevent misuse."
 
+#: templates/core/privacy_policy.html:20
 msgid "٣. كيف نستخدم بياناتك"
 msgstr "3. How we use your data"
 
+#: templates/core/privacy_policy.html:22
 msgid "عرض إعلاناتك للمستخدمين الآخرين وتمكينهم من التواصل معك بخصوصها."
-msgstr "Showing your reports to other users and enabling them to contact you about them."
+msgstr ""
+"Showing your reports to other users and enabling them to contact you about "
+"them."
 
+#: templates/core/privacy_policy.html:23
 msgid "تشغيل نظام التحقق قبل تسليم الأغراض وحماية حسابك."
-msgstr "Running the verification system before items are handed over, and protecting your account."
+msgstr ""
+"Running the verification system before items are handed over, and protecting "
+"your account."
 
+#: templates/core/privacy_policy.html:24
 msgid "تحسين المنصة والرد على استفساراتك."
 msgstr "Improving the platform and responding to your inquiries."
 
+#: templates/core/privacy_policy.html:27
 msgid "٤. مشاركة البيانات"
 msgstr "4. Data sharing"
 
+#: templates/core/privacy_policy.html:28
 msgid ""
 "لا نبيع بياناتك لأي طرف ثالث. لا يظهر بريدك الإلكتروني أو رقم هاتفك "
 "للمستخدمين الآخرين مباشرة؛ التواصل يتم عبر نظام الرسائل الداخلي بالمنصة. قد "
 "نُفصح عن بيانات محدودة إذا طُلب ذلك بموجب القانون."
-msgstr "We never sell your data to third parties. Your email address and phone number are never shown directly to other users — communication happens through the platform's internal messaging system. We may disclose limited data if legally required to do so."
+msgstr ""
+"We never sell your data to third parties. Your email address and phone "
+"number are never shown directly to other users - communication happens "
+"through the platform's internal messaging system. We may disclose limited "
+"data if legally required to do so."
 
+#: templates/core/privacy_policy.html:30
 msgid "٥. أمان البيانات"
 msgstr "5. Data security"
 
+#: templates/core/privacy_policy.html:31
 msgid ""
 "نتخذ إجراءات تقنية معقولة لحماية بياناتك، لكن لا يمكن ضمان أمان مطلق لأي "
 "نظام متصل بالإنترنت. يُرجى عدم مشاركة كلمة مرورك مع أي شخص."
-msgstr "We take reasonable technical measures to protect your data, but no system connected to the internet can guarantee absolute security. Please don't share your password with anyone."
+msgstr ""
+"We take reasonable technical measures to protect your data, but no system "
+"connected to the internet can guarantee absolute security. Please don't "
+"share your password with anyone."
 
+#: templates/core/privacy_policy.html:33
 msgid "٦. حقوقك"
 msgstr "6. Your rights"
 
+#: templates/core/privacy_policy.html:35
 msgid "يمكنك تعديل بيانات حسابك في أي وقت."
 msgstr "You can update your account details at any time."
 
+#: templates/core/privacy_policy.html:36
 msgid "يمكنك طلب حذف حسابك وبياناتك بالتواصل معنا."
 msgstr "You can request deletion of your account and data by contacting us."
 
+#: templates/core/privacy_policy.html:37
 msgid "يمكنك حذف أي إعلان نشرته بنفسك بعد استرجاع الغرض."
-msgstr "You can delete any report you've posted once the item has been recovered."
+msgstr ""
+"You can delete any report you've posted once the item has been recovered."
 
+#: templates/core/privacy_policy.html:40
 msgid "٧. ملفات تعريف الارتباط"
 msgstr "7. Cookies"
 
+#: templates/core/privacy_policy.html:41
 msgid ""
 "نستخدم ملفات تعريف ارتباط أساسية فقط للحفاظ على تسجيل دخولك وتفضيلاتك، ولا "
 "نستخدمها لأغراض إعلانية."
-msgstr "We use only essential cookies to keep you logged in and remember your preferences — never for advertising purposes."
+msgstr ""
+"We use only essential cookies to keep you logged in and remember your "
+"preferences - never for advertising purposes."
 
+#: templates/core/privacy_policy.html:43
 msgid "٨. التواصل معنا"
 msgstr "8. Contact us"
 
+#: templates/core/privacy_policy.html:44
 msgid "لأي استفسار بخصوص خصوصيتك، راسلنا على"
 msgstr "For any questions about your privacy, reach us at"
 
+#: templates/core/terms.html:9
 msgid "١. طبيعة الخدمة"
 msgstr "1. Nature of the service"
 
+#: templates/core/terms.html:10
 msgid ""
 "Misfound منصة تتيح للمستخدمين نشر إعلانات عن أغراض مفقودة أو معثور عليها، "
 "والتواصل فيما بينهم بشأنها. المنصة وسيط للتواصل فقط، ولا تمتلك أو تتحقق من "
 "الأغراض المعلن عنها، ولا تضمن استرجاعها."
-msgstr "Misfound is a platform that lets users post reports about lost or found items and communicate with each other about them. The platform is only a communication intermediary — it does not own or verify the items reported, and does not guarantee their recovery."
+msgstr ""
+"Misfound is a platform that lets users post reports about lost or found "
+"items and communicate with each other about them. The platform is only a "
+"communication intermediary - it does not own or verify the items reported, "
+"and does not guarantee their recovery."
 
+#: templates/core/terms.html:12
 msgid "٢. مسؤوليات المستخدم"
 msgstr "2. User responsibilities"
 
+#: templates/core/terms.html:14
 msgid "تقديم معلومات صحيحة عند نشر إعلان أو التواصل بشأنه."
-msgstr "Providing accurate information when posting a report or communicating about it."
+msgstr ""
+"Providing accurate information when posting a report or communicating about "
+"it."
 
+#: templates/core/terms.html:15
 msgid "عدم نشر إعلانات وهمية أو مضلِّلة."
 msgstr "Not posting fake or misleading reports."
 
+#: templates/core/terms.html:16
 msgid "عدم نشر محتوى يتعلق بأغراض غير قانونية أو محظورة."
 msgstr "Not posting content related to illegal or prohibited items."
 
+#: templates/core/terms.html:17
 msgid "التعامل باحترام مع باقي المستخدمين وعدم إساءة استخدام نظام الرسائل."
-msgstr "Treating other users respectfully and not misusing the messaging system."
+msgstr ""
+"Treating other users respectfully and not misusing the messaging system."
 
+#: templates/core/terms.html:20
 msgid "٣. التحقق والتسليم"
 msgstr "3. Verification and handover"
 
+#: templates/core/terms.html:21
 msgid ""
 "التحقق من هوية الطرف الآخر وملكيته الفعلية للغرض قبل التسليم هو مسؤولية "
 "المستخدمين أنفسهم. ننصح باستخدام سؤال التحقق المتاح، والاجتماع في أماكن عامة "
 "آمنة عند تسليم الأغراض. المنصة غير مسؤولة عن أي نزاع أو ضرر ينشأ عن عملية "
 "التسليم."
-msgstr "Verifying the other party's identity and actual ownership of the item before handover is the users' own responsibility. We recommend using the available verification question and meeting in safe public places when handing items over. The platform is not responsible for any dispute or harm arising from the handover process."
+msgstr ""
+"Verifying the other party's identity and actual ownership of the item before "
+"handover is the users' own responsibility. We recommend using the available "
+"verification question and meeting in safe public places when handing items "
+"over. The platform is not responsible for any dispute or harm arising from "
+"the handover process."
 
+#: templates/core/terms.html:23
 msgid "٤. تعليق الحساب"
 msgstr "4. Account suspension"
 
+#: templates/core/terms.html:24
 msgid ""
 "يحق لنا تعليق أو حذف أي حساب أو إعلان يخالف هذه الشروط أو يُستخدم بشكل مسيء، "
 "دون إشعار مسبق في الحالات الجسيمة."
-msgstr "We reserve the right to suspend or remove any account or report that violates these terms or is used abusively, without prior notice in serious cases."
+msgstr ""
+"We reserve the right to suspend or remove any account or report that "
+"violates these terms or is used abusively, without prior notice in serious "
+"cases."
 
+#: templates/core/terms.html:26
 msgid "٥. حدود المسؤولية"
 msgstr "5. Limitation of liability"
 
+#: templates/core/terms.html:27
 msgid ""
 "تُقدَّم المنصة «كما هي» دون أي ضمانات. لا تتحمل Misfound مسؤولية فقدان الأغراض، "
 "أو صحة الإعلانات المنشورة من المستخدمين، أو أي تعامل يتم خارج المنصة."
-msgstr "The platform is provided “as is” without any warranties. Misfound is not responsible for lost items, the accuracy of reports posted by users, or any dealings that take place outside the platform."
+msgstr ""
+"The platform is provided “as is” without any warranties. Misfound is not "
+"responsible for lost items, the accuracy of reports posted by users, or any "
+"dealings that take place outside the platform."
 
+#: templates/core/terms.html:29
 msgid "٦. التعديلات"
 msgstr "6. Changes"
 
+#: templates/core/terms.html:30
 msgid ""
 "قد نُحدّث هذه الشروط من وقت لآخر، وسيظل استمرارك في استخدام المنصة بعد التحديث "
 "بمثابة موافقة على الشروط الجديدة."
-msgstr "We may update these terms from time to time. Continuing to use the platform after an update constitutes acceptance of the new terms."
+msgstr ""
+"We may update these terms from time to time. Continuing to use the platform "
+"after an update constitutes acceptance of the new terms."
 
+#: templates/core/terms.html:32
 msgid "٧. التواصل معنا"
 msgstr "7. Contact us"
 
+#: templates/core/terms.html:33
 msgid "لأي استفسار بخصوص هذه الشروط، راسلنا على"
 msgstr "For any questions about these terms, reach us at"
 
+#: templates/messaging/conversation.html:8
 msgid "محادثة حول الإعلان"
 msgstr "Conversation about the report"
 
+#: templates/messaging/conversation.html:11
 msgid "رقم الهاتف مسجَّل لدى الطرف الآخر"
 msgstr "This user has a registered phone number"
 
+#: templates/messaging/conversation.html:14 templates/reports/_card.html:27
 msgid "عرض الإعلان"
 msgstr "View report"
 
+#: templates/messaging/conversation.html:28
 msgid "إرسال الرسالة"
 msgstr "Send message"
 
+#: templates/messaging/conversation.html:28
 msgid "إرسال"
 msgstr "Send"
 
+#: templates/messaging/conversation.html:31
 msgid "محادثة خاصة وآمنة"
 msgstr "Private and secure conversation"
 
+#: templates/messaging/conversation.html:60
 msgid "تعذر إرسال الرسالة، يرجى المحاولة مرة أخرى."
 msgstr "Couldn't send the message. Please try again."
 
+#: templates/messaging/inbox.html:5
 msgid "تواصلك"
 msgstr "Your conversations"
 
+#: templates/messaging/inbox.html:26
 msgid "لا توجد محادثات بعد."
 msgstr "No conversations yet."
 
+#: templates/notifications/_dropdown.html:5
 msgid "تعليم الكل كمقروء"
 msgstr "Mark all as read"
 
+#: templates/notifications/_dropdown.html:21
+#: templates/notifications/list.html:23
 msgid "لا توجد إشعارات بعد."
 msgstr "No notifications yet."
 
+#: templates/notifications/_dropdown.html:26
 msgid "عرض كل الإشعارات"
 msgstr "View all notifications"
 
+#: templates/reports/_form.html:17
 msgid "نشر الإعلان"
 msgstr "Post report"
 
+#: templates/reports/_results.html:8
 msgid "لا توجد نتائج مطابقة."
 msgstr "No matching results."
 
+#: templates/reports/detail.html:6
 msgid "العودة للإعلانات"
 msgstr "Back to reports"
 
+#: templates/reports/detail.html:9
 msgid "مشاركة"
 msgstr "Share"
 
+#: templates/reports/detail.html:11
 msgid "مشاهدة"
 msgstr "views"
 
+#: templates/reports/detail.html:31
 msgid "، "
 msgstr ", "
 
+#: templates/reports/detail.html:42
 msgid "مكان الفقدان/العثور"
 msgstr "Where it was lost/found"
 
+#: templates/reports/detail.html:49
 msgid "سؤال التحقق الخاص بك"
 msgstr "Your verification question"
 
+#: templates/reports/detail.html:58
 msgid "هل هذا الإعلان يخصك؟"
 msgstr "Is this your report?"
 
+#: templates/reports/detail.html:58
 msgid "أرسل رسالة لصاحب الإعلان"
 msgstr "Send a message to the reporter"
 
+#: templates/reports/detail.html:64
 msgid "أعتقد أنني وجدتها"
 msgstr "I think I found it"
 
+#: templates/reports/detail.html:64
 msgid "أعتقد أنها لي"
 msgstr "I think it's mine"
 
+#: templates/reports/detail.html:70
 msgid "يرجى تسجيل الدخول للتواصل"
 msgstr "Please log in to get in touch"
 
+#: templates/reports/detail.html:78 templates/reports/detail.html:222
 msgid "تم إبلاغك عن هذا الإعلان مسبقًا"
 msgstr "You've already flagged this report"
 
+#: templates/reports/detail.html:80 templates/reports/detail.html:128
 msgid "الإبلاغ عن هذا الإعلان"
 msgstr "Flag this report"
 
+#: templates/reports/detail.html:91
 msgid "اقتراحات لك"
 msgstr "Suggestions for you"
 
+#: templates/reports/detail.html:91
 msgid "إعلانات قد تكون مطابقة"
 msgstr "Reports that might match"
 
+#: templates/reports/detail.html:104
 msgid "تطابق"
 msgstr "match"
 
+#: templates/reports/detail.html:131
 msgid "سبب الإبلاغ"
 msgstr "Reason for flagging"
 
+#: templates/reports/detail.html:133
 msgid "اختر السبب"
 msgstr "Choose a reason"
 
+#: templates/reports/detail.html:141
 msgid "ملاحظة إضافية (اختياري)"
 msgstr "Additional note (optional)"
 
+#: templates/reports/detail.html:146
 msgid "إرسال البلاغ"
 msgstr "Submit flag"
 
+#: templates/reports/detail.html:162
 msgid "تأكيد الاسترجاع"
 msgstr "Confirm recovery"
 
+#: templates/reports/detail.html:163
 msgid "هل استرجعت هذا الغرض فعلاً؟ سيتم وسم الإعلان كمنتهي."
-msgstr "Have you actually recovered this item? The report will be marked as closed."
+msgstr ""
+"Have you actually recovered this item? The report will be marked as closed."
 
+#: templates/reports/detail.html:164
 msgid "نعم، تم الاسترجاع"
 msgstr "Yes, it's recovered"
 
+#: templates/reports/form.html:9
 msgid "نشر إعلان مفقود"
 msgstr "Post a Lost Item Report"
 
+#: templates/reports/form.html:9
 msgid "نشر إعلان معثور عليه"
 msgstr "Post a Found Item Report"
 
+#: templates/reports/list.html:12
 msgid "الكل"
 msgstr "All"
 
+#: templates/reports/list.html:19
 msgid "جميع التصنيفات"
 msgstr "All categories"
 
+#: templates/reports/list.html:27
 msgid "جميع الدول"
 msgstr "All countries"
 
+#: templates/reports/list.html:35 templates/reports/list.html:59
 msgid "جميع المدن"
 msgstr "All cities"
 
+#: templates/reports/list.html:47
 msgid "تصفية"
 msgstr "Filter"
 
+#: templates/reports/list.html:85
 msgid "حدث خطأ في تحميل النتائج، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong loading the results. Please try again."
 
+#: templates/reports/mine.html:15
 msgid "لا توجد إعلانات حتى الآن."
 msgstr "No reports yet."
-

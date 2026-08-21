@@ -19,6 +19,7 @@ local_settings.py
 
 # Secrets
 secrets.json
+commands.txt
 
 # IDE
 .vscode/

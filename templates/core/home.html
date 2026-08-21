@@ -8,17 +8,14 @@
             <span class="mf-hero-eyebrow">
                 <span class="mf-live-dot"></span> {% trans "مجتمع يعيد الأشياء إلى أصحابها" %}
             </span>
-            <h1>{% trans "ما تبحث عنه قد يكون أقرب مما تتخيل." %}</h1>
+            <h1>{% trans "فقدت شيئًا؟ وجدت شيئًا؟ لنعيده إلى صاحبه." %}</h1>
             <p>{% trans "منصة تجمع إعلانات المفقودات والمعثورات في مكان واحد. انشر إعلانك في دقائق، وتواصل مباشرة وبأمان مع الطرف الآخر حتى يعود كل غرض إلى صاحبه." %}</p>
 
             <div class="mf-hero-actions">
-                <a href="{% url 'reports:list' %}" class="btn btn-primary btn-lg"><i class="bi bi-arrow-left"></i> {% trans "اكتشف الإعلانات" %}</a>
-                {% if user.is_authenticated %}
-                <a href="{% url 'reports:create' report_type='lost' %}" class="btn btn-ghost-light btn-lg"><i class="bi bi-megaphone"></i> {% trans "أضف إعلانًا" %}</a>
-                {% else %}
-                <a href="{% url 'accounts:register' %}" class="btn btn-ghost-light btn-lg"><i class="bi bi-person-plus"></i> {% trans "ابدأ الآن" %}</a>
-                {% endif %}
+                <a href="{% url 'reports:create' report_type='lost' %}" class="btn btn-primary btn-lg"><i class="bi bi-search-heart"></i> {% trans "فقدت شيئًا" %}</a>
+                <a href="{% url 'reports:create' report_type='found' %}" class="btn btn-found-cta btn-lg"><i class="bi bi-hand-thumbs-up"></i> {% trans "وجدت شيئًا" %}</a>
             </div>
+            <a href="{% url 'reports:list' %}" class="mf-hero-browse-link">{% trans "أو تصفح كل الإعلانات" %} <i class="bi bi-arrow-left"></i></a>
 
             <div class="mf-hero-stats">
                 <div><strong>469+</strong><span>{% trans "مدينة عربية" %}</span></div>
@@ -53,6 +50,13 @@
         {% endfor %}
     </select>
     <span class="mf-pill-divider"></span>
+    <select name="country" class="form-select border-0 bg-transparent mf-pill-field mf-pill-field--select mf-pill-field--location">
+        <option value="">{% trans "كل الدول" %}</option>
+        {% for c in countries %}
+        <option value="{{ c.id }}">{{ c.name }}</option>
+        {% endfor %}
+    </select>
+    <span class="mf-pill-divider"></span>
     <input type="text" name="q" class="form-control border-0 bg-transparent mf-pill-field" placeholder="{% trans 'مثال: محفظة جلد بني، آيفون 13...' %}">
     <button class="btn btn-primary mf-pill-submit" type="submit">
         <i class="bi bi-search"></i> {% trans "بحث" %}
@@ -71,7 +75,13 @@
     {% for report in latest_lost %}
         {% include "reports/_card.html" %}
     {% empty %}
-    <div class="col-12 text-center text-muted py-4">{% trans "لا توجد إعلانات عن مفقودات حاليًا." %}</div>
+    <div class="col-12">
+        <div class="mf-empty-state">
+            <div class="mf-empty-state__icon"><i class="bi bi-search-heart"></i></div>
+            <p>{% trans "لا توجد إعلانات عن مفقودات في منطقتك حتى الآن." %}</p>
+            <a href="{% url 'reports:create' report_type='lost' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> {% trans "كن أول من ينشر" %}</a>
+        </div>
+    </div>
     {% endfor %}
 </div>
 </section>
@@ -88,9 +98,46 @@
     {% for report in latest_found %}
         {% include "reports/_card.html" %}
     {% empty %}
-    <div class="col-12 text-center text-muted py-4">{% trans "لا توجد إعلانات عن معثورات حاليًا." %}</div>
+    <div class="col-12">
+        <div class="mf-empty-state">
+            <div class="mf-empty-state__icon mf-empty-state__icon--found"><i class="bi bi-hand-thumbs-up"></i></div>
+            <p>{% trans "لا توجد إعلانات عن معثورات في منطقتك حتى الآن." %}</p>
+            <a href="{% url 'reports:create' report_type='found' %}" class="btn btn-found-cta btn-sm"><i class="bi bi-plus-lg"></i> {% trans "كن أول من ينشر" %}</a>
+        </div>
+    </div>
     {% endfor %}
 </div>
+</section>
+
+<section class="mf-trust-section my-5">
+    <div class="mf-section-heading mf-section-heading--center">
+        <div>
+            <span class="mf-section-kicker"><i class="bi bi-shield-check"></i> {% trans "لماذا Misfound؟" %}</span>
+            <h2>{% trans "منصة آمنة تحمي بياناتك وخصوصيتك" %}</h2>
+        </div>
+    </div>
+    <div class="mf-trust-grid">
+        <div class="mf-trust-card">
+            <div class="mf-trust-card__icon"><i class="bi bi-chat-dots"></i></div>
+            <h3>{% trans "تواصل آمن داخل المنصة" %}</h3>
+            <p>{% trans "راسل الطرف الآخر مباشرة من داخل المنصة دون الحاجة لمشاركة رقم هاتفك قبل أن تثق به." %}</p>
+        </div>
+        <div class="mf-trust-card">
+            <div class="mf-trust-card__icon"><i class="bi bi-patch-check"></i></div>
+            <h3>{% trans "تحقق من الملكية" %}</h3>
+            <p>{% trans "صف الغرض بتفاصيله الدقيقة أو رقمه التسلسلي للتأكد أن من يتواصل معك هو صاحبه الحقيقي." %}</p>
+        </div>
+        <div class="mf-trust-card">
+            <div class="mf-trust-card__icon"><i class="bi bi-flag"></i></div>
+            <h3>{% trans "إبلاغ ومراجعة" %}</h3>
+            <p>{% trans "يمكنك الإبلاغ عن أي إعلان مشبوه، ويقوم فريقنا بمراجعته والتعامل معه بسرعة." %}</p>
+        </div>
+        <div class="mf-trust-card">
+            <div class="mf-trust-card__icon"><i class="bi bi-gift"></i></div>
+            <h3>{% trans "مجاني بالكامل" %}</h3>
+            <p>{% trans "نشر الإعلانات والبحث والتواصل، كل ذلك مجانًا وبدون أي رسوم خفية." %}</p>
+        </div>
+    </div>
 </section>
 </div>
 {% endblock %}

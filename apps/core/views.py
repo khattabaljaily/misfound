@@ -23,6 +23,7 @@ def home(request):
         'latest_lost': latest_lost,
         'latest_found': latest_found,
         'categories': Category.objects.all(),
+        'countries': Country.objects.all(),
     })
 
 
