@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 14:13+0300\n"
+"POT-Creation-Date: 2026-08-21 15:03+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -57,11 +57,11 @@ msgstr "Misfound Admin"
 msgid "لوحة التحكم"
 msgstr "Dashboard"
 
-#: apps/core/views.py:108
+#: apps/core/views.py:122
 msgid "طلب غير صالح."
 msgstr "Invalid request."
 
-#: apps/core/views.py:112
+#: apps/core/views.py:126
 msgid "تم وسم البلاغ كمُراجَع."
 msgstr "Report marked as reviewed."
 
@@ -103,7 +103,7 @@ msgstr "City"
 msgid "المدن"
 msgstr "Cities"
 
-#: apps/messaging/forms.py:11 templates/reports/detail.html:61
+#: apps/messaging/forms.py:11 templates/reports/detail.html:63
 msgid "اكتب رسالتك..."
 msgstr "Type your message..."
 
@@ -163,7 +163,7 @@ msgstr "Read"
 msgid "رسالة"
 msgstr "Message"
 
-#: apps/messaging/models.py:42 templates/base.html:43
+#: apps/messaging/models.py:42 templates/base.html:86
 #: templates/messaging/inbox.html:5
 msgid "الرسائل"
 msgstr "Messages"
@@ -224,7 +224,7 @@ msgstr "Type"
 msgid "العنوان"
 msgstr "Title"
 
-#: apps/notifications/models.py:31 templates/reports/detail.html:35
+#: apps/notifications/models.py:31 templates/reports/detail.html:37
 msgid "التفاصيل"
 msgstr "Details"
 
@@ -240,7 +240,7 @@ msgstr "Created on"
 msgid "إشعار"
 msgstr "Notification"
 
-#: apps/notifications/models.py:39 templates/base.html:60
+#: apps/notifications/models.py:39 templates/base.html:103
 #: templates/notifications/_dropdown.html:3 templates/notifications/list.html:3
 #: templates/notifications/list.html:5
 msgid "الإشعارات"
@@ -270,12 +270,12 @@ msgid "التصنيفات"
 msgstr "Categories"
 
 #: apps/reports/models.py:33 templates/core/admin_dashboard.html:42
-#: templates/reports/list.html:22 templates/reports/list.html:122
+#: templates/reports/list.html:23 templates/reports/list.html:123
 msgid "مفقود"
 msgstr "Lost"
 
 #: apps/reports/models.py:34 templates/core/admin_dashboard.html:43
-#: templates/reports/list.html:23 templates/reports/list.html:123
+#: templates/reports/list.html:24 templates/reports/list.html:124
 msgid "معثور عليه"
 msgstr "Found"
 
@@ -284,7 +284,7 @@ msgid "قائم"
 msgstr "Open"
 
 #: apps/reports/models.py:41 templates/reports/_card.html:15
-#: templates/reports/detail.html:26 templates/reports/detail.html:53
+#: templates/reports/detail.html:28 templates/reports/detail.html:55
 msgid "تم الاسترجاع"
 msgstr "Resolved"
 
@@ -308,7 +308,7 @@ msgstr "Category"
 msgid "الوصف"
 msgstr "Description"
 
-#: apps/reports/models.py:67 templates/reports/detail.html:39
+#: apps/reports/models.py:67 templates/reports/detail.html:41
 msgid "رقم المعرف"
 msgstr "Reference number"
 
@@ -367,19 +367,19 @@ msgstr "Report"
 msgid "الإعلانات"
 msgstr "Reports"
 
-#: apps/reports/models.py:110 templates/reports/detail.html:134
+#: apps/reports/models.py:110 templates/reports/detail.html:136
 msgid "محتوى مسيء أو غير لائق"
 msgstr "Offensive or inappropriate content"
 
-#: apps/reports/models.py:111 templates/reports/detail.html:135
+#: apps/reports/models.py:111 templates/reports/detail.html:137
 msgid "معلومات مضللة أو غير صحيحة"
 msgstr "Misleading or incorrect information"
 
-#: apps/reports/models.py:112 templates/reports/detail.html:136
+#: apps/reports/models.py:112 templates/reports/detail.html:138
 msgid "إعلان مكرر"
 msgstr "Duplicate report"
 
-#: apps/reports/models.py:113 templates/reports/detail.html:137
+#: apps/reports/models.py:113 templates/reports/detail.html:139
 msgid "سبب آخر"
 msgstr "Other reason"
 
@@ -436,29 +436,60 @@ msgstr "Detected on"
 msgid "التطابقات المحتملة"
 msgstr "Possible matches"
 
-#: apps/reports/views.py:186
+#: apps/reports/views.py:107 templates/base.html:76 templates/base.html:152
+msgid "المفقودات"
+msgstr "Lost items"
+
+#: apps/reports/views.py:108
+msgid ""
+"تصفح أحدث إعلانات المفقودات في الوطن العربي وساعد في إعادتها إلى أصحابها."
+msgstr ""
+"Browse the latest lost item reports across the Arab world and help reunite "
+"them with their owners."
+
+#: apps/reports/views.py:110 templates/base.html:79 templates/base.html:153
+msgid "المعثورات"
+msgstr "Found items"
+
+#: apps/reports/views.py:111
+msgid ""
+"تصفح أحدث إعلانات المعثورات في الوطن العربي وساعد في إيصالها إلى أصحابها."
+msgstr ""
+"Browse the latest found item reports across the Arab world and help get "
+"them to their owners."
+
+#: apps/reports/views.py:113 templates/404.html:12 templates/core/about.html:76
+#: templates/reports/list.html:11
+msgid "تصفح الإعلانات"
+msgstr "Explore reports"
+
+#: apps/reports/views.py:114
+msgid "تصفح جميع إعلانات المفقودات والمعثورات في الوطن العربي في مكان واحد."
+msgstr "Browse all lost and found reports across the Arab world in one place."
+
+#: apps/reports/views.py:209
 msgid "تم نشر الإعلان بنجاح."
 msgstr "Your report was posted successfully."
 
-#: apps/reports/views.py:216
+#: apps/reports/views.py:239
 msgid "لا يمكنك الإبلاغ عن إعلانك الخاص."
 msgstr "You can't flag your own report."
 
-#: apps/reports/views.py:222
+#: apps/reports/views.py:245
 msgid "يرجى اختيار سبب الإبلاغ."
 msgstr "Please choose a reason for the flag."
 
-#: apps/reports/views.py:229
+#: apps/reports/views.py:252
 msgid "تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة."
 msgstr ""
 "Your flag has been received - thanks for helping keep the platform "
 "trustworthy."
 
-#: apps/reports/views.py:229
+#: apps/reports/views.py:252
 msgid "سبق أن أبلغت عن هذا الإعلان."
 msgstr "You've already flagged this report."
 
-#: apps/reports/views.py:243 apps/reports/views.py:244
+#: apps/reports/views.py:266 apps/reports/views.py:267
 msgid "تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح."
 msgstr "The report's status was updated to “Resolved”."
 
@@ -493,11 +524,6 @@ msgid "يبدو أن الرابط الذي وصلت إليه غير صحيح أ�
 msgstr ""
 "The link you followed seems to be broken, or the page is no longer available."
 
-#: templates/404.html:12 templates/core/about.html:76
-#: templates/reports/list.html:10
-msgid "تصفح الإعلانات"
-msgstr "Explore reports"
-
 #: templates/500.html:7 templates/500.html:25
 msgid "حدث خطأ غير متوقع"
 msgstr "Something went wrong"
@@ -507,7 +533,7 @@ msgid "نعتذر، حدث خطأ من جانبنا. يرجى المحاولة �
 msgstr "Sorry, something went wrong on our end. Please try again shortly."
 
 #: templates/accounts/_login_form.html:12 templates/accounts/login.html:7
-#: templates/base.html:86
+#: templates/base.html:129
 msgid "تسجيل الدخول"
 msgstr "Log in"
 
@@ -531,147 +557,148 @@ msgstr "Already have an account? Log in"
 msgid "المفقودات والمعثورات"
 msgstr "Lost & Found"
 
-#: templates/base.html:27
+#: templates/base.html:9
+msgid ""
+"منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب "
+"غرض على الوصول إلى غرضه. تواصل آمن ومنصة مجانية بالكامل."
+msgstr ""
+"A platform for the Arab world that brings lost and found reports together in "
+"one place, helping every owner reach their item. Safe communication, and "
+"completely free."
+
+#: templates/base.html:70
 msgid "فتح القائمة"
 msgstr "Open menu"
 
-#: templates/base.html:33 templates/base.html:109
-msgid "المفقودات"
-msgstr "Lost items"
-
-#: templates/base.html:36 templates/base.html:110
-msgid "المعثورات"
-msgstr "Found items"
-
-#: templates/base.html:40 templates/reports/mine.html:6
+#: templates/base.html:83 templates/reports/mine.html:6
 msgid "إعلاناتي"
 msgstr "My reports"
 
-#: templates/base.html:52
+#: templates/base.html:95
 msgid "تبديل اللغة"
 msgstr "Switch language"
 
-#: templates/base.html:57
+#: templates/base.html:100
 msgid "إعلان مفقود"
 msgstr "Report Lost Item"
 
-#: templates/base.html:58
+#: templates/base.html:101
 msgid "إعلان معثور عليه"
 msgstr "Report Found Item"
 
-#: templates/base.html:65 templates/base.html:161
+#: templates/base.html:108 templates/base.html:204
 msgid "جاري التحميل..."
 msgstr "Loading..."
 
-#: templates/base.html:69
+#: templates/base.html:112
 msgid "قائمة المستخدم"
 msgstr "User menu"
 
-#: templates/base.html:75
+#: templates/base.html:118
 msgid "الملف الشخصي"
 msgstr "Profile"
 
-#: templates/base.html:77
+#: templates/base.html:120
 msgid "لوحة الإحصائيات"
 msgstr "Stats dashboard"
 
-#: templates/base.html:79 templates/base.html:173 templates/base.html:175
+#: templates/base.html:122 templates/base.html:216 templates/base.html:218
 msgid "تسجيل الخروج"
 msgstr "Log out"
 
-#: templates/base.html:87
+#: templates/base.html:130
 msgid "حساب جديد"
 msgstr "Sign up"
 
-#: templates/base.html:105
+#: templates/base.html:148
 msgid "نساعد كل صاحب غرض على الوصول إلى غرضه، بخطوة بسيطة وتواصل آمن."
 msgstr ""
 "We help every owner reach their item, through one simple step and a safe "
 "conversation."
 
-#: templates/base.html:108
+#: templates/base.html:151
 msgid "استكشف"
 msgstr "Explore"
 
-#: templates/base.html:113
+#: templates/base.html:156
 msgid "معلومات"
 msgstr "Info"
 
-#: templates/base.html:114 templates/core/about.html:3
+#: templates/base.html:157 templates/core/about.html:3
 msgid "عن الخدمة"
 msgstr "About"
 
-#: templates/base.html:115 templates/core/about.html:77
+#: templates/base.html:158 templates/core/about.html:77
 #: templates/core/privacy_policy.html:3 templates/core/privacy_policy.html:6
 msgid "سياسة الخصوصية"
 msgstr "Privacy Policy"
 
-#: templates/base.html:116 templates/core/terms.html:3
+#: templates/base.html:159 templates/core/terms.html:3
 #: templates/core/terms.html:6
 msgid "الشروط والأحكام"
 msgstr "Terms & Conditions"
 
-#: templates/base.html:121
+#: templates/base.html:164
 msgid "تم التطوير بواسطة"
 msgstr "Developed by"
 
-#: templates/base.html:121
+#: templates/base.html:164
 msgid "خطاب الجيلي"
 msgstr "Khattab Aljaily"
 
-#: templates/base.html:138 templates/base.html:152
+#: templates/base.html:181 templates/base.html:195
 msgid "تأكيد العملية"
 msgstr "Confirm action"
 
-#: templates/base.html:139 templates/base.html:153
+#: templates/base.html:182 templates/base.html:196
 msgid "هل أنت متأكد؟"
 msgstr "Are you sure?"
 
-#: templates/base.html:141 templates/reports/detail.html:145
+#: templates/base.html:184 templates/reports/detail.html:147
 msgid "إلغاء"
 msgstr "Cancel"
 
-#: templates/base.html:142 templates/base.html:154
+#: templates/base.html:185 templates/base.html:197
 msgid "تأكيد"
 msgstr "Confirm"
 
-#: templates/base.html:151
+#: templates/base.html:194
 msgid "إغلاق"
 msgstr "Close"
 
-#: templates/base.html:155
+#: templates/base.html:198
 msgid "جاري التنفيذ..."
 msgstr "Working..."
 
-#: templates/base.html:156
+#: templates/base.html:199
 msgid "توجد بيانات تحتاج إلى مراجعة، يرجى التحقق من الحقول أدناه."
 msgstr "Some fields need your attention - please check the form below."
 
-#: templates/base.html:157
+#: templates/base.html:200
 msgid "حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى."
 msgstr "A connection error occurred. Please try again."
 
-#: templates/base.html:158
+#: templates/base.html:201
 msgid "اكتب للبحث..."
 msgstr "Type to search..."
 
-#: templates/base.html:159
+#: templates/base.html:202
 msgid "لا توجد نتائج"
 msgstr "No results found"
 
-#: templates/base.html:160
+#: templates/base.html:203
 msgid "لا توجد خيارات"
 msgstr "No options available"
 
-#: templates/base.html:162
+#: templates/base.html:205
 msgid "اختر المدينة"
 msgstr "Choose a city"
 
-#: templates/base.html:174
+#: templates/base.html:217
 msgid "هل تريد تسجيل الخروج من حسابك؟"
 msgstr "Do you want to log out of your account?"
 
-#: templates/base.html:213
+#: templates/base.html:256
 msgid "تعذّر تحميل الإشعارات."
 msgstr "Couldn't load notifications."
 
@@ -861,8 +888,8 @@ msgstr "No reviewed flags yet."
 msgid "لا توجد بلاغات بانتظار المراجعة."
 msgstr "No flags awaiting review."
 
-#: templates/core/admin_flags.html:69 templates/reports/detail.html:183
-#: templates/reports/detail.html:188
+#: templates/core/admin_flags.html:69 templates/reports/detail.html:185
+#: templates/reports/detail.html:190
 msgid "حدث خطأ، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong. Please try again."
 
@@ -919,7 +946,7 @@ msgstr "All countries"
 msgid "مثال: محفظة جلد بني، آيفون 13..."
 msgstr "e.g. brown leather wallet, iPhone 13..."
 
-#: templates/core/home.html:62 templates/reports/list.html:66
+#: templates/core/home.html:62 templates/reports/list.html:67
 msgid "بحث"
 msgstr "Search"
 
@@ -1334,96 +1361,96 @@ msgstr "Post report"
 msgid "لا توجد نتائج مطابقة."
 msgstr "No matching results."
 
-#: templates/reports/detail.html:6
+#: templates/reports/detail.html:8
 msgid "العودة للإعلانات"
 msgstr "Back to reports"
 
-#: templates/reports/detail.html:9
+#: templates/reports/detail.html:11
 msgid "مشاركة"
 msgstr "Share"
 
-#: templates/reports/detail.html:11
+#: templates/reports/detail.html:13
 msgid "مشاهدة"
 msgstr "views"
 
-#: templates/reports/detail.html:31
+#: templates/reports/detail.html:33
 msgid "، "
 msgstr ", "
 
-#: templates/reports/detail.html:42
+#: templates/reports/detail.html:44
 msgid "مكان الفقدان/العثور"
 msgstr "Where it was lost/found"
 
-#: templates/reports/detail.html:49
+#: templates/reports/detail.html:51
 msgid "سؤال التحقق الخاص بك"
 msgstr "Your verification question"
 
-#: templates/reports/detail.html:58
+#: templates/reports/detail.html:60
 msgid "هل هذا الإعلان يخصك؟"
 msgstr "Is this your report?"
 
-#: templates/reports/detail.html:58
+#: templates/reports/detail.html:60
 msgid "أرسل رسالة لصاحب الإعلان"
 msgstr "Send a message to the reporter"
 
-#: templates/reports/detail.html:64
+#: templates/reports/detail.html:66
 msgid "أعتقد أنني وجدتها"
 msgstr "I think I found it"
 
-#: templates/reports/detail.html:64
+#: templates/reports/detail.html:66
 msgid "أعتقد أنها لي"
 msgstr "I think it's mine"
 
-#: templates/reports/detail.html:70
+#: templates/reports/detail.html:72
 msgid "يرجى تسجيل الدخول للتواصل"
 msgstr "Please log in to get in touch"
 
-#: templates/reports/detail.html:78 templates/reports/detail.html:225
+#: templates/reports/detail.html:80 templates/reports/detail.html:227
 msgid "تم إبلاغك عن هذا الإعلان مسبقًا"
 msgstr "You've already flagged this report"
 
-#: templates/reports/detail.html:80 templates/reports/detail.html:128
+#: templates/reports/detail.html:82 templates/reports/detail.html:130
 msgid "الإبلاغ عن هذا الإعلان"
 msgstr "Flag this report"
 
-#: templates/reports/detail.html:91
+#: templates/reports/detail.html:93
 msgid "اقتراحات لك"
 msgstr "Suggestions for you"
 
-#: templates/reports/detail.html:91
+#: templates/reports/detail.html:93
 msgid "إعلانات قد تكون مطابقة"
 msgstr "Reports that might match"
 
-#: templates/reports/detail.html:104
+#: templates/reports/detail.html:106
 msgid "تطابق"
 msgstr "match"
 
-#: templates/reports/detail.html:131
+#: templates/reports/detail.html:133
 msgid "سبب الإبلاغ"
 msgstr "Reason for flagging"
 
-#: templates/reports/detail.html:133
+#: templates/reports/detail.html:135
 msgid "اختر السبب"
 msgstr "Choose a reason"
 
-#: templates/reports/detail.html:141
+#: templates/reports/detail.html:143
 msgid "ملاحظة إضافية (اختياري)"
 msgstr "Additional note (optional)"
 
-#: templates/reports/detail.html:146
+#: templates/reports/detail.html:148
 msgid "إرسال البلاغ"
 msgstr "Submit flag"
 
-#: templates/reports/detail.html:162
+#: templates/reports/detail.html:164
 msgid "تأكيد الاسترجاع"
 msgstr "Confirm recovery"
 
-#: templates/reports/detail.html:163
+#: templates/reports/detail.html:165
 msgid "هل استرجعت هذا الغرض فعلاً؟ سيتم وسم الإعلان كمنتهي."
 msgstr ""
 "Have you actually recovered this item? The report will be marked as closed."
 
-#: templates/reports/detail.html:164
+#: templates/reports/detail.html:166
 msgid "نعم، تم الاسترجاع"
 msgstr "Yes, it's recovered"
 
@@ -1435,63 +1462,63 @@ msgstr "Post a Lost Item Report"
 msgid "نشر إعلان معثور عليه"
 msgstr "Post a Found Item Report"
 
-#: templates/reports/list.html:13
+#: templates/reports/list.html:14
 msgid "قائمة"
 msgstr "List"
 
-#: templates/reports/list.html:14
+#: templates/reports/list.html:15
 msgid "خريطة"
 msgstr "Map"
 
-#: templates/reports/list.html:21
+#: templates/reports/list.html:22
 msgid "الكل"
 msgstr "All"
 
-#: templates/reports/list.html:28
+#: templates/reports/list.html:29
 msgid "جميع التصنيفات"
 msgstr "All categories"
 
-#: templates/reports/list.html:36
+#: templates/reports/list.html:37
 msgid "جميع الدول"
 msgstr "All countries"
 
-#: templates/reports/list.html:44 templates/reports/list.html:87
+#: templates/reports/list.html:45 templates/reports/list.html:88
 msgid "جميع المدن"
 msgstr "All cities"
 
-#: templates/reports/list.html:52
+#: templates/reports/list.html:53
 msgid "كل الأوقات"
 msgstr "All time"
 
-#: templates/reports/list.html:53
+#: templates/reports/list.html:54
 msgid "اليوم"
 msgstr "Today"
 
-#: templates/reports/list.html:54
+#: templates/reports/list.html:55
 msgid "هذا الأسبوع"
 msgstr "This week"
 
-#: templates/reports/list.html:55
+#: templates/reports/list.html:56
 msgid "هذا الشهر"
 msgstr "This month"
 
-#: templates/reports/list.html:60
+#: templates/reports/list.html:61
 msgid "الأحدث"
 msgstr "Newest"
 
-#: templates/reports/list.html:61
+#: templates/reports/list.html:62
 msgid "الأقدم"
 msgstr "Oldest"
 
-#: templates/reports/list.html:62
+#: templates/reports/list.html:63
 msgid "الأكثر مشاهدة"
 msgstr "Most viewed"
 
-#: templates/reports/list.html:71
+#: templates/reports/list.html:72
 msgid "تصفية"
 msgstr "Filter"
 
-#: templates/reports/list.html:189
+#: templates/reports/list.html:190
 msgid "حدث خطأ في تحميل النتائج، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong loading the results. Please try again."
 

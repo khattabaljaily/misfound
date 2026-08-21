@@ -3,7 +3,7 @@
     <div class="card report-card h-100">
         <div class="position-relative report-card__media">
             {% if report.image %}
-                <img src="{{ report.image.url }}" class="card-img-top" alt="">
+                <img src="{{ report.image.url }}" class="card-img-top" alt="{{ report.title }}">
             {% else %}
                 <div class="card-img-placeholder"><i class="bi {{ report.category.icon|default:'bi-search' }}"></i></div>
             {% endif %}

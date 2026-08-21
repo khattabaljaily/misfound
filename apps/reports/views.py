@@ -8,6 +8,7 @@ from django.db.models import Count, F, Q
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.utils.text import Truncator
 from django.utils.translation import get_language, gettext as _
 
 from apps.locations.models import City, Country
@@ -102,11 +103,23 @@ def report_list(request):
     querystring = request.GET.copy()
     querystring.pop('page', None)
 
+    if report_type == Report.LOST:
+        meta_title = _('المفقودات') + ' | Misfound'
+        meta_description = _('تصفح أحدث إعلانات المفقودات في الوطن العربي وساعد في إعادتها إلى أصحابها.')
+    elif report_type == Report.FOUND:
+        meta_title = _('المعثورات') + ' | Misfound'
+        meta_description = _('تصفح أحدث إعلانات المعثورات في الوطن العربي وساعد في إيصالها إلى أصحابها.')
+    else:
+        meta_title = _('تصفح الإعلانات') + ' | Misfound'
+        meta_description = _('تصفح جميع إعلانات المفقودات والمعثورات في الوطن العربي في مكان واحد.')
+
     context = {
         'reports': page_obj,
         'page_obj': page_obj,
         'map_points': map_points,
         'base_qs': querystring.urlencode(),
+        'meta_title': meta_title,
+        'meta_description': meta_description,
         'categories': Category.objects.all(),
         'countries': Country.objects.all(),
         'cities': City.objects.filter(country_id=country_id) if country_id else City.objects.none(),
@@ -158,11 +171,21 @@ def report_detail(request, pk):
     absolute_url = request.build_absolute_uri(report.get_absolute_url())
     share_text = f'{report.get_type_display()}: {report.title}\n{absolute_url}'
 
+    location_bit = report.city.name if report.city else report.country.name
+    meta_description = (
+        f'{report.get_type_display()} · {report.category.name} · {location_bit} — '
+        + Truncator(report.description).chars(120)
+    )
+
     return render(request, 'reports/detail.html', {
         'report': report, 'is_owner': is_owner, 'matched_reports': matched_reports,
         'already_flagged': already_flagged,
         'absolute_url': absolute_url,
         'whatsapp_share_url': 'https://wa.me/?text=' + quote(share_text),
+        'meta_title': f'{report.title} | Misfound',
+        'meta_description': meta_description,
+        'meta_image': request.build_absolute_uri(report.image.url) if report.image else None,
+        'canonical_url': absolute_url,
     })
 
 

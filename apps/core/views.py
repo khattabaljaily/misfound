@@ -2,7 +2,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.db.models import Avg, Count, DurationField, ExpressionWrapper, F
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 
@@ -14,6 +14,20 @@ ADMIN_FLAGS_PAGE_SIZE = 20
 
 def _admin_context(active):
     return {'active': active, 'pending_flags_count': ReportFlag.objects.filter(resolved=False).count()}
+
+
+def robots_txt(request):
+    lines = [
+        'User-agent: *',
+        'Disallow: /admin/',
+        'Disallow: /DDQ9RKHA/',
+        'Disallow: /accounts/',
+        'Disallow: /messages/',
+        'Disallow: /notifications/',
+        '',
+        'Sitemap: ' + request.build_absolute_uri('/sitemap.xml'),
+    ]
+    return HttpResponse('\n'.join(lines), content_type='text/plain')
 
 
 def home(request):

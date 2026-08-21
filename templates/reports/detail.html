@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block title %}{{ meta_title }}{% endblock %}
+{% block og_type %}article{% endblock %}
 {% block content %}
 <div class="mf-report-detail">
     <div class="mf-report-detail__topline">
@@ -97,7 +99,7 @@
             <a href="{% url 'reports:detail' pk=matched_report.pk %}" class="card report-card h-100 text-decoration-none">
                 <div class="position-relative report-card__media">
                     {% if matched_report.image %}
-                        <img src="{{ matched_report.image.url }}" class="card-img-top" alt="">
+                        <img src="{{ matched_report.image.url }}" class="card-img-top" alt="{{ matched_report.title }}">
                     {% else %}
                         <div class="card-img-placeholder"><i class="bi {{ matched_report.category.icon|default:'bi-search' }}"></i></div>
                     {% endif %}
