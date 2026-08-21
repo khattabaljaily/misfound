@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 13:38+0300\n"
+"POT-Creation-Date: 2026-08-21 13:45+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -584,9 +584,9 @@ msgid "حساب جديد"
 msgstr "Sign up"
 
 #: templates/base.html:104
-msgid "نساعد الأشياء على العودة إلى أصحابها، بخطوة بسيطة وتواصل آمن."
+msgid "نساعد كل صاحب غرض على الوصول إلى غرضه، بخطوة بسيطة وتواصل آمن."
 msgstr ""
-"We help lost things find their way home, through one simple step and a safe "
+"We help every owner reach their item, through one simple step and a safe "
 "conversation."
 
 #: templates/base.html:107
@@ -613,7 +613,11 @@ msgstr "Terms & Conditions"
 
 #: templates/base.html:120
 msgid "تم التطوير بواسطة"
-msgstr "Built by"
+msgstr "Developed by"
+
+#: templates/base.html:120
+msgid "خطاب الجيلي"
+msgstr "Khattab Aljaily"
 
 #: templates/base.html:137 templates/base.html:151
 msgid "تأكيد العملية"
@@ -685,11 +689,11 @@ msgstr "About Misfound"
 
 #: templates/core/about.html:8
 msgid ""
-"منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل غرض على "
-"العودة إلى صاحبه."
+"منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب "
+"غرض على الوصول إلى غرضه."
 msgstr ""
 "A platform for the Arab world that brings lost and found reports together in "
-"one place, helping every item find its way back to its owner."
+"one place, helping every owner reach their item."
 
 #: templates/core/about.html:15
 msgid "دولة عربية"
@@ -700,8 +704,8 @@ msgid "مدينة مغطاة"
 msgstr "cities covered"
 
 #: templates/core/about.html:27
-msgid "غرض عاد لصاحبه"
-msgstr "items reunited with owners"
+msgid "صاحب وصل إلى غرضه"
+msgstr "owners reunited with their items"
 
 #: templates/core/about.html:32 templates/core/home.html:144
 msgid "لماذا Misfound؟"
@@ -710,13 +714,13 @@ msgstr "Why Misfound?"
 #: templates/core/about.html:34
 msgid ""
 "كل يوم يفقد أحدهم شيئًا يهمه — محفظة، مفتاح، هاتف، أو حتى وثيقة رسمية — بينما "
-"يعثر شخص آخر على هذا الغرض بالضبط دون أن يعرف كيف يوصله لصاحبه. Misfound "
-"يجمع الطرفين في مكان واحد بدلاً من الاعتماد على الحظ أو منشورات متفرقة على "
-"وسائل التواصل."
+"يعثر شخص آخر على هذا الغرض بالضبط دون أن يصل صاحبه إليه. Misfound يجمع "
+"الطرفين في مكان واحد بدلاً من الاعتماد على الحظ أو منشورات متفرقة على وسائل "
+"التواصل."
 msgstr ""
 "Every day, someone loses something that matters to them - a wallet, a key, a "
-"phone, even an official document - while someone else finds that exact item "
-"without knowing how to return it. Misfound brings both sides together in one "
+"phone, even an official document - while someone else finds that exact item, "
+"without its owner reaching it. Misfound brings both sides together in one "
 "place, instead of leaving it to luck or scattered social media posts."
 
 #: templates/core/about.html:37 templates/core/home.html:115
@@ -858,21 +862,21 @@ msgid "حدث خطأ، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong. Please try again."
 
 #: templates/core/home.html:9
-msgid "مجتمع يعيد الأشياء إلى أصحابها"
-msgstr "A community that reunites things with their owners"
+msgid "مجتمع يساعد كل صاحب غرض على الوصول إلى غرضه"
+msgstr "A community that helps every owner reach their item"
 
 #: templates/core/home.html:11
-msgid "فقدت شيئًا؟ وجدت شيئًا؟ لنعيده إلى صاحبه."
-msgstr "Lost something? Found something? Let's reunite it with its owner."
+msgid "فقدت شيئًا؟ وجدت شيئًا؟ دعنا نساعد صاحبه على الوصول إليه."
+msgstr "Lost something? Found something? Let's help its owner reach it."
 
 #: templates/core/home.html:12
 msgid ""
 "منصة تجمع إعلانات المفقودات والمعثورات في مكان واحد. انشر إعلانك في دقائق، "
-"وتواصل مباشرة وبأمان مع الطرف الآخر حتى يعود كل غرض إلى صاحبه."
+"وتواصل مباشرة وبأمان مع الطرف الآخر حتى يصل كل صاحب غرض إلى غرضه."
 msgstr ""
 "A platform that brings lost and found reports together in one place. Post "
 "your report in minutes, and connect directly and safely with the other party "
-"until every item finds its way back to its owner."
+"until every owner reaches their item."
 
 #: templates/core/home.html:15
 msgid "فقدت شيئًا"
