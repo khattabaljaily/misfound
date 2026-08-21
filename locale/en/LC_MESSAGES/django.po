@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 11:48+0300\n"
+"POT-Creation-Date: 2026-08-21 12:40+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -388,29 +388,29 @@ msgstr "Detected on"
 msgid "التطابقات المحتملة"
 msgstr "Possible matches"
 
-#: apps/reports/views.py:143
+#: apps/reports/views.py:163
 msgid "تم نشر الإعلان بنجاح."
 msgstr "Your report was posted successfully."
 
-#: apps/reports/views.py:173
+#: apps/reports/views.py:193
 msgid "لا يمكنك الإبلاغ عن إعلانك الخاص."
 msgstr "You can't flag your own report."
 
-#: apps/reports/views.py:179
+#: apps/reports/views.py:199
 msgid "يرجى اختيار سبب الإبلاغ."
 msgstr "Please choose a reason for the flag."
 
-#: apps/reports/views.py:186
+#: apps/reports/views.py:206
 msgid "تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة."
 msgstr ""
 "Your flag has been received - thanks for helping keep the platform "
 "trustworthy."
 
-#: apps/reports/views.py:186
+#: apps/reports/views.py:206
 msgid "سبق أن أبلغت عن هذا الإعلان."
 msgstr "You've already flagged this report."
 
-#: apps/reports/views.py:200 apps/reports/views.py:201
+#: apps/reports/views.py:220 apps/reports/views.py:221
 msgid "تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح."
 msgstr "The report's status was updated to “Resolved”."
 
@@ -611,7 +611,7 @@ msgstr "cities covered"
 msgid "غرض عاد لصاحبه"
 msgstr "items reunited with owners"
 
-#: templates/core/about.html:32 templates/core/home.html:115
+#: templates/core/about.html:32 templates/core/home.html:144
 msgid "لماذا Misfound؟"
 msgstr "Why Misfound?"
 
@@ -627,35 +627,35 @@ msgstr ""
 "without knowing how to return it. Misfound brings both sides together in one "
 "place, instead of leaving it to luck or scattered social media posts."
 
-#: templates/core/about.html:37
+#: templates/core/about.html:37 templates/core/home.html:115
 msgid "كيف تعمل المنصة؟"
 msgstr "How does it work?"
 
-#: templates/core/about.html:43
+#: templates/core/about.html:43 templates/core/home.html:123
 msgid "١. انشر إعلانك"
 msgstr "1. Post your report"
 
-#: templates/core/about.html:44
+#: templates/core/about.html:44 templates/core/home.html:124
 msgid "بلّغ عن غرض فقدته أو عثرت عليه في دقائق، مع صورة ووصف ومكان."
 msgstr ""
 "Report something you've lost or found in minutes, with a photo, description, "
 "and location."
 
-#: templates/core/about.html:52
+#: templates/core/about.html:52 templates/core/home.html:129
 msgid "٢. نبحث عن تطابق"
 msgstr "2. We look for a match"
 
-#: templates/core/about.html:53
+#: templates/core/about.html:53 templates/core/home.html:130
 msgid "نظام ذكي يقارن إعلانك تلقائيًا بالإعلانات المقابلة ويقترح ما قد يطابقه."
 msgstr ""
 "A smart system automatically compares your report against matching ones and "
 "suggests possible matches."
 
-#: templates/core/about.html:61
+#: templates/core/about.html:61 templates/core/home.html:135
 msgid "٣. تواصل بأمان"
 msgstr "3. Connect safely"
 
-#: templates/core/about.html:62
+#: templates/core/about.html:62 templates/core/home.html:136
 msgid "تراسل الطرف الآخر داخل المنصة مباشرة، وتتحقق من الملكية قبل التسليم."
 msgstr ""
 "Message the other party directly within the platform, and verify ownership "
@@ -822,7 +822,7 @@ msgstr "All countries"
 msgid "مثال: محفظة جلد بني، آيفون 13..."
 msgstr "e.g. brown leather wallet, iPhone 13..."
 
-#: templates/core/home.html:62 templates/reports/list.html:42
+#: templates/core/home.html:62 templates/reports/list.html:57
 msgid "بحث"
 msgstr "Search"
 
@@ -863,26 +863,30 @@ msgid "لا توجد إعلانات عن معثورات في منطقتك حتى
 msgstr "No found item reports in your area yet."
 
 #: templates/core/home.html:116
+msgid "ثلاث خطوات بسيطة لاسترجاع غرضك"
+msgstr "Three simple steps to get your item back"
+
+#: templates/core/home.html:145
 msgid "منصة آمنة تحمي بياناتك وخصوصيتك"
 msgstr "A safe platform that protects your data and privacy"
 
-#: templates/core/home.html:122
+#: templates/core/home.html:151
 msgid "تواصل آمن داخل المنصة"
 msgstr "Safe in-app messaging"
 
-#: templates/core/home.html:123
+#: templates/core/home.html:152
 msgid ""
 "راسل الطرف الآخر مباشرة من داخل المنصة دون الحاجة لمشاركة رقم هاتفك قبل أن "
 "تثق به."
 msgstr ""
-"Message the other party directly within the platform - no need to share "
-"your phone number until you trust them."
+"Message the other party directly within the platform - no need to share your "
+"phone number until you trust them."
 
-#: templates/core/home.html:127
+#: templates/core/home.html:156
 msgid "تحقق من الملكية"
 msgstr "Verify ownership"
 
-#: templates/core/home.html:128
+#: templates/core/home.html:157
 msgid ""
 "صف الغرض بتفاصيله الدقيقة أو رقمه التسلسلي للتأكد أن من يتواصل معك هو صاحبه "
 "الحقيقي."
@@ -890,22 +894,22 @@ msgstr ""
 "Describe the item's exact details or serial number to confirm whoever "
 "contacts you is its real owner."
 
-#: templates/core/home.html:132
+#: templates/core/home.html:161
 msgid "إبلاغ ومراجعة"
 msgstr "Report & review"
 
-#: templates/core/home.html:133
+#: templates/core/home.html:162
 msgid ""
 "يمكنك الإبلاغ عن أي إعلان مشبوه، ويقوم فريقنا بمراجعته والتعامل معه بسرعة."
 msgstr ""
 "You can flag any suspicious report, and our team will review and handle it "
 "quickly."
 
-#: templates/core/home.html:137
+#: templates/core/home.html:166
 msgid "مجاني بالكامل"
 msgstr "Completely free"
 
-#: templates/core/home.html:138
+#: templates/core/home.html:167
 msgid "نشر الإعلانات والبحث والتواصل، كل ذلك مجانًا وبدون أي رسوم خفية."
 msgstr "Posting, searching, and messaging - all free, with no hidden fees."
 
@@ -1317,15 +1321,43 @@ msgstr "All categories"
 msgid "جميع الدول"
 msgstr "All countries"
 
-#: templates/reports/list.html:35 templates/reports/list.html:59
+#: templates/reports/list.html:35 templates/reports/list.html:74
 msgid "جميع المدن"
 msgstr "All cities"
 
-#: templates/reports/list.html:47
+#: templates/reports/list.html:43
+msgid "كل الأوقات"
+msgstr "All time"
+
+#: templates/reports/list.html:44
+msgid "اليوم"
+msgstr "Today"
+
+#: templates/reports/list.html:45
+msgid "هذا الأسبوع"
+msgstr "This week"
+
+#: templates/reports/list.html:46
+msgid "هذا الشهر"
+msgstr "This month"
+
+#: templates/reports/list.html:51
+msgid "الأحدث"
+msgstr "Newest"
+
+#: templates/reports/list.html:52
+msgid "الأقدم"
+msgstr "Oldest"
+
+#: templates/reports/list.html:53
+msgid "الأكثر مشاهدة"
+msgstr "Most viewed"
+
+#: templates/reports/list.html:62
 msgid "تصفية"
 msgstr "Filter"
 
-#: templates/reports/list.html:85
+#: templates/reports/list.html:100
 msgid "حدث خطأ في تحميل النتائج، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong loading the results. Please try again."
 

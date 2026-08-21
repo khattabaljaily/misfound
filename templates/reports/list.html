@@ -38,6 +38,21 @@
             {% endfor %}
         </select>
     </div>
+    <div class="col-md-2">
+        <select name="date_range" class="form-select" data-choices>
+            <option value="">{% trans "كل الأوقات" %}</option>
+            <option value="today" {% if selected.date_range == 'today' %}selected{% endif %}>{% trans "اليوم" %}</option>
+            <option value="week" {% if selected.date_range == 'week' %}selected{% endif %}>{% trans "هذا الأسبوع" %}</option>
+            <option value="month" {% if selected.date_range == 'month' %}selected{% endif %}>{% trans "هذا الشهر" %}</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="sort" class="form-select" data-choices>
+            <option value="newest" {% if selected.sort == 'newest' %}selected{% endif %}>{% trans "الأحدث" %}</option>
+            <option value="oldest" {% if selected.sort == 'oldest' %}selected{% endif %}>{% trans "الأقدم" %}</option>
+            <option value="popular" {% if selected.sort == 'popular' %}selected{% endif %}>{% trans "الأكثر مشاهدة" %}</option>
+        </select>
+    </div>
     <div class="col-md-3">
         <input type="text" name="q" class="form-control" placeholder="{% trans 'بحث' %}" value="{{ selected.q }}">
     </div>

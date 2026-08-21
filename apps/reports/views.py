@@ -1,3 +1,4 @@
+from datetime import timedelta
 from urllib.parse import quote
 
 from django.contrib import messages
@@ -6,6 +7,7 @@ from django.core.paginator import Paginator
 from django.db.models import F
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 from django.utils.translation import get_language, gettext as _
 
 from apps.locations.models import City, Country
@@ -56,6 +58,22 @@ def report_list(request):
             | qs.filter(identifier__icontains=q)
         )
 
+    date_range = request.GET.get('date_range')
+    if date_range in ('today', 'week', 'month'):
+        since = {'today': 0, 'week': 7, 'month': 30}[date_range]
+        qs = qs.filter(created_at__gte=timezone.now() - timedelta(days=since))
+    else:
+        date_range = ''
+
+    sort = request.GET.get('sort')
+    if sort == 'oldest':
+        qs = qs.order_by('created_at')
+    elif sort == 'popular':
+        qs = qs.order_by('-views')
+    else:
+        sort = 'newest'
+        qs = qs.order_by('-created_at')
+
     paginator = Paginator(qs, REPORTS_PAGE_SIZE)
     page_obj = paginator.get_page(request.GET.get('page'))
 
@@ -75,6 +93,8 @@ def report_list(request):
             'country': country_id or '',
             'city': city_id or '',
             'q': q or '',
+            'date_range': date_range or '',
+            'sort': sort,
         },
     }
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':

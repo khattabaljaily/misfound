@@ -1150,6 +1150,41 @@ a.mf-pagination__link:hover {
 
 .mf-empty-state p { color: var(--mf-text-muted); margin-bottom: 1.1rem; }
 
+/* How it works steps */
+.mf-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.mf-step-card {
+    position: relative;
+    background: var(--mf-surface);
+    border: 1px solid var(--mf-border);
+    border-radius: var(--mf-radius-lg);
+    box-shadow: var(--mf-shadow);
+    padding: 1.6rem 1.4rem;
+    text-align: center;
+}
+
+.mf-step-card__num {
+    position: absolute;
+    top: 0.9rem;
+    inset-inline-end: 1.1rem;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--mf-border);
+}
+
+.mf-step-card .mf-section-icon { width: 46px; height: 46px; font-size: 1.2rem; margin: 0 auto 1rem; }
+.mf-step-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+.mf-step-card p { font-size: 0.85rem; color: var(--mf-text-muted); line-height: 1.75; margin: 0; }
+
+@media (max-width: 980px) {
+    .mf-steps-grid { grid-template-columns: 1fr; }
+}
+
 /* Trust & safety section */
 .mf-trust-grid {
     display: grid;
