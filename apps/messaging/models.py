@@ -43,3 +43,34 @@ class Message(models.Model):
 
     def __str__(self):
         return f'{self.sender}: {self.body[:30]}'
+
+
+class Rating(models.Model):
+    """A star rating one conversation participant leaves for the other,
+    once the report behind the conversation has been resolved."""
+
+    conversation = models.ForeignKey(
+        Conversation, on_delete=models.CASCADE, related_name='ratings', verbose_name=_('المحادثة')
+    )
+    rater = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='ratings_given',
+        verbose_name=_('المُقيِّم')
+    )
+    ratee = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='ratings_received',
+        verbose_name=_('المُقيَّم')
+    )
+    stars = models.PositiveSmallIntegerField(
+        choices=[(i, i) for i in range(1, 6)], verbose_name=_('التقييم')
+    )
+    comment = models.CharField(max_length=300, blank=True, verbose_name=_('تعليق'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاريخ التقييم'))
+
+    class Meta:
+        unique_together = ['conversation', 'rater']
+        ordering = ['-created_at']
+        verbose_name = _('تقييم')
+        verbose_name_plural = _('التقييمات')
+
+    def __str__(self):
+        return f'{self.rater} → {self.ratee}: {self.stars}★'

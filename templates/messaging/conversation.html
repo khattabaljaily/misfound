@@ -10,6 +10,14 @@
         {% if other_participant.phone %}
         <span class="mf-phone-on-file"><i class="bi bi-patch-check"></i> {% trans "رقم الهاتف مسجَّل لدى الطرف الآخر" %}</span>
         {% endif %}
+        {% if other_reputation.count %}
+        <span class="mf-reputation">
+            <i class="bi bi-star-fill"></i> {{ other_reputation.avg }} ({{ other_reputation.count }})
+            {% if 'trusted' in other_reputation.badges %}
+            <span class="mf-badge-chip"><i class="bi bi-award-fill"></i> {% trans "موثوق" %}</span>
+            {% endif %}
+        </span>
+        {% endif %}
     </div>
     <a href="{% url 'reports:detail' pk=conversation.report.pk %}" class="mf-chat-report-link"><i class="bi bi-box-arrow-up-left"></i> {% trans "عرض الإعلان" %}</a>
 </div>
@@ -32,6 +40,27 @@
 {% elif not is_reporter and conversation.report.verification_question %}
 <div class="mf-verify-banner mf-verify-banner--waiting">
     <i class="bi bi-hourglass-split"></i> {% trans "بانتظار تحقق صاحب الإعلان من ملكيتك للغرض قبل التسليم." %}
+</div>
+{% endif %}
+
+{% if rating_form %}
+<div class="mf-rate-banner">
+    <strong><i class="bi bi-star"></i> {% trans "كيف كانت تجربتك؟" %}</strong>
+    <form method="post" action="{% url 'messaging:rate' pk=conversation.pk %}" class="mf-rate-form">
+        {% csrf_token %}
+        <div class="mf-star-input">
+            {% for value in "54321" %}
+            <input type="radio" name="stars" id="star-{{ value }}" value="{{ value }}" required>
+            <label for="star-{{ value }}"><i class="bi bi-star-fill"></i></label>
+            {% endfor %}
+        </div>
+        {{ rating_form.comment }}
+        <button type="submit" class="btn btn-found-cta btn-sm"><i class="bi bi-send"></i> {% trans "إرسال التقييم" %}</button>
+    </form>
+</div>
+{% elif my_rating %}
+<div class="mf-verify-banner mf-verify-banner--done">
+    <i class="bi bi-star-fill"></i> {% blocktrans with stars=my_rating.stars %}قيّمت هذه التجربة بـ {{ stars }} نجوم{% endblocktrans %}
 </div>
 {% endif %}
 

@@ -8,8 +8,9 @@ from django.urls import reverse
 
 from apps.notifications.services import notify
 from apps.reports.models import Report
-from .forms import MessageForm
-from .models import Conversation, Message
+from .forms import MessageForm, RatingForm
+from .models import Conversation, Message, Rating
+from .services import get_reputation
 
 INBOX_PAGE_SIZE = 15
 
@@ -81,12 +82,52 @@ def conversation_detail(request, pk):
     conversation.messages.exclude(sender=request.user).update(read=True)
     request.user.notifications.filter(type='message', url=request.path, is_read=False).update(is_read=True)
 
+    other_participant = _other_participant(conversation, request.user)
+    my_rating = Rating.objects.filter(conversation=conversation, rater=request.user).first()
+    can_rate = conversation.report.status == Report.RESOLVED and not my_rating
+
     return render(request, 'messaging/conversation.html', {
         'conversation': conversation,
         'form': form,
-        'other_participant': _other_participant(conversation, request.user),
+        'rating_form': RatingForm() if can_rate else None,
+        'my_rating': my_rating,
+        'other_participant': other_participant,
+        'other_reputation': get_reputation(other_participant),
         'is_reporter': request.user == conversation.report.reporter,
+        'can_rate': can_rate,
     })
+
+
+@login_required
+def rate_conversation(request, pk):
+    conversation = get_object_or_404(Conversation.objects.select_related('report'), pk=pk)
+    if not _can_access(request.user, conversation):
+        return HttpResponseForbidden()
+    if request.method != 'POST' or conversation.report.status != Report.RESOLVED:
+        return HttpResponseForbidden()
+    if Rating.objects.filter(conversation=conversation, rater=request.user).exists():
+        return HttpResponseForbidden()
+
+    form = RatingForm(request.POST)
+    if form.is_valid():
+        ratee = _other_participant(conversation, request.user)
+        rating = form.save(commit=False)
+        rating.conversation = conversation
+        rating.rater = request.user
+        rating.ratee = ratee
+        rating.save()
+        notify(
+            ratee, 'rating',
+            'قيّمك أحد المستخدمين',
+            f'{"⭐" * rating.stars} على تجربتكم بخصوص: {conversation.report.title}',
+            reverse('messaging:conversation', args=[conversation.pk]),
+        )
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})
+    elif request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+
+    return redirect('messaging:conversation', pk=pk)
 
 
 @login_required

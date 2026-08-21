@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 12:48+0300\n"
+"POT-Creation-Date: 2026-08-21 12:59+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -99,6 +99,10 @@ msgstr "Cities"
 msgid "اكتب رسالتك..."
 msgstr "Type your message..."
 
+#: apps/messaging/forms.py:23
+msgid "تعليق اختياري عن تجربتك..."
+msgstr "Optional comment about your experience..."
+
 #: apps/messaging/models.py:9 apps/reports/models.py:117
 msgid "الإعلان"
 msgstr "Report"
@@ -115,7 +119,7 @@ msgstr "The user claiming ownership of the item"
 msgid "تاريخ البدء"
 msgstr "Started on"
 
-#: apps/messaging/models.py:16 templates/messaging/conversation.html:19
+#: apps/messaging/models.py:16 templates/messaging/conversation.html:27
 msgid "تم التحقق من الملكية"
 msgstr "Ownership verified"
 
@@ -127,7 +131,7 @@ msgstr "Conversation"
 msgid "المحادثات"
 msgstr "Conversations"
 
-#: apps/messaging/models.py:30
+#: apps/messaging/models.py:30 apps/messaging/models.py:53
 msgid "المحادثة"
 msgstr "Conversation"
 
@@ -143,7 +147,7 @@ msgstr "Message text"
 msgid "تاريخ الإرسال"
 msgstr "Sent on"
 
-#: apps/messaging/models.py:37 apps/notifications/models.py:30
+#: apps/messaging/models.py:37 apps/notifications/models.py:33
 msgid "تمت القراءة"
 msgstr "Read"
 
@@ -156,47 +160,79 @@ msgstr "Message"
 msgid "الرسائل"
 msgstr "Messages"
 
-#: apps/notifications/models.py:11 apps/reports/models.py:157
+#: apps/messaging/models.py:57
+msgid "المُقيِّم"
+msgstr "Rater"
+
+#: apps/messaging/models.py:61
+msgid "المُقيَّم"
+msgstr "Ratee"
+
+#: apps/messaging/models.py:64
+msgid "التقييم"
+msgstr "Rating"
+
+#: apps/messaging/models.py:66
+msgid "تعليق"
+msgstr "Comment"
+
+#: apps/messaging/models.py:67
+msgid "تاريخ التقييم"
+msgstr "Rated on"
+
+#: apps/messaging/models.py:72
+msgid "تقييم"
+msgstr "Rating"
+
+#: apps/messaging/models.py:73
+msgid "التقييمات"
+msgstr "Ratings"
+
+#: apps/notifications/models.py:12 apps/reports/models.py:157
 msgid "تطابق محتمل"
 msgstr "Possible match"
 
-#: apps/notifications/models.py:12
+#: apps/notifications/models.py:13
 msgid "رسالة جديدة"
 msgstr "New message"
 
-#: apps/notifications/models.py:13
+#: apps/notifications/models.py:14
 msgid "تذكير بالاسترجاع"
 msgstr "Recovery reminder"
 
-#: apps/notifications/models.py:24
+#: apps/notifications/models.py:15
+msgid "تقييم جديد"
+msgstr "New rating"
+
+#: apps/notifications/models.py:27
 msgid "المستخدم"
 msgstr "User"
 
-#: apps/notifications/models.py:26
+#: apps/notifications/models.py:29
 msgid "النوع"
 msgstr "Type"
 
-#: apps/notifications/models.py:27 apps/reports/models.py:64
+#: apps/notifications/models.py:30 apps/reports/models.py:64
 msgid "العنوان"
 msgstr "Title"
 
-#: apps/notifications/models.py:28 templates/reports/detail.html:35
+#: apps/notifications/models.py:31 templates/reports/detail.html:35
 msgid "التفاصيل"
 msgstr "Details"
 
-#: apps/notifications/models.py:29
+#: apps/notifications/models.py:32
 msgid "الرابط"
 msgstr "Link"
 
-#: apps/notifications/models.py:31 apps/reports/models.py:83
+#: apps/notifications/models.py:34 apps/reports/models.py:83
 msgid "تاريخ الإنشاء"
 msgstr "Created on"
 
-#: apps/notifications/models.py:35
+#: apps/notifications/models.py:38
 msgid "إشعار"
 msgstr "Notification"
 
-#: apps/notifications/models.py:36 templates/base.html:59
+#: apps/notifications/models.py:39 templates/base.html:59
 #: templates/notifications/_dropdown.html:3 templates/notifications/list.html:3
 #: templates/notifications/list.html:5
 msgid "الإشعارات"
@@ -1163,35 +1199,52 @@ msgstr "Conversation about the report"
 msgid "رقم الهاتف مسجَّل لدى الطرف الآخر"
 msgstr "This user has a registered phone number"
 
-#: templates/messaging/conversation.html:14 templates/reports/_card.html:27
+#: templates/messaging/conversation.html:17
+msgid "موثوق"
+msgstr "Trusted"
+
+#: templates/messaging/conversation.html:22 templates/reports/_card.html:27
 msgid "عرض الإعلان"
 msgstr "View report"
 
-#: templates/messaging/conversation.html:24
+#: templates/messaging/conversation.html:32
 msgid "كيف نتأكد أنه الغرض الصحيح؟"
 msgstr "How do we know it's the right item?"
 
-#: templates/messaging/conversation.html:29
+#: templates/messaging/conversation.html:37
 msgid "تحقّقت، هذا صاحب الغرض"
 msgstr "Confirmed, this is the owner"
 
-#: templates/messaging/conversation.html:34
+#: templates/messaging/conversation.html:42
 msgid "بانتظار تحقق صاحب الإعلان من ملكيتك للغرض قبل التسليم."
 msgstr "Waiting for the reporter to verify you own the item before handover."
 
-#: templates/messaging/conversation.html:49
+#: templates/messaging/conversation.html:48
+msgid "كيف كانت تجربتك؟"
+msgstr "How was your experience?"
+
+#: templates/messaging/conversation.html:58
+msgid "إرسال التقييم"
+msgstr "Submit rating"
+
+#: templates/messaging/conversation.html:63
+#, python-format
+msgid "قيّمت هذه التجربة بـ %(stars)s نجوم"
+msgstr "You rated this experience %(stars)s stars"
+
+#: templates/messaging/conversation.html:78
 msgid "إرسال الرسالة"
 msgstr "Send message"
 
-#: templates/messaging/conversation.html:49
+#: templates/messaging/conversation.html:78
 msgid "إرسال"
 msgstr "Send"
 
-#: templates/messaging/conversation.html:52
+#: templates/messaging/conversation.html:81
 msgid "محادثة خاصة وآمنة"
 msgstr "Private and secure conversation"
 
-#: templates/messaging/conversation.html:81
+#: templates/messaging/conversation.html:110
 msgid "تعذر إرسال الرسالة، يرجى المحاولة مرة أخرى."
 msgstr "Couldn't send the message. Please try again."
 

@@ -7,16 +7,19 @@ class Notification(models.Model):
     MATCH = 'match'
     MESSAGE = 'message'
     RESOLVED_REMINDER = 'resolved_reminder'
+    RATING = 'rating'
     TYPE_CHOICES = [
         (MATCH, _('تطابق محتمل')),
         (MESSAGE, _('رسالة جديدة')),
         (RESOLVED_REMINDER, _('تذكير بالاسترجاع')),
+        (RATING, _('تقييم جديد')),
     ]
 
     ICONS = {
         MATCH: 'bi-stars',
         MESSAGE: 'bi-chat-dots',
         RESOLVED_REMINDER: 'bi-check-circle',
+        RATING: 'bi-star-fill',
     }
 
     user = models.ForeignKey(

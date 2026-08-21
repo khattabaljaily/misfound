@@ -8,4 +8,5 @@ urlpatterns = [
     path('start/<int:report_pk>/', views.start_conversation, name='start'),
     path('<int:pk>/', views.conversation_detail, name='conversation'),
     path('<int:pk>/verify/', views.mark_verified, name='verify'),
+    path('<int:pk>/rate/', views.rate_conversation, name='rate'),
 ]

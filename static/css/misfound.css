@@ -1404,6 +1404,56 @@ button.mf-flag-link:hover { color: var(--mf-danger); }
     border-color: rgba(22, 163, 126, 0.35);
 }
 
+.mf-reputation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+    color: var(--mf-text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.mf-reputation i { color: #f5a524; }
+
+.mf-badge-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background: var(--mf-teal-light);
+    color: var(--mf-teal-dark);
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+
+.mf-badge-chip i { color: var(--mf-teal-dark); }
+
+/* Rate-your-experience panel */
+.mf-rate-banner {
+    max-width: 920px;
+    margin: 0 auto 1rem;
+    padding: 1rem 1.1rem;
+    border-radius: var(--mf-radius);
+    background: var(--mf-surface);
+    border: 1px solid var(--mf-border);
+}
+
+.mf-rate-banner > strong { display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; color: var(--mf-navy); margin-bottom: 0.7rem; }
+.mf-rate-banner > strong i { color: #f5a524; }
+
+.mf-rate-form { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+
+.mf-star-input { display: inline-flex; flex-direction: row-reverse; gap: 0.15rem; }
+.mf-star-input input { display: none; }
+.mf-star-input label { cursor: pointer; font-size: 1.4rem; color: var(--mf-border); transition: color 0.15s ease; }
+.mf-star-input input:checked ~ label,
+.mf-star-input label:hover,
+.mf-star-input label:hover ~ label { color: #f5a524; }
+
+.mf-rate-form .form-control { flex: 1; min-width: 180px; }
+
 .mf-chat-shell, .mf-inbox-shell { max-width: 920px; margin: 0 auto; overflow: hidden; border: 1px solid rgba(18, 38, 58, 0.07); border-radius: 20px; background: rgba(255, 255, 255, 0.86); box-shadow: var(--mf-shadow-lg); }
 .mf-messages { height: min(56vh, 520px); overflow-y: auto; padding: 1.4rem; background: radial-gradient(circle at 10% 10%, rgba(255, 128, 111, 0.07), transparent 32%), var(--mf-bg); }
 .mf-message-row { display: flex; align-items: flex-end; gap: 0.55rem; margin-bottom: 1rem; }
