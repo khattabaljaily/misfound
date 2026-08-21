@@ -10,5 +10,5 @@ class MessageInline(admin.TabularInline):
 
 @admin.register(Conversation)
 class ConversationAdmin(admin.ModelAdmin):
-    list_display = ['report', 'claimant', 'created_at']
+    list_display = ['report', 'claimant', 'created_at', 'ownership_verified']
     inlines = [MessageInline]

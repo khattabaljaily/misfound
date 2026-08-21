@@ -14,6 +14,27 @@
     <a href="{% url 'reports:detail' pk=conversation.report.pk %}" class="mf-chat-report-link"><i class="bi bi-box-arrow-up-left"></i> {% trans "عرض الإعلان" %}</a>
 </div>
 
+{% if conversation.ownership_verified %}
+<div class="mf-verify-banner mf-verify-banner--done">
+    <i class="bi bi-patch-check-fill"></i> {% trans "تم التحقق من الملكية" %}
+</div>
+{% elif is_reporter and conversation.report.verification_question %}
+<div class="mf-verify-banner">
+    <div class="mf-verify-banner__question">
+        <strong><i class="bi bi-shield-question"></i> {% trans "كيف نتأكد أنه الغرض الصحيح؟" %}</strong>
+        <p>{{ conversation.report.verification_question }}</p>
+    </div>
+    <form method="post" action="{% url 'messaging:verify' pk=conversation.pk %}" id="verify-form">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-found-cta btn-sm"><i class="bi bi-check-circle"></i> {% trans "تحقّقت، هذا صاحب الغرض" %}</button>
+    </form>
+</div>
+{% elif not is_reporter and conversation.report.verification_question %}
+<div class="mf-verify-banner mf-verify-banner--waiting">
+    <i class="bi bi-hourglass-split"></i> {% trans "بانتظار تحقق صاحب الإعلان من ملكيتك للغرض قبل التسليم." %}
+</div>
+{% endif %}
+
 <div class="mf-chat-shell">
     <div id="messages" class="mf-messages">
         {% for message in conversation.messages.all %}

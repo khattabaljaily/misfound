@@ -85,7 +85,24 @@ def conversation_detail(request, pk):
         'conversation': conversation,
         'form': form,
         'other_participant': _other_participant(conversation, request.user),
+        'is_reporter': request.user == conversation.report.reporter,
     })
+
+
+@login_required
+def mark_verified(request, pk):
+    conversation = get_object_or_404(Conversation.objects.select_related('report'), pk=pk)
+    if request.user != conversation.report.reporter:
+        return HttpResponseForbidden()
+    if request.method != 'POST':
+        return HttpResponseForbidden()
+
+    conversation.ownership_verified = True
+    conversation.save(update_fields=['ownership_verified'])
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'success': True})
+    return redirect('messaging:conversation', pk=pk)
 
 
 @login_required

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 12:40+0300\n"
+"POT-Creation-Date: 2026-08-21 12:48+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -115,39 +115,43 @@ msgstr "The user claiming ownership of the item"
 msgid "تاريخ البدء"
 msgstr "Started on"
 
-#: apps/messaging/models.py:20
+#: apps/messaging/models.py:16 templates/messaging/conversation.html:19
+msgid "تم التحقق من الملكية"
+msgstr "Ownership verified"
+
+#: apps/messaging/models.py:21
 msgid "محادثة"
 msgstr "Conversation"
 
-#: apps/messaging/models.py:21
+#: apps/messaging/models.py:22
 msgid "المحادثات"
 msgstr "Conversations"
 
-#: apps/messaging/models.py:29
+#: apps/messaging/models.py:30
 msgid "المحادثة"
 msgstr "Conversation"
 
-#: apps/messaging/models.py:32
+#: apps/messaging/models.py:33
 msgid "المرسل"
 msgstr "Sender"
 
-#: apps/messaging/models.py:34
+#: apps/messaging/models.py:35
 msgid "نص الرسالة"
 msgstr "Message text"
 
-#: apps/messaging/models.py:35
+#: apps/messaging/models.py:36
 msgid "تاريخ الإرسال"
 msgstr "Sent on"
 
-#: apps/messaging/models.py:36 apps/notifications/models.py:30
+#: apps/messaging/models.py:37 apps/notifications/models.py:30
 msgid "تمت القراءة"
 msgstr "Read"
 
-#: apps/messaging/models.py:40
+#: apps/messaging/models.py:41
 msgid "رسالة"
 msgstr "Message"
 
-#: apps/messaging/models.py:41 templates/base.html:42
+#: apps/messaging/models.py:42 templates/base.html:42
 #: templates/messaging/inbox.html:5
 msgid "الرسائل"
 msgstr "Messages"
@@ -1163,19 +1167,31 @@ msgstr "This user has a registered phone number"
 msgid "عرض الإعلان"
 msgstr "View report"
 
-#: templates/messaging/conversation.html:28
+#: templates/messaging/conversation.html:24
+msgid "كيف نتأكد أنه الغرض الصحيح؟"
+msgstr "How do we know it's the right item?"
+
+#: templates/messaging/conversation.html:29
+msgid "تحقّقت، هذا صاحب الغرض"
+msgstr "Confirmed, this is the owner"
+
+#: templates/messaging/conversation.html:34
+msgid "بانتظار تحقق صاحب الإعلان من ملكيتك للغرض قبل التسليم."
+msgstr "Waiting for the reporter to verify you own the item before handover."
+
+#: templates/messaging/conversation.html:49
 msgid "إرسال الرسالة"
 msgstr "Send message"
 
-#: templates/messaging/conversation.html:28
+#: templates/messaging/conversation.html:49
 msgid "إرسال"
 msgstr "Send"
 
-#: templates/messaging/conversation.html:31
+#: templates/messaging/conversation.html:52
 msgid "محادثة خاصة وآمنة"
 msgstr "Private and secure conversation"
 
-#: templates/messaging/conversation.html:60
+#: templates/messaging/conversation.html:81
 msgid "تعذر إرسال الرسالة، يرجى المحاولة مرة أخرى."
 msgstr "Couldn't send the message. Please try again."
 

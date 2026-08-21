@@ -13,6 +13,7 @@ class Conversation(models.Model):
         verbose_name=_('المدّعي'), help_text=_('المستخدم الذي يدّعي ملكية الغرض')
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاريخ البدء'))
+    ownership_verified = models.BooleanField(default=False, verbose_name=_('تم التحقق من الملكية'))
 
     class Meta:
         unique_together = ['report', 'claimant']
