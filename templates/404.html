@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "الصفحة غير موجودة" %} | Misfound{% endblock %}
+{% block content %}
+<div class="mf-error-page">
+    <div class="mf-error-page__icon"><i class="bi bi-signpost-split"></i></div>
+    <div class="mf-error-page__code">404</div>
+    <h1>{% trans "الصفحة غير موجودة" %}</h1>
+    <p>{% trans "يبدو أن الرابط الذي وصلت إليه غير صحيح أو أن الصفحة أصبحت غير متاحة." %}</p>
+    <div class="mf-error-page__actions">
+        <a href="{% url 'core:home' %}" class="btn btn-primary"><i class="bi bi-house-door"></i> {% trans "العودة للرئيسية" %}</a>
+        <a href="{% url 'reports:list' %}" class="btn btn-outline-secondary"><i class="bi bi-search"></i> {% trans "تصفح الإعلانات" %}</a>
+    </div>
+</div>
+{% endblock %}

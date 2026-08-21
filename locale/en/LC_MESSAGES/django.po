@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 13:09+0300\n"
+"POT-Creation-Date: 2026-08-21 13:38+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -462,6 +462,50 @@ msgstr "You've already flagged this report."
 msgid "تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح."
 msgstr "The report's status was updated to “Resolved”."
 
+#: templates/400.html:3 templates/400.html:8
+msgid "طلب غير صالح"
+msgstr "Bad request"
+
+#: templates/400.html:9
+msgid "تعذّر على الخادم فهم هذا الطلب. تحقق من الرابط وحاول مرة أخرى."
+msgstr ""
+"The server couldn't understand this request. Check the link and try again."
+
+#: templates/400.html:11 templates/403.html:11 templates/404.html:11
+#: templates/500.html:28
+msgid "العودة للرئيسية"
+msgstr "Back to home"
+
+#: templates/403.html:3 templates/403.html:8
+msgid "غير مسموح بالوصول"
+msgstr "Access denied"
+
+#: templates/403.html:9
+msgid "ليس لديك صلاحية للوصول إلى هذه الصفحة."
+msgstr "You don't have permission to access this page."
+
+#: templates/404.html:3 templates/404.html:8
+msgid "الصفحة غير موجودة"
+msgstr "Page not found"
+
+#: templates/404.html:9
+msgid "يبدو أن الرابط الذي وصلت إليه غير صحيح أو أن الصفحة أصبحت غير متاحة."
+msgstr ""
+"The link you followed seems to be broken, or the page is no longer available."
+
+#: templates/404.html:12 templates/core/about.html:76
+#: templates/reports/list.html:10
+msgid "تصفح الإعلانات"
+msgstr "Explore reports"
+
+#: templates/500.html:7 templates/500.html:25
+msgid "حدث خطأ غير متوقع"
+msgstr "Something went wrong"
+
+#: templates/500.html:26
+msgid "نعتذر، حدث خطأ من جانبنا. يرجى المحاولة مرة أخرى بعد قليل."
+msgstr "Sorry, something went wrong on our end. Please try again shortly."
+
 #: templates/accounts/_login_form.html:12 templates/accounts/login.html:7
 #: templates/base.html:85
 msgid "تسجيل الدخول"
@@ -724,10 +768,6 @@ msgstr "The platform is completely free to use."
 #: templates/core/about.html:72
 msgid "نغطي كل الدول العربية بواجهة عربية أولاً."
 msgstr "We cover every Arab country with an Arabic-first experience."
-
-#: templates/core/about.html:76 templates/reports/list.html:10
-msgid "تصفح الإعلانات"
-msgstr "Explore reports"
 
 #: templates/core/admin_base.html:26 templates/core/admin_dashboard.html:3
 #: templates/core/admin_dashboard.html:5
