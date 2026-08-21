@@ -1050,57 +1050,13 @@ input.mf-pill-field {
     to { transform: rotate(360deg); }
 }
 
-/* Global top-of-page loading bar: shown for real page navigations and as a
-   sitewide companion to any button/section spinner. Ref-counted in JS so it
-   only hides once every concurrent operation has finished, and is force-reset
-   on `pageshow` (including bfcache restores) so it can never stay stuck. */
-#mf-page-loader {
-    position: fixed;
-    inset-inline: 0;
-    top: 0;
-    height: 3px;
-    z-index: 2000;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
-}
-
-#mf-page-loader.is-active,
-#mf-page-loader.is-complete {
-    opacity: 1;
-}
-
-.mf-page-loader__glow {
-    display: block;
-    position: absolute;
-    inset-block: 0;
-    width: 35%;
-    inset-inline-start: -35%;
-    background: linear-gradient(90deg, transparent, var(--mf-teal-dark), var(--mf-teal), transparent);
-    box-shadow: 0 0 8px rgba(255, 128, 111, 0.6);
-}
-
-#mf-page-loader.is-active .mf-page-loader__glow {
-    animation: mf-loader-sweep 1s ease-in-out infinite;
-}
-
-#mf-page-loader.is-complete .mf-page-loader__glow {
-    animation: none;
-    width: 100%;
-    inset-inline-start: 0;
-    background: linear-gradient(90deg, var(--mf-teal-dark), var(--mf-teal));
-    transition: width 0.2s ease, inset-inline-start 0.2s ease;
-}
-
-@keyframes mf-loader-sweep {
-    0% { inset-inline-start: -35%; }
-    100% { inset-inline-start: 100%; }
-}
+/* The #mf-page-loader bar's own CSS lives inline in base.html <head>, not
+   here — it has to be able to render before this external stylesheet has
+   even loaded (see the comment there for why). Keeping a second copy here
+   would just be a drift risk with no benefit. */
 
 @media (prefers-reduced-motion: reduce) {
     .mf-spinner { animation-duration: 1.4s; }
-    #mf-page-loader.is-active .mf-page-loader__glow { animation-duration: 1.8s; }
 }
 
 .mf-pagination {

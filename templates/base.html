@@ -6,6 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% trans "المفقودات والمعثورات" %} | Misfound{% endblock %}</title>
 
+    <!--
+        The loader bar itself lives here in <head>, not near <body>, and is
+        activated inline before any other tag — because on a real full-page
+        navigation, the *old* page's loader only ever gets to exist for the
+        brief moment before the browser commits to the new document; once
+        this new page takes over, nothing carries the "still loading" state
+        across that boundary unless the new page starts showing it itself
+        from its very first paint. This is what actually covers the part of
+        loading a user perceives (styles/scripts/fonts arriving), not just
+        the network round-trip for the HTML document.
+    -->
+    <style>
+        #mf-page-loader { position: fixed; inset-inline: 0; top: 0; height: 3px; z-index: 2000; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+        #mf-page-loader.is-active, #mf-page-loader.is-complete { opacity: 1; }
+        .mf-page-loader__glow { display: block; position: absolute; inset-block: 0; width: 35%; inset-inline-start: -35%; background: linear-gradient(90deg, transparent, #d95b50, #ff806f, transparent); box-shadow: 0 0 8px rgba(255,128,111,.6); }
+        #mf-page-loader.is-active .mf-page-loader__glow { animation: mf-loader-sweep 1s ease-in-out infinite; }
+        #mf-page-loader.is-complete .mf-page-loader__glow { animation: none; width: 100%; inset-inline-start: 0; background: linear-gradient(90deg, #d95b50, #ff806f); transition: width .2s ease, inset-inline-start .2s ease; }
+        @keyframes mf-loader-sweep { 0% { inset-inline-start: -35%; } 100% { inset-inline-start: 100%; } }
+        @media (prefers-reduced-motion: reduce) { #mf-page-loader.is-active .mf-page-loader__glow { animation-duration: 1.8s; } }
+    </style>
+    <div id="mf-page-loader" class="is-active" aria-hidden="true"><span class="mf-page-loader__glow"></span></div>
+    <script>
+        (function () {
+            function settle() {
+                var bar = document.getElementById('mf-page-loader');
+                if (!bar) return;
+                bar.classList.remove('is-active');
+                bar.classList.add('is-complete');
+                setTimeout(function () { bar.classList.remove('is-complete'); }, 220);
+            }
+            if (document.readyState === 'complete') {
+                settle();
+            } else {
+                window.addEventListener('load', settle);
+            }
+        })();
+    </script>
+
     {% blocktrans asvar mf_default_description %}منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب غرض على الوصول إلى غرضه. تواصل آمن ومنصة مجانية بالكامل.{% endblocktrans %}
     {% static 'img/og-default.jpg' as mf_og_default_path %}
     {% with mf_origin=request.scheme|add:"://"|add:request.get_host %}
@@ -61,7 +99,6 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <div id="mf-page-loader" aria-hidden="true"><span class="mf-page-loader__glow"></span></div>
     <nav class="navbar navbar-expand-lg navbar-dark mf-navbar">
         <div class="container mf-navbar__inner">
             <a class="navbar-brand mf-brand" href="{% url 'core:home' %}">
