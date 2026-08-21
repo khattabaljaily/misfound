@@ -7,37 +7,44 @@
     <title>{% block title %}{% trans "المفقودات والمعثورات" %} | Misfound{% endblock %}</title>
 
     <!--
-        The loader bar itself lives here in <head>, not near <body>, and is
-        activated inline before any other tag — because on a real full-page
-        navigation, the *old* page's loader only ever gets to exist for the
-        brief moment before the browser commits to the new document; once
-        this new page takes over, nothing carries the "still loading" state
-        across that boundary unless the new page starts showing it itself
-        from its very first paint. This is what actually covers the part of
-        loading a user perceives (styles/scripts/fonts arriving), not just
-        the network round-trip for the HTML document.
+        TEMP DIAGNOSTIC: forced permanently visible (class="is-visible" baked
+        in, and the JS that would ever hide it is disabled below) so it can
+        be checked by eye before wiring it to real loading state. Revert both
+        once approved.
+
+        Lives here in <head>, inline, not loaded from the external
+        stylesheet/image lazily — on a real full-page navigation the *old*
+        page's overlay only ever exists for the moment before the browser
+        commits to the new document, so the *new* page has to be able to
+        show it again from its own very first paint to cover its own load
+        time (styles/scripts/fonts arriving), which is the part a user
+        actually perceives as "loading".
     -->
     <style>
-        #mf-page-loader { position: fixed; inset-inline: 0; top: 0; height: 10px; z-index: 2000; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity .25s ease; } /* TEMP-DIAGNOSTIC: height bumped from 3px, revert */
-        #mf-page-loader.is-active, #mf-page-loader.is-complete { opacity: 1; }
-        .mf-page-loader__glow { display: block; position: absolute; inset-block: 0; width: 35%; inset-inline-start: -35%; background: linear-gradient(90deg, transparent, #d95b50, #ff806f, transparent); box-shadow: 0 0 8px rgba(255,128,111,.6); }
-        #mf-page-loader.is-active .mf-page-loader__glow { animation: mf-loader-sweep 1s ease-in-out infinite; }
-        #mf-page-loader.is-complete .mf-page-loader__glow { animation: none; width: 100%; inset-inline-start: 0; background: linear-gradient(90deg, #d95b50, #ff806f); transition: width .2s ease, inset-inline-start .2s ease; }
-        @keyframes mf-loader-sweep { 0% { inset-inline-start: -35%; } 100% { inset-inline-start: 100%; } }
-        @media (prefers-reduced-motion: reduce) { #mf-page-loader.is-active .mf-page-loader__glow { animation-duration: 1.8s; } }
+        #mf-page-loader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: rgba(18, 38, 58, .55); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); opacity: 0; visibility: hidden; transition: opacity .18s ease; }
+        #mf-page-loader.is-visible { opacity: 1; visibility: visible; }
+        .mf-page-loader__ring { position: relative; width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(from 0deg, #ff806f, #d95b50, #ff806f); padding: 4px; animation: mf-loader-spin 1s linear infinite; box-shadow: 0 10px 30px rgba(217,91,80,.35); }
+        .mf-page-loader__inner { width: 100%; height: 100%; border-radius: 50%; background: #12263a; display: grid; place-items: center; }
+        .mf-page-loader__logo { width: 40px; height: 40px; object-fit: contain; animation: mf-loader-spin-reverse 1s linear infinite; }
+        @keyframes mf-loader-spin { to { transform: rotate(360deg); } }
+        @keyframes mf-loader-spin-reverse { to { transform: rotate(-360deg); } }
+        @media (prefers-reduced-motion: reduce) { .mf-page-loader__ring, .mf-page-loader__logo { animation: none; } }
     </style>
-    <div id="mf-page-loader" class="is-active" aria-hidden="true"><span class="mf-page-loader__glow"></span></div>
+    <div id="mf-page-loader" class="is-visible" aria-hidden="true">
+        <div class="mf-page-loader__ring">
+            <div class="mf-page-loader__inner">
+                <img src="{% static 'img/icon.png' %}" alt="" class="mf-page-loader__logo">
+            </div>
+        </div>
+    </div>
     <script>
         (function () {
             function settle() {
-                var bar = document.getElementById('mf-page-loader');
-                if (!bar) return;
-                bar.classList.remove('is-active');
-                bar.classList.add('is-complete');
-                setTimeout(function () { bar.classList.remove('is-complete'); }, 220);
+                var overlay = document.getElementById('mf-page-loader');
+                if (!overlay) return;
+                overlay.classList.remove('is-visible');
             }
-            // TEMP-DIAGNOSTIC: settle() disabled on purpose so the bar stays
-            // visible permanently, to confirm it renders at all. Revert this.
+            // TEMP DIAGNOSTIC: disabled on purpose, see comment above. Revert.
             // if (document.readyState === 'complete') {
             //     settle();
             // } else {
