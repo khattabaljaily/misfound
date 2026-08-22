@@ -1294,7 +1294,6 @@ a.mf-pagination__link:hover {
 }
 
 @media (max-width: 480px) {
-    .mf-hero-actions .btn { width: 100%; }
     .mf-footer__main { grid-template-columns: 1fr; }
     .mf-footer__intro { grid-column: auto; }
     .mf-footer__bottom { flex-direction: column; }
@@ -1498,7 +1497,8 @@ a.mf-pagination__link:hover {
 @media (max-width: 700px) {
     .mf-hero { border-radius: 18px; padding: 1.75rem 1.25rem; }
     .mf-hero-content h1 { font-size: 1.9rem; }
-    .mf-hero-actions .btn { width: auto; }
+    .mf-hero-actions { flex-wrap: nowrap; gap: 0.5rem; }
+    .mf-hero-actions .btn { flex: 1 1 0; min-width: 0; padding-inline: 0.6rem; white-space: nowrap; }
     .mf-hero-stats { gap: 0.9rem; }
     .mf-search-pill { margin-top: -1.3rem !important; border-radius: 13px; }
     .mf-search-icon { display: none; }
