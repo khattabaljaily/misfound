@@ -133,47 +133,53 @@
                     </li>
                     {% endif %}
                 </ul>
-                <div class="d-flex align-items-center gap-2 mf-navbar__actions">
-                    {% get_current_language as CURRENT_LANGUAGE %}
-                    <form action="{% url 'set_language' %}" method="post" class="mf-lang-switch">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <button type="submit" name="language" value="{% if CURRENT_LANGUAGE == 'ar' %}en{% else %}ar{% endif %}" class="btn btn-outline-light btn-sm mf-lang-switch__btn" aria-label="{% trans 'تبديل اللغة' %}">
-                            {% if CURRENT_LANGUAGE == 'ar' %}EN{% else %}AR{% endif %}
-                        </button>
-                    </form>
+                <div class="mf-navbar__actions">
+                    <div class="mf-navbar__actions-row mf-navbar__actions-row--icons">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        <form action="{% url 'set_language' %}" method="post" class="mf-lang-switch">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button type="submit" name="language" value="{% if CURRENT_LANGUAGE == 'ar' %}en{% else %}ar{% endif %}" class="btn btn-outline-light btn-sm mf-lang-switch__btn" aria-label="{% trans 'تبديل اللغة' %}">
+                                {% if CURRENT_LANGUAGE == 'ar' %}EN{% else %}AR{% endif %}
+                            </button>
+                        </form>
+                        {% if user.is_authenticated %}
+                            <div class="dropdown mf-notif-menu" id="mfNotifMenu">
+                                <button type="button" class="mf-user-trigger position-relative" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{% trans 'الإشعارات' %}" id="mfNotifTrigger">
+                                    <i class="bi bi-bell-fill"></i>
+                                    <span class="mf-notif-badge d-none" id="mfNotifBadge">0</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end mf-notif-dropdown" id="mfNotifDropdown">
+                                    <div class="text-center text-muted py-4 small">{% trans "جاري التحميل..." %}</div>
+                                </div>
+                            </div>
+                            <div class="dropdown mf-user-menu">
+                                <button type="button" class="mf-user-trigger" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{% trans 'قائمة المستخدم' %}" title="{{ user.username }}">
+                                    <i class="bi bi-person-fill"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end mf-user-dropdown">
+                                    <li class="mf-user-dropdown__heading"><i class="bi bi-person-circle"></i> {{ user.username }}</li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'reports:mine' %}"><i class="bi bi-person"></i> {% trans "الملف الشخصي" %}</a></li>
+                                    {% if user.is_staff %}
+                                    <li><a class="dropdown-item" href="{% url 'core:admin_stats' %}"><i class="bi bi-bar-chart-line"></i> {% trans "لوحة الإحصائيات" %}</a></li>
+                                    {% endif %}
+                                    <li><button type="button" class="dropdown-item mf-logout-link" id="mfLogoutBtn"><i class="bi bi-box-arrow-right"></i> {% trans "تسجيل الخروج" %}</button></li>
+                                </ul>
+                            </div>
+                            <form action="{% url 'accounts:logout' %}" method="post" id="mfLogoutForm" class="d-none">
+                                {% csrf_token %}
+                            </form>
+                        {% else %}
+                            <a href="{% url 'accounts:login' %}" class="btn btn-outline-light btn-sm">{% trans "تسجيل الدخول" %}</a>
+                            <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-sm">{% trans "حساب جديد" %}</a>
+                        {% endif %}
+                    </div>
                     {% if user.is_authenticated %}
+                    <div class="mf-navbar__actions-row mf-navbar__actions-row--reports">
                         <a href="{% url 'reports:create' report_type='lost' %}" class="btn btn-outline-light btn-sm"><i class="bi bi-plus-lg"></i> {% trans "إعلان مفقود" %}</a>
                         <a href="{% url 'reports:create' report_type='found' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> {% trans "إعلان معثور عليه" %}</a>
-                        <div class="dropdown mf-notif-menu" id="mfNotifMenu">
-                            <button type="button" class="mf-user-trigger position-relative" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{% trans 'الإشعارات' %}" id="mfNotifTrigger">
-                                <i class="bi bi-bell-fill"></i>
-                                <span class="mf-notif-badge d-none" id="mfNotifBadge">0</span>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end mf-notif-dropdown" id="mfNotifDropdown">
-                                <div class="text-center text-muted py-4 small">{% trans "جاري التحميل..." %}</div>
-                            </div>
-                        </div>
-                        <div class="dropdown mf-user-menu">
-                            <button type="button" class="mf-user-trigger" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{% trans 'قائمة المستخدم' %}" title="{{ user.username }}">
-                                <i class="bi bi-person-fill"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end mf-user-dropdown">
-                                <li class="mf-user-dropdown__heading"><i class="bi bi-person-circle"></i> {{ user.username }}</li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'reports:mine' %}"><i class="bi bi-person"></i> {% trans "الملف الشخصي" %}</a></li>
-                                {% if user.is_staff %}
-                                <li><a class="dropdown-item" href="{% url 'core:admin_stats' %}"><i class="bi bi-bar-chart-line"></i> {% trans "لوحة الإحصائيات" %}</a></li>
-                                {% endif %}
-                                <li><button type="button" class="dropdown-item mf-logout-link" id="mfLogoutBtn"><i class="bi bi-box-arrow-right"></i> {% trans "تسجيل الخروج" %}</button></li>
-                            </ul>
-                        </div>
-                        <form action="{% url 'accounts:logout' %}" method="post" id="mfLogoutForm" class="d-none">
-                            {% csrf_token %}
-                        </form>
-                    {% else %}
-                        <a href="{% url 'accounts:login' %}" class="btn btn-outline-light btn-sm">{% trans "تسجيل الدخول" %}</a>
-                        <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-sm">{% trans "حساب جديد" %}</a>
+                    </div>
                     {% endif %}
                 </div>
             </div>

@@ -493,6 +493,34 @@ function mfInitImageUploader(root) {
     });
 }
 
+/**
+ * Bootstrap disables Popper for any dropdown nested inside a .navbar (a
+ * built-in performance optimization), falling back to plain CSS corner
+ * alignment (.dropdown-menu-end etc). That works fine for a trigger sitting
+ * flush against the edge of its row, but our navbar icon triggers sit
+ * between other elements (justify-content: space-between), so a wide panel
+ * anchored to one corner can overflow the viewport on narrow screens with
+ * no dynamic correction (no Popper means no flip/preventOverflow either).
+ * This clamps any opened navbar dropdown back within the viewport as a
+ * final, layout-agnostic correction.
+ */
+document.addEventListener('shown.bs.dropdown', function (e) {
+    var wrapper = e.target.closest('.navbar .dropdown');
+    if (!wrapper) return;
+    var menu = wrapper.querySelector('.dropdown-menu');
+    if (!menu) return;
+
+    menu.style.transform = '';
+    var rect = menu.getBoundingClientRect();
+    var margin = 8;
+    var overflowRight = rect.right - (window.innerWidth - margin);
+    var overflowLeft = margin - rect.left;
+    var shift = 0;
+    if (overflowRight > 0) shift = -overflowRight;
+    else if (overflowLeft > 0) shift = overflowLeft;
+    if (shift !== 0) menu.style.transform = 'translateX(' + shift + 'px)';
+});
+
 /* =================================================================
    Sitewide navigation feedback
    ================================================================= */

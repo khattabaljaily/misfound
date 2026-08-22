@@ -141,14 +141,15 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 0 0 0.2rem rgba(94, 224, 193, 0.18);
 }
 
-input[type="date"] {
-    text-align: start;
-}
+/* Native date inputs keep an internal ltr direction regardless of page
+   language (so dates always read left-to-right), which means the usual
+   inline-start/inline-end logical properties don't flip here the way they
+   do for normal text — they have to be set from the page's actual dir. */
+html[dir="ltr"] input[type="date"] { text-align: left; }
+html[dir="ltr"] input[type="date"]::-webkit-calendar-picker-indicator { margin-left: auto; margin-right: 0; }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-    margin-inline-start: 0;
-    margin-inline-end: auto;
-}
+html[dir="rtl"] input[type="date"] { text-align: right; }
+html[dir="rtl"] input[type="date"]::-webkit-calendar-picker-indicator { margin-left: 0; margin-right: auto; }
 
 .form-label {
     color: var(--mf-teal-dark);
@@ -186,7 +187,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .mf-navbar__links { gap: 0.25rem; }
 .mf-navbar__links .nav-link { padding-inline: 0.85rem !important; }
 .mf-navbar__links .nav-link i { margin-inline-end: 0.3rem; color: var(--mf-teal); font-size: 0.88rem; }
-.mf-navbar__actions { flex-wrap: nowrap; white-space: nowrap; }
+.mf-navbar__actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: nowrap; white-space: nowrap; }
+.mf-navbar__actions-row { display: flex; align-items: center; gap: 0.5rem; }
 .mf-navbar__actions .btn-primary { color: var(--mf-navy-2); }
 .mf-navbar__toggle { border-color: rgba(255, 255, 255, 0.25); }
 .mf-navbar__toggle:focus { box-shadow: 0 0 0 0.2rem rgba(94, 224, 193, 0.25); }
@@ -195,7 +197,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .mf-user-menu { display: flex; align-items: center; }
 .mf-user-trigger { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; background: rgba(94, 224, 193, 0.12); color: var(--mf-teal); cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease; }
 .mf-user-trigger:hover, .mf-user-trigger[aria-expanded="true"] { background: var(--mf-teal); border-color: var(--mf-teal); color: var(--mf-navy-2); transform: translateY(-1px); }
-.mf-user-dropdown { min-width: 205px; margin-top: 0.7rem !important; padding: 0.45rem; border: 1px solid var(--mf-border); border-radius: 12px; box-shadow: var(--mf-shadow-lg); }
+.mf-user-dropdown { min-width: 205px; max-width: 90vw; margin-top: 0.7rem !important; padding: 0.45rem; border: 1px solid var(--mf-border); border-radius: 12px; box-shadow: var(--mf-shadow-lg); }
 .mf-user-dropdown__heading { padding: 0.55rem 0.7rem; color: var(--mf-text-muted); font-size: 0.78rem; font-weight: 700; }
 .mf-user-dropdown__heading i { color: var(--mf-teal-dark); margin-inline-end: 0.35rem; }
 .mf-user-dropdown .dropdown-item { display: flex; align-items: center; gap: 0.55rem; border-radius: 8px; color: var(--mf-text); font-size: 0.85rem; padding: 0.6rem 0.7rem; }
@@ -1277,9 +1279,13 @@ a.mf-pagination__link:hover {
 
 @media (max-width: 991px) {
     .mf-navbar__links { padding-top: 1rem; }
-    .mf-navbar__actions { flex-wrap: wrap; padding: 1rem 0 0.8rem; }
-    .mf-navbar__actions .btn { flex: 1; }
+    .mf-navbar__actions { flex-direction: column; align-items: stretch; gap: 0.6rem; padding: 1rem 0 0.8rem; white-space: normal; }
+    .mf-navbar__actions-row--icons { justify-content: space-between; }
+    .mf-navbar__actions-row--reports .btn { flex: 1; }
     .mf-user-link { margin-inline-end: auto; }
+    .mf-brand__logo { width: 96px; }
+    .mf-navbar__toggle { padding: 0.3rem 0.55rem; }
+    .mf-navbar__toggle .navbar-toggler-icon { width: 1.15em; height: 1.15em; }
 }
 
 @media (max-width: 700px) {

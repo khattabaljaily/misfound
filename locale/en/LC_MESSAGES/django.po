@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 19:11+0300\n"
+"POT-Creation-Date: 2026-08-22 19:40+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -284,7 +284,7 @@ msgstr "Created on"
 msgid "إشعار"
 msgstr "Notification"
 
-#: apps/notifications/models.py:39 templates/base.html:149
+#: apps/notifications/models.py:39 templates/base.html:148
 #: templates/notifications/_dropdown.html:3 templates/notifications/list.html:3
 #: templates/notifications/list.html:5
 msgid "الإشعارات"
@@ -513,7 +513,7 @@ msgstr "Detected on"
 msgid "التطابقات المحتملة"
 msgstr "Possible matches"
 
-#: apps/reports/views.py:108 templates/base.html:122 templates/base.html:198
+#: apps/reports/views.py:108 templates/base.html:122 templates/base.html:204
 msgid "المفقودات"
 msgstr "Lost items"
 
@@ -524,7 +524,7 @@ msgstr ""
 "Browse the latest lost item reports across the Arab world and help reunite "
 "them with their owners."
 
-#: apps/reports/views.py:111 templates/base.html:125 templates/base.html:199
+#: apps/reports/views.py:111 templates/base.html:125 templates/base.html:205
 msgid "المعثورات"
 msgstr "Found items"
 
@@ -622,7 +622,7 @@ msgid "نسيت كلمة المرور؟"
 msgstr "Forgot your password?"
 
 #: templates/accounts/_login_form.html:15 templates/accounts/login.html:7
-#: templates/accounts/password_reset_complete.html:14 templates/base.html:175
+#: templates/accounts/password_reset_complete.html:14 templates/base.html:174
 msgid "تسجيل الدخول"
 msgstr "Log in"
 
@@ -638,8 +638,8 @@ msgstr "Send reset link"
 msgid "إنشاء الحساب"
 msgstr "Create account"
 
-#: templates/accounts/_verify_otp_form.html:12 templates/base.html:231
-#: templates/base.html:243
+#: templates/accounts/_verify_otp_form.html:12 templates/base.html:237
+#: templates/base.html:249
 msgid "تأكيد"
 msgstr "Confirm"
 
@@ -825,139 +825,139 @@ msgstr "Open menu"
 msgid "إعلاناتي"
 msgstr "My reports"
 
-#: templates/base.html:141
+#: templates/base.html:142
 msgid "تبديل اللغة"
 msgstr "Switch language"
 
-#: templates/base.html:146
-msgid "إعلان مفقود"
-msgstr "Report Lost Item"
-
-#: templates/base.html:147
-msgid "إعلان معثور عليه"
-msgstr "Report Found Item"
-
-#: templates/base.html:154 templates/base.html:250
+#: templates/base.html:153 templates/base.html:256
 msgid "جاري التحميل..."
 msgstr "Loading..."
 
-#: templates/base.html:158
+#: templates/base.html:157
 msgid "قائمة المستخدم"
 msgstr "User menu"
 
-#: templates/base.html:164
+#: templates/base.html:163
 msgid "الملف الشخصي"
 msgstr "Profile"
 
-#: templates/base.html:166
+#: templates/base.html:165
 msgid "لوحة الإحصائيات"
 msgstr "Stats dashboard"
 
-#: templates/base.html:168 templates/base.html:265 templates/base.html:267
+#: templates/base.html:167 templates/base.html:271 templates/base.html:273
 msgid "تسجيل الخروج"
 msgstr "Log out"
 
-#: templates/base.html:176
+#: templates/base.html:175
 msgid "حساب جديد"
 msgstr "Sign up"
 
-#: templates/base.html:194
+#: templates/base.html:180
+msgid "إعلان مفقود"
+msgstr "Lost Item"
+
+#: templates/base.html:181
+msgid "إعلان معثور عليه"
+msgstr "Found Item"
+
+#: templates/base.html:200
 msgid "نساعد كل صاحب غرض على الوصول إلى غرضه، بخطوة بسيطة وتواصل آمن."
 msgstr ""
 "We help every owner reach their item, through one simple step and a safe "
 "conversation."
 
-#: templates/base.html:197
+#: templates/base.html:203
 msgid "استكشف"
 msgstr "Explore"
 
-#: templates/base.html:202
+#: templates/base.html:208
 msgid "معلومات"
 msgstr "Info"
 
-#: templates/base.html:203 templates/core/about.html:3
+#: templates/base.html:209 templates/core/about.html:3
 msgid "عن الخدمة"
 msgstr "About"
 
-#: templates/base.html:204 templates/core/about.html:76
+#: templates/base.html:210 templates/core/about.html:76
 #: templates/core/privacy_policy.html:3 templates/core/privacy_policy.html:6
 msgid "سياسة الخصوصية"
 msgstr "Privacy Policy"
 
-#: templates/base.html:205 templates/core/terms.html:3
+#: templates/base.html:211 templates/core/terms.html:3
 #: templates/core/terms.html:6
 msgid "الشروط والأحكام"
 msgstr "Terms & Conditions"
 
-#: templates/base.html:210
+#: templates/base.html:216
 msgid "تم التطوير بواسطة"
 msgstr "Developed by"
 
-#: templates/base.html:210
+#: templates/base.html:216
 msgid "خطاب الجيلي"
 msgstr "Khattab Aljaily"
 
-#: templates/base.html:227 templates/base.html:241
+#: templates/base.html:233 templates/base.html:247
 msgid "تأكيد العملية"
 msgstr "Confirm action"
 
-#: templates/base.html:228 templates/base.html:242
+#: templates/base.html:234 templates/base.html:248
 msgid "هل أنت متأكد؟"
 msgstr "Are you sure?"
 
-#: templates/base.html:230 templates/reports/detail.html:169
+#: templates/base.html:236 templates/reports/detail.html:169
 msgid "إلغاء"
 msgstr "Cancel"
 
-#: templates/base.html:240
+#: templates/base.html:246
 msgid "إغلاق"
 msgstr "Close"
 
-#: templates/base.html:244
+#: templates/base.html:250
 msgid "جاري التنفيذ..."
 msgstr "Working..."
 
-#: templates/base.html:245
+#: templates/base.html:251
 msgid "توجد بيانات تحتاج إلى مراجعة، يرجى التحقق من الحقول أدناه."
 msgstr "Some fields need your attention - please check the form below."
 
-#: templates/base.html:246
+#: templates/base.html:252
 msgid "حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى."
 msgstr "A connection error occurred. Please try again."
 
-#: templates/base.html:247
+#: templates/base.html:253
 msgid "اكتب للبحث..."
 msgstr "Type to search..."
 
-#: templates/base.html:248
+#: templates/base.html:254
 msgid "لا توجد نتائج"
 msgstr "No results found"
 
-#: templates/base.html:249
+#: templates/base.html:255
 msgid "لا توجد خيارات"
 msgstr "No options available"
 
-#: templates/base.html:251
+#: templates/base.html:257
 msgid "اختر المدينة"
 msgstr "Choose a city"
 
-#: templates/base.html:252
+#: templates/base.html:258
 msgid "يمكن رفع 3 صور كحد أقصى."
 msgstr "You can upload up to 3 photos maximum."
 
-#: templates/base.html:253
+#: templates/base.html:259
 msgid "يرجى اختيار صور فقط."
 msgstr "Please choose images only."
 
-#: templates/base.html:254 templates/reports/_form.html:14
+#: templates/base.html:260 templates/reports/_form.html:14
 msgid "حذف الصورة"
 msgstr "Remove photo"
 
-#: templates/base.html:266
+#: templates/base.html:272
 msgid "هل تريد تسجيل الخروج من حسابك؟"
 msgstr "Do you want to log out of your account?"
 
-#: templates/base.html:304
+#: templates/base.html:310
 msgid "تعذّر تحميل الإشعارات."
 msgstr "Couldn't load notifications."
 
@@ -1166,11 +1166,11 @@ msgstr ""
 
 #: templates/core/home.html:15
 msgid "فقدت شيئًا"
-msgstr "I Lost Something"
+msgstr "I Lost It"
 
 #: templates/core/home.html:16
 msgid "وجدت شيئًا"
-msgstr "I Found Something"
+msgstr "I Found It"
 
 #: templates/core/home.html:18
 msgid "أو تصفح كل الإعلانات"
@@ -1182,7 +1182,7 @@ msgstr "Arab cities"
 
 #: templates/core/home.html:22
 msgid "تواصل آمن"
-msgstr "Safe communication"
+msgstr "Secure chat"
 
 #: templates/core/home.html:23
 msgid "نشر سريع"
