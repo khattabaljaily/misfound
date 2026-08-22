@@ -18,7 +18,7 @@
                     {% if c.claimant == user %}{{ c.report.reporter }}{% else %}{{ c.claimant }}{% endif %}
                 </span>
             </div>
-            <i class="bi bi-arrow-left mf-conversation-arrow"></i>
+            <i class="bi {% if LANGUAGE_BIDI %}bi-arrow-left{% else %}bi-arrow-right{% endif %} mf-conversation-arrow"></i>
         </a>
         {% empty %}
         <div class="text-muted text-center py-5">

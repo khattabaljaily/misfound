@@ -90,6 +90,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ---------------------------------------------------------------- */
+/* Directional icons                                                  */
+/* ---------------------------------------------------------------- */
+/* Back/next/prev arrow and chevron icons across the site are authored
+   assuming Arabic (RTL, the site's base language) as "forward" — e.g. a
+   "next" link points left, since forward in RTL reading is leftward.
+   Mirror them in English (LTR) pages instead of hand-picking a left/right
+   icon variant at every call site. mf-conversation-arrow is excluded: it
+   already swaps its own icon class per language template-side, because its
+   hover state animates the icon's own transform and would fight this flip. */
+html[dir="ltr"] .bi-arrow-left:not(.mf-conversation-arrow),
+html[dir="ltr"] .bi-arrow-right:not(.mf-conversation-arrow),
+html[dir="ltr"] .bi-chevron-left,
+html[dir="ltr"] .bi-chevron-right {
+    display: inline-block;
+    transform: scaleX(-1);
+}
+
+/* ---------------------------------------------------------------- */
 /* Bootstrap primary-color rebrand                                   */
 /* ---------------------------------------------------------------- */
 .btn-primary {
