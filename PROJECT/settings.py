@@ -156,6 +156,7 @@ LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'core:home'
 LOGOUT_REDIRECT_URL = 'core:home'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # 30 days
+AUTHENTICATION_BACKENDS = ['apps.accounts.backends.AllowInactiveModelBackend']
 
 
 # Email

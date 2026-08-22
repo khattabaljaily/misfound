@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block content %}
+<div class="mf-auth-panel">
+    <div class="mf-auth-panel__header">
+        <img src="{% static 'img/logo_white.png' %}" alt="Misfound">
+        <div class="mf-auth-panel__title">{% trans "تفعيل الحساب" %}</div>
+    </div>
+    <div class="mf-auth-panel__body">
+        <p class="text-muted small mb-3">
+            {% blocktrans %}أرسلنا رمز تحقق مكوّن من 6 أرقام إلى بريدك الإلكتروني {{ email }}.{% endblocktrans %}
+        </p>
+        <div id="formWrapper">
+            {% include "accounts/_verify_otp_form.html" %}
+        </div>
+        <p class="mt-3 text-center mb-0">
+            <button type="button" id="resendOtpBtn" class="btn btn-link p-0">{% trans "لم يصلك الرمز؟ أعد الإرسال" %}</button>
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function mfInitVerifyOTPForm(root) {
+    var form = (root || document).querySelector('#verifyOtpForm');
+    if (!form) return;
+    ajaxForm(form, {
+        swapTarget: '#formWrapper',
+        afterSwap: function (container) { mfInitVerifyOTPForm(container); },
+    });
+}
+mfInitVerifyOTPForm(document);
+
+var resendBtn = document.getElementById('resendOtpBtn');
+if (resendBtn) {
+    resendBtn.addEventListener('click', function () {
+        mfSetButtonLoading(resendBtn, true);
+        fetch("{% url 'accounts:resend_otp' %}", {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': document.querySelector('#verifyOtpForm [name=csrfmiddlewaretoken]').value,
+            },
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                mfSetButtonLoading(resendBtn, false);
+                showToast(data.success ? 'success' : 'error', data.message);
+            });
+    });
+}
+</script>
+{% endblock %}

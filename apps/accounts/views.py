@@ -7,26 +7,45 @@ from django.contrib.auth.views import (
     PasswordResetDoneView,
     PasswordResetView,
 )
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
+from django.utils.translation import gettext as _
 
-from .forms import RegisterForm
+from .forms import LoginForm, OTPVerifyForm, RegisterForm
+from .models import EmailOTP, User
+
+OTP_RESEND_COOLDOWN_SECONDS = 60
 
 
 def _is_ajax(request):
     return request.headers.get('X-Requested-With') == 'XMLHttpRequest'
 
 
+def _send_otp_email(user):
+    otp = EmailOTP.objects.create(user=user, code=EmailOTP.generate_code())
+    context = {'user': user, 'code': otp.code}
+    subject = render_to_string('accounts/otp_email_subject.txt', context).strip()
+    body = render_to_string('accounts/otp_email.html', context)
+    send_mail(subject, body, None, [user.email])
+    return otp
+
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            _send_otp_email(user)
+            request.session['pending_verification_user_id'] = user.pk
             if _is_ajax(request):
-                return JsonResponse({'success': True, 'redirect': reverse('core:home')})
-            return redirect('core:home')
+                return JsonResponse({'success': True, 'redirect': reverse('accounts:verify_otp')})
+            return redirect('accounts:verify_otp')
         if _is_ajax(request):
             return render(request, 'accounts/_register_form.html', {'form': form}, status=400)
     else:
@@ -34,8 +53,61 @@ def register(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 
+def _pending_verification_user(request):
+    user_id = request.session.get('pending_verification_user_id')
+    if not user_id:
+        return None
+    return User.objects.filter(pk=user_id, is_active=False).first()
+
+
+def verify_otp(request):
+    user = _pending_verification_user(request)
+    if not user:
+        return redirect('accounts:register')
+
+    if request.method == 'POST':
+        form = OTPVerifyForm(request.POST, user=user)
+        if form.is_valid():
+            form.otp.is_used = True
+            form.otp.save(update_fields=['is_used'])
+            user.is_active = True
+            user.save(update_fields=['is_active'])
+            del request.session['pending_verification_user_id']
+            login(request, user)
+            if _is_ajax(request):
+                return JsonResponse({'success': True, 'redirect': reverse('core:home')})
+            return redirect('core:home')
+        if _is_ajax(request):
+            return render(request, 'accounts/_verify_otp_form.html', {'form': form}, status=400)
+    else:
+        form = OTPVerifyForm(user=user)
+    return render(request, 'accounts/verify_otp.html', {'form': form, 'email': user.email})
+
+
+def resend_otp(request):
+    user = _pending_verification_user(request)
+    if not user:
+        return redirect('accounts:register')
+
+    last_otp = user.otps.order_by('-created_at').first()
+    if last_otp and (timezone.now() - last_otp.created_at).total_seconds() < OTP_RESEND_COOLDOWN_SECONDS:
+        message = _('انتظر قليلاً قبل طلب رمز جديد.')
+        status = 429
+        success = False
+    else:
+        _send_otp_email(user)
+        message = _('تم إرسال رمز جديد إلى بريدك الإلكتروني.')
+        status = 200
+        success = True
+
+    if _is_ajax(request):
+        return JsonResponse({'success': success, 'message': message}, status=status)
+    return redirect('accounts:verify_otp')
+
+
 class MisfoundLoginView(LoginView):
     template_name = 'accounts/login.html'
+    form_class = LoginForm
 
     def get_success_url(self):
         if self.request.user.is_superuser:

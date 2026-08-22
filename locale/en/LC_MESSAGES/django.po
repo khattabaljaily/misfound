@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 15:44+0300\n"
+"POT-Creation-Date: 2026-08-22 16:26+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -21,37 +21,70 @@ msgstr "Additional information"
 #: apps/accounts/forms.py:11
 msgid ""
 "اسم المستخدم يجب أن يتكون من حروف إنجليزية وأرقام فقط، بدون مسافات أو رموز."
-msgstr "Username must contain only English letters and numbers, no spaces or symbols."
+msgstr ""
+"Username must contain only English letters and numbers, no spaces or symbols."
 
 #: apps/accounts/forms.py:23
 msgid "حروف إنجليزية وأرقام فقط، بدون مسافات أو رموز."
 msgstr "English letters and numbers only, no spaces or symbols."
 
-#: apps/accounts/forms.py:26 apps/reports/forms.py:25
+#: apps/accounts/forms.py:27 apps/reports/forms.py:25
 #, python-format
 msgid "اختر %(field)s"
 msgstr "Choose %(field)s"
 
-#: apps/accounts/models.py:7
+#: apps/accounts/forms.py:38
+msgid "حسابك غير مُفعّل بعد. تحقق من بريدك الإلكتروني لإكمال عملية التفعيل."
+msgstr "Your account isn't verified yet. Check your email to complete verification."
+
+#: apps/accounts/forms.py:44 apps/accounts/models.py:41
+msgid "رمز التحقق"
+msgstr "Verification code"
+
+#: apps/accounts/forms.py:58
+msgid "انتهت صلاحية الرمز، اطلب رمزاً جديداً."
+msgstr "This code has expired, request a new one."
+
+#: apps/accounts/forms.py:60
+msgid "تجاوزت عدد المحاولات المسموحة، اطلب رمزاً جديداً."
+msgstr "You've exceeded the allowed number of attempts, request a new code."
+
+#: apps/accounts/forms.py:64
+msgid "الرمز غير صحيح."
+msgstr "Incorrect code."
+
+#: apps/accounts/models.py:15
 msgid "رقم الهاتف"
 msgstr "Phone number"
 
-#: apps/accounts/models.py:10 apps/locations/models.py:25
+#: apps/accounts/models.py:18 apps/locations/models.py:25
 #: apps/reports/models.py:57
 msgid "الدولة"
 msgstr "Country"
 
-#: apps/accounts/models.py:14 apps/reports/models.py:61
+#: apps/accounts/models.py:22 apps/reports/models.py:61
 msgid "المدينة"
 msgstr "City"
 
-#: apps/accounts/models.py:18
+#: apps/accounts/models.py:26
 msgid "مستخدم"
 msgstr "User"
 
-#: apps/accounts/models.py:19
+#: apps/accounts/models.py:27
 msgid "المستخدمون"
 msgstr "Users"
+
+#: apps/accounts/models.py:42
+msgid "رموز التحقق"
+msgstr "Verification codes"
+
+#: apps/accounts/views.py:94
+msgid "انتظر قليلاً قبل طلب رمز جديد."
+msgstr "Please wait a moment before requesting a new code."
+
+#: apps/accounts/views.py:99
+msgid "تم إرسال رمز جديد إلى بريدك الإلكتروني."
+msgstr "A new code has been sent to your email."
 
 #: apps/core/admin.py:5
 msgid "إدارة موقع Misfound"
@@ -562,9 +595,41 @@ msgstr "Send reset link"
 msgid "إنشاء الحساب"
 msgstr "Create account"
 
+#: templates/accounts/_verify_otp_form.html:12 templates/base.html:231
+#: templates/base.html:243
+msgid "تأكيد"
+msgstr "Confirm"
+
 #: templates/accounts/login.html:14
 msgid "ليس لديك حساب؟ أنشئ حسابًا جديدًا"
 msgstr "Don't have an account? Create one"
+
+#: templates/accounts/otp_email.html:1
+#: templates/accounts/password_reset_email.html:1
+#, python-format
+msgid "مرحبًا %(user)s،"
+msgstr "Hello %(user)s,"
+
+#: templates/accounts/otp_email.html:3
+msgid "رمز تفعيل حسابك في Misfound هو:"
+msgstr "Your Misfound account activation code is:"
+
+#: templates/accounts/otp_email.html:7
+msgid ""
+"هذا الرمز صالح لمدة 10 دقائق فقط. إذا لم تطلب إنشاء حساب في Misfound، يمكنك "
+"تجاهل هذه الرسالة بأمان."
+msgstr ""
+"This code is valid for 10 minutes only. If you didn't request to create a "
+"Misfound account, you can safely ignore this email."
+
+#: templates/accounts/otp_email.html:9
+#: templates/accounts/password_reset_email.html:10
+msgid "فريق Misfound"
+msgstr "The Misfound Team"
+
+#: templates/accounts/otp_email_subject.txt:1
+msgid "رمز تفعيل حسابك في Misfound"
+msgstr "Your Misfound Account Activation Code"
 
 #: templates/accounts/password_reset.html:7
 msgid "استعادة كلمة المرور"
@@ -595,8 +660,8 @@ msgid ""
 "رابط إعادة تعيين كلمة المرور غير صالح، ربما تم استخدامه من قبل. يمكنك طلب "
 "رابط جديد."
 msgstr ""
-"This password reset link is invalid, it may have already been used. You "
-"can request a new one."
+"This password reset link is invalid, it may have already been used. You can "
+"request a new one."
 
 #: templates/accounts/password_reset_confirm.html:19
 msgid "طلب رابط جديد"
@@ -618,11 +683,6 @@ msgstr ""
 msgid "العودة لتسجيل الدخول"
 msgstr "Back to log in"
 
-#: templates/accounts/password_reset_email.html:1
-#, python-format
-msgid "مرحبًا %(user)s،"
-msgstr "Hello %(user)s,"
-
 #: templates/accounts/password_reset_email.html:3
 msgid "وصلنا طلب لإعادة تعيين كلمة المرور الخاصة بحسابك في Misfound."
 msgstr "We received a request to reset the password for your Misfound account."
@@ -633,11 +693,8 @@ msgstr "Click the link below to set a new password:"
 
 #: templates/accounts/password_reset_email.html:8
 msgid "إذا لم تطلب إعادة تعيين كلمة المرور، يمكنك تجاهل هذه الرسالة بأمان."
-msgstr "If you didn't request a password reset, you can safely ignore this email."
-
-#: templates/accounts/password_reset_email.html:10
-msgid "فريق Misfound"
-msgstr "The Misfound Team"
+msgstr ""
+"If you didn't request a password reset, you can safely ignore this email."
 
 #: templates/accounts/password_reset_subject.txt:1
 msgid "استعادة كلمة المرور - Misfound"
@@ -650,6 +707,19 @@ msgstr "Create a new account"
 #: templates/accounts/register.html:14
 msgid "لديك حساب بالفعل؟ سجّل الدخول"
 msgstr "Already have an account? Log in"
+
+#: templates/accounts/verify_otp.html:7
+msgid "تفعيل الحساب"
+msgstr "Account Activation"
+
+#: templates/accounts/verify_otp.html:11
+#, python-format
+msgid "أرسلنا رمز تحقق مكوّن من 6 أرقام إلى بريدك الإلكتروني %(email)s."
+msgstr "We sent a 6-digit verification code to your email %(email)s."
+
+#: templates/accounts/verify_otp.html:17
+msgid "لم يصلك الرمز؟ أعد الإرسال"
+msgstr "Didn't receive the code? Resend"
 
 #: templates/base.html:7
 msgid "المفقودات والمعثورات"
@@ -754,10 +824,6 @@ msgstr "Are you sure?"
 #: templates/base.html:230 templates/reports/detail.html:147
 msgid "إلغاء"
 msgstr "Cancel"
-
-#: templates/base.html:231 templates/base.html:243
-msgid "تأكيد"
-msgstr "Confirm"
 
 #: templates/base.html:240
 msgid "إغلاق"
