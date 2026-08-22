@@ -7,7 +7,7 @@ from django.contrib.auth.views import (
     PasswordResetDoneView,
     PasswordResetView,
 )
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
@@ -29,8 +29,11 @@ def _send_otp_email(user):
     otp = EmailOTP.objects.create(user=user, code=EmailOTP.generate_code())
     context = {'user': user, 'code': otp.code}
     subject = render_to_string('accounts/otp_email_subject.txt', context).strip()
-    body = render_to_string('accounts/otp_email.html', context)
-    send_mail(subject, body, None, [user.email])
+    text_body = render_to_string('accounts/otp_email.txt', context)
+    html_body = render_to_string('accounts/otp_email.html', context)
+    message = EmailMultiAlternatives(subject, text_body, None, [user.email])
+    message.attach_alternative(html_body, 'text/html')
+    message.send()
     return otp
 
 
@@ -132,7 +135,8 @@ class MisfoundLogoutView(LogoutView):
 
 class MisfoundPasswordResetView(PasswordResetView):
     template_name = 'accounts/password_reset.html'
-    email_template_name = 'accounts/password_reset_email.html'
+    email_template_name = 'accounts/password_reset_email.txt'
+    html_email_template_name = 'accounts/password_reset_email.html'
     subject_template_name = 'accounts/password_reset_subject.txt'
     success_url = reverse_lazy('accounts:password_reset_done')
 

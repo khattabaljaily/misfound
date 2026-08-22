@@ -1,0 +1,43 @@
+{% load i18n %}{% get_current_language_bidi as LANGUAGE_BIDI %}{% get_current_language as LANGUAGE_CODE %}<!DOCTYPE html>
+<html dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" lang="{{ LANGUAGE_CODE }}" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="color-scheme" content="light">
+<title>Misfound</title>
+<!--[if mso]>
+<style type="text/css">
+table { border-collapse: collapse; }
+</style>
+<![endif]-->
+</head>
+<body style="margin:0; padding:0; background-color:#f7f8fc; direction:{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %};">
+<div style="display:none; max-height:0; max-width:0; overflow:hidden; opacity:0; mso-hide:all;">
+    {% block preheader %}{% endblock %}
+</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f7f8fc;">
+    <tr>
+        <td align="center" style="padding:32px 16px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px; background-color:#ffffff; border-radius:18px;">
+                <tr>
+                    <td bgcolor="#12263a" style="background-color:#12263a; background-image:linear-gradient(135deg,#091b2d,#12263a); border-radius:18px 18px 0 0; padding:28px 32px; text-align:center;">
+                        <span style="color:#ffffff; font-family:Tahoma,Arial,Helvetica,sans-serif; font-size:22px; font-weight:700; letter-spacing:0.5px;">Misfound</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:32px; text-align:{% if LANGUAGE_BIDI %}right{% else %}left{% endif %}; direction:{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}; font-family:Tahoma,Arial,Helvetica,sans-serif; color:#12263a; font-size:15px; line-height:1.9;">
+                        {% block content %}{% endblock %}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:18px 32px; background-color:#f7f8fc; border-top:1px solid rgba(18,38,58,0.11); border-radius:0 0 18px 18px; text-align:center; font-family:Tahoma,Arial,Helvetica,sans-serif;">
+                        <span style="color:#657484; font-size:12px;">{% trans "هذه رسالة تلقائية من Misfound، منصة المفقودات والمعثورات." %}</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

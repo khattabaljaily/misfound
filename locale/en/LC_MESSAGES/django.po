@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 16:26+0300\n"
+"POT-Creation-Date: 2026-08-22 16:35+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -35,7 +35,8 @@ msgstr "Choose %(field)s"
 
 #: apps/accounts/forms.py:38
 msgid "حسابك غير مُفعّل بعد. تحقق من بريدك الإلكتروني لإكمال عملية التفعيل."
-msgstr "Your account isn't verified yet. Check your email to complete verification."
+msgstr ""
+"Your account isn't verified yet. Check your email to complete verification."
 
 #: apps/accounts/forms.py:44 apps/accounts/models.py:41
 msgid "رمز التحقق"
@@ -78,11 +79,11 @@ msgstr "Users"
 msgid "رموز التحقق"
 msgstr "Verification codes"
 
-#: apps/accounts/views.py:94
+#: apps/accounts/views.py:97
 msgid "انتظر قليلاً قبل طلب رمز جديد."
 msgstr "Please wait a moment before requesting a new code."
 
-#: apps/accounts/views.py:99
+#: apps/accounts/views.py:102
 msgid "تم إرسال رمز جديد إلى بريدك الإلكتروني."
 msgstr "A new code has been sent to your email."
 
@@ -600,21 +601,39 @@ msgstr "Create account"
 msgid "تأكيد"
 msgstr "Confirm"
 
+#: templates/accounts/email_base.html:35
+msgid "هذه رسالة تلقائية من Misfound، منصة المفقودات والمعثورات."
+msgstr "This is an automated message from Misfound, the lost & found platform."
+
 #: templates/accounts/login.html:14
 msgid "ليس لديك حساب؟ أنشئ حسابًا جديدًا"
 msgstr "Don't have an account? Create one"
 
-#: templates/accounts/otp_email.html:1
-#: templates/accounts/password_reset_email.html:1
+#: templates/accounts/otp_email.html:4
+#, python-format
+msgid "رمز تفعيل حسابك هو %(code)s"
+msgstr "Your activation code is %(code)s"
+
+#: templates/accounts/otp_email.html:7 templates/accounts/otp_email.txt:1
+#: templates/accounts/password_reset_email.html:8
+#: templates/accounts/password_reset_email.txt:1
 #, python-format
 msgid "مرحبًا %(user)s،"
 msgstr "Hello %(user)s,"
 
-#: templates/accounts/otp_email.html:3
+#: templates/accounts/otp_email.html:9 templates/accounts/otp_email.txt:3
 msgid "رمز تفعيل حسابك في Misfound هو:"
 msgstr "Your Misfound account activation code is:"
 
-#: templates/accounts/otp_email.html:7
+#: templates/accounts/otp_email.html:25
+msgid "هذا الرمز صالح لمدة 10 دقائق فقط."
+msgstr "This code is valid for 10 minutes only."
+
+#: templates/accounts/otp_email.html:26
+msgid "إذا لم تطلب إنشاء حساب في Misfound، يمكنك تجاهل هذه الرسالة بأمان."
+msgstr "If you didn't request to create a Misfound account, you can safely ignore this email."
+
+#: templates/accounts/otp_email.txt:7
 msgid ""
 "هذا الرمز صالح لمدة 10 دقائق فقط. إذا لم تطلب إنشاء حساب في Misfound، يمكنك "
 "تجاهل هذه الرسالة بأمان."
@@ -622,8 +641,8 @@ msgstr ""
 "This code is valid for 10 minutes only. If you didn't request to create a "
 "Misfound account, you can safely ignore this email."
 
-#: templates/accounts/otp_email.html:9
-#: templates/accounts/password_reset_email.html:10
+#: templates/accounts/otp_email.txt:9
+#: templates/accounts/password_reset_email.txt:10
 msgid "فريق Misfound"
 msgstr "The Misfound Team"
 
@@ -683,18 +702,39 @@ msgstr ""
 msgid "العودة لتسجيل الدخول"
 msgstr "Back to log in"
 
-#: templates/accounts/password_reset_email.html:3
-msgid "وصلنا طلب لإعادة تعيين كلمة المرور الخاصة بحسابك في Misfound."
-msgstr "We received a request to reset the password for your Misfound account."
-
 #: templates/accounts/password_reset_email.html:4
-msgid "اضغط على الرابط التالي لتعيين كلمة مرور جديدة:"
-msgstr "Click the link below to set a new password:"
+msgid "اضغط على الرابط لتعيين كلمة مرور جديدة لحسابك في Misfound."
+msgstr "Click the link to set a new password for your Misfound account."
 
-#: templates/accounts/password_reset_email.html:8
+#: templates/accounts/password_reset_email.html:10
+msgid ""
+"وصلنا طلب لإعادة تعيين كلمة المرور الخاصة بحسابك في Misfound. اضغط على الزر "
+"التالي لتعيين كلمة مرور جديدة:"
+msgstr ""
+"We received a request to reset the password for your Misfound account. "
+"Click the button below to set a new password:"
+
+#: templates/accounts/password_reset_email.html:20
+msgid "إعادة تعيين كلمة المرور"
+msgstr "Reset Password"
+
+#: templates/accounts/password_reset_email.html:29
+msgid "أو انسخ هذا الرابط في متصفحك:"
+msgstr "Or copy this link into your browser:"
+
+#: templates/accounts/password_reset_email.html:34
+#: templates/accounts/password_reset_email.txt:8
 msgid "إذا لم تطلب إعادة تعيين كلمة المرور، يمكنك تجاهل هذه الرسالة بأمان."
 msgstr ""
 "If you didn't request a password reset, you can safely ignore this email."
+
+#: templates/accounts/password_reset_email.txt:3
+msgid "وصلنا طلب لإعادة تعيين كلمة المرور الخاصة بحسابك في Misfound."
+msgstr "We received a request to reset the password for your Misfound account."
+
+#: templates/accounts/password_reset_email.txt:4
+msgid "اضغط على الرابط التالي لتعيين كلمة مرور جديدة:"
+msgstr "Click the link below to set a new password:"
 
 #: templates/accounts/password_reset_subject.txt:1
 msgid "استعادة كلمة المرور - Misfound"

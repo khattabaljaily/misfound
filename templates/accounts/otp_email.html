@@ -1,10 +1,27 @@
-{% load i18n %}{% autoescape off %}{% blocktrans %}مرحبًا {{ user }}،{% endblocktrans %}
+{% extends "accounts/email_base.html" %}
+{% load i18n %}
 
-{% trans "رمز تفعيل حسابك في Misfound هو:" %}
+{% block preheader %}{% blocktrans %}رمز تفعيل حسابك هو {{ code }}{% endblocktrans %}{% endblock %}
 
-{{ code }}
+{% block content %}
+<p style="margin:0 0 16px;">{% blocktrans %}مرحبًا {{ user }}،{% endblocktrans %}</p>
 
-{% blocktrans %}هذا الرمز صالح لمدة 10 دقائق فقط. إذا لم تطلب إنشاء حساب في Misfound، يمكنك تجاهل هذه الرسالة بأمان.{% endblocktrans %}
+<p style="margin:0 0 20px;">{% trans "رمز تفعيل حسابك في Misfound هو:" %}</p>
 
-{% trans "فريق Misfound" %}
-{% endautoescape %}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center" style="padding:4px 0 24px;">
+            <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td bgcolor="#fff0ed" style="border-radius:12px; padding:16px 32px;">
+                        <span style="display:block; font-family:'Courier New',monospace; font-size:34px; font-weight:700; letter-spacing:10px; color:#d95b50; direction:ltr;">{{ code }}</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<p style="margin:0 0 8px; color:#657484; font-size:13px;">{% trans "هذا الرمز صالح لمدة 10 دقائق فقط." %}</p>
+<p style="margin:0; color:#657484; font-size:13px;">{% trans "إذا لم تطلب إنشاء حساب في Misfound، يمكنك تجاهل هذه الرسالة بأمان." %}</p>
+{% endblock %}

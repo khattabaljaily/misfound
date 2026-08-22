@@ -1,0 +1,10 @@
+{% load i18n %}{% autoescape off %}{% blocktrans %}مرحبًا {{ user }}،{% endblocktrans %}
+
+{% trans "رمز تفعيل حسابك في Misfound هو:" %}
+
+{{ code }}
+
+{% blocktrans %}هذا الرمز صالح لمدة 10 دقائق فقط. إذا لم تطلب إنشاء حساب في Misfound، يمكنك تجاهل هذه الرسالة بأمان.{% endblocktrans %}
+
+{% trans "فريق Misfound" %}
+{% endautoescape %}
