@@ -157,13 +157,19 @@
 
 {% block extra_js %}
 <script>
+{% trans "تأكيد الاسترجاع" as mf_resolve_title %}
+{% trans "هل استرجعت هذا الغرض فعلاً؟ سيتم وسم الإعلان كمنتهي." as mf_resolve_message %}
+{% trans "نعم، تم الاسترجاع" as mf_resolve_confirm_label %}
+{% trans "حدث خطأ، يرجى المحاولة مرة أخرى." as mf_generic_error %}
+{% trans "تم إبلاغك عن هذا الإعلان مسبقًا" as mf_flagged_label %}
+
 var resolveBtn = document.getElementById('resolveBtn');
 if (resolveBtn) {
     resolveBtn.addEventListener('click', function () {
         mfConfirm({
-            title: '{% trans "تأكيد الاسترجاع" %}',
-            message: '{% trans "هل استرجعت هذا الغرض فعلاً؟ سيتم وسم الإعلان كمنتهي." %}',
-            confirmLabel: '{% trans "نعم، تم الاسترجاع" %}',
+            title: '{{ mf_resolve_title|escapejs }}',
+            message: '{{ mf_resolve_message|escapejs }}',
+            confirmLabel: '{{ mf_resolve_confirm_label|escapejs }}',
             confirmVariant: 'btn-success',
             onConfirm: function () {
                 mfSetButtonLoading(resolveBtn, true);
@@ -182,12 +188,12 @@ if (resolveBtn) {
                             document.getElementById('resolvedBadge').hidden = false;
                         } else {
                             mfSetButtonLoading(resolveBtn, false);
-                            showToast('error', data.message || '{% trans "حدث خطأ، يرجى المحاولة مرة أخرى." %}');
+                            showToast('error', data.message || '{{ mf_generic_error|escapejs }}');
                         }
                     })
                     .catch(function () {
                         mfSetButtonLoading(resolveBtn, false);
-                        showToast('error', '{% trans "حدث خطأ، يرجى المحاولة مرة أخرى." %}');
+                        showToast('error', '{{ mf_generic_error|escapejs }}');
                     });
             },
         });
@@ -224,14 +230,14 @@ if (flagReportBtn && flagModalEl) {
                 flagModal.hide();
                 if (data.success) {
                     showToast('success', data.message);
-                    flagReportBtn.outerHTML = '<span class="mf-flag-link mf-flag-link--done"><i class="bi bi-flag-fill"></i> {% trans "تم إبلاغك عن هذا الإعلان مسبقًا" %}</span>';
+                    flagReportBtn.outerHTML = '<span class="mf-flag-link mf-flag-link--done"><i class="bi bi-flag-fill"></i> {{ mf_flagged_label|escapejs }}</span>';
                 } else {
                     showToast('error', data.message);
                 }
             })
             .catch(function () {
                 mfSetButtonLoading(submitBtn, false);
-                showToast('error', 'حدث خطأ، يرجى المحاولة مرة أخرى.');
+                showToast('error', '{{ mf_generic_error|escapejs }}');
             });
     });
 }

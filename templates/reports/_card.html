@@ -26,6 +26,16 @@
                 <a href="{% url 'reports:detail' pk=report.pk %}" class="mf-card-link">
                     {% trans "عرض الإعلان" %} <i class="bi bi-arrow-left"></i>
                 </a>
+                {% if show_owner_actions %}
+                <div class="d-flex gap-2">
+                    <a href="{% url 'reports:edit' pk=report.pk %}" class="btn btn-sm btn-outline-secondary" title="{% trans 'تعديل' %}" aria-label="{% trans 'تعديل' %}">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-outline-danger mf-card-delete-btn" data-url="{% url 'reports:delete' pk=report.pk %}" title="{% trans 'حذف' %}" aria-label="{% trans 'حذف' %}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 16:35+0300\n"
+"POT-Creation-Date: 2026-08-22 18:38+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -479,60 +479,68 @@ msgstr "Detected on"
 msgid "التطابقات المحتملة"
 msgstr "Possible matches"
 
-#: apps/reports/views.py:107 templates/base.html:122 templates/base.html:198
+#: apps/reports/views.py:108 templates/base.html:122 templates/base.html:198
 msgid "المفقودات"
 msgstr "Lost items"
 
-#: apps/reports/views.py:108
+#: apps/reports/views.py:109
 msgid ""
 "تصفح أحدث إعلانات المفقودات في الوطن العربي وساعد في إعادتها إلى أصحابها."
 msgstr ""
 "Browse the latest lost item reports across the Arab world and help reunite "
 "them with their owners."
 
-#: apps/reports/views.py:110 templates/base.html:125 templates/base.html:199
+#: apps/reports/views.py:111 templates/base.html:125 templates/base.html:199
 msgid "المعثورات"
 msgstr "Found items"
 
-#: apps/reports/views.py:111
+#: apps/reports/views.py:112
 msgid ""
 "تصفح أحدث إعلانات المعثورات في الوطن العربي وساعد في إيصالها إلى أصحابها."
 msgstr ""
 "Browse the latest found item reports across the Arab world and help get them "
 "to their owners."
 
-#: apps/reports/views.py:113 templates/404.html:12 templates/core/about.html:75
+#: apps/reports/views.py:114 templates/404.html:12 templates/core/about.html:75
 #: templates/reports/list.html:11
 msgid "تصفح الإعلانات"
 msgstr "Explore reports"
 
-#: apps/reports/views.py:114
+#: apps/reports/views.py:115
 msgid "تصفح جميع إعلانات المفقودات والمعثورات في الوطن العربي في مكان واحد."
 msgstr "Browse all lost and found reports across the Arab world in one place."
 
-#: apps/reports/views.py:209
+#: apps/reports/views.py:210
 msgid "تم نشر الإعلان بنجاح."
 msgstr "Your report was posted successfully."
 
-#: apps/reports/views.py:239
+#: apps/reports/views.py:234
+msgid "تم تحديث الإعلان بنجاح."
+msgstr "Your report was updated successfully."
+
+#: apps/reports/views.py:259
+msgid "تم حذف الإعلان بنجاح."
+msgstr "Your report was deleted successfully."
+
+#: apps/reports/views.py:280
 msgid "لا يمكنك الإبلاغ عن إعلانك الخاص."
 msgstr "You can't flag your own report."
 
-#: apps/reports/views.py:245
+#: apps/reports/views.py:286
 msgid "يرجى اختيار سبب الإبلاغ."
 msgstr "Please choose a reason for the flag."
 
-#: apps/reports/views.py:252
+#: apps/reports/views.py:293
 msgid "تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة."
 msgstr ""
 "Your flag has been received - thanks for helping keep the platform "
 "trustworthy."
 
-#: apps/reports/views.py:252
+#: apps/reports/views.py:293
 msgid "سبق أن أبلغت عن هذا الإعلان."
 msgstr "You've already flagged this report."
 
-#: apps/reports/views.py:266 apps/reports/views.py:267
+#: apps/reports/views.py:307 apps/reports/views.py:308
 msgid "تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح."
 msgstr "The report's status was updated to “Resolved”."
 
@@ -631,7 +639,9 @@ msgstr "This code is valid for 10 minutes only."
 
 #: templates/accounts/otp_email.html:26
 msgid "إذا لم تطلب إنشاء حساب في Misfound، يمكنك تجاهل هذه الرسالة بأمان."
-msgstr "If you didn't request to create a Misfound account, you can safely ignore this email."
+msgstr ""
+"If you didn't request to create a Misfound account, you can safely ignore "
+"this email."
 
 #: templates/accounts/otp_email.txt:7
 msgid ""
@@ -711,8 +721,8 @@ msgid ""
 "وصلنا طلب لإعادة تعيين كلمة المرور الخاصة بحسابك في Misfound. اضغط على الزر "
 "التالي لتعيين كلمة مرور جديدة:"
 msgstr ""
-"We received a request to reset the password for your Misfound account. "
-"Click the button below to set a new password:"
+"We received a request to reset the password for your Misfound account. Click "
+"the button below to set a new password:"
 
 #: templates/accounts/password_reset_email.html:20
 msgid "إعادة تعيين كلمة المرور"
@@ -1087,8 +1097,7 @@ msgstr "No reviewed flags yet."
 msgid "لا توجد بلاغات بانتظار المراجعة."
 msgstr "No flags awaiting review."
 
-#: templates/core/admin_flags.html:69 templates/reports/detail.html:185
-#: templates/reports/detail.html:190
+#: templates/core/admin_flags.html:69 templates/reports/detail.html:163
 msgid "حدث خطأ، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong. Please try again."
 
@@ -1554,6 +1563,18 @@ msgstr "No notifications yet."
 msgid "عرض كل الإشعارات"
 msgstr "View all notifications"
 
+#: templates/reports/_card.html:31
+msgid "تعديل"
+msgstr "Edit"
+
+#: templates/reports/_card.html:34 templates/reports/mine.html:26
+msgid "حذف"
+msgstr "Delete"
+
+#: templates/reports/_form.html:17
+msgid "حفظ التعديلات"
+msgstr "Save changes"
+
 #: templates/reports/_form.html:17
 msgid "نشر الإعلان"
 msgstr "Post report"
@@ -1606,7 +1627,7 @@ msgstr "I think it's mine"
 msgid "يرجى تسجيل الدخول للتواصل"
 msgstr "Please log in to get in touch"
 
-#: templates/reports/detail.html:80 templates/reports/detail.html:227
+#: templates/reports/detail.html:80 templates/reports/detail.html:164
 msgid "تم إبلاغك عن هذا الإعلان مسبقًا"
 msgstr "You've already flagged this report"
 
@@ -1642,24 +1663,28 @@ msgstr "Additional note (optional)"
 msgid "إرسال البلاغ"
 msgstr "Submit flag"
 
-#: templates/reports/detail.html:164
+#: templates/reports/detail.html:160
 msgid "تأكيد الاسترجاع"
 msgstr "Confirm recovery"
 
-#: templates/reports/detail.html:165
+#: templates/reports/detail.html:161
 msgid "هل استرجعت هذا الغرض فعلاً؟ سيتم وسم الإعلان كمنتهي."
 msgstr ""
 "Have you actually recovered this item? The report will be marked as closed."
 
-#: templates/reports/detail.html:166
+#: templates/reports/detail.html:162
 msgid "نعم، تم الاسترجاع"
 msgstr "Yes, it's recovered"
 
-#: templates/reports/form.html:9
+#: templates/reports/form.html:10
+msgid "تعديل الإعلان"
+msgstr "Edit report"
+
+#: templates/reports/form.html:11
 msgid "نشر إعلان مفقود"
 msgstr "Post a Lost Item Report"
 
-#: templates/reports/form.html:9
+#: templates/reports/form.html:11
 msgid "نشر إعلان معثور عليه"
 msgstr "Post a Found Item Report"
 
@@ -1726,3 +1751,16 @@ msgstr "Something went wrong loading the results. Please try again."
 #: templates/reports/mine.html:15
 msgid "لا توجد إعلانات حتى الآن."
 msgstr "No reports yet."
+
+#: templates/reports/mine.html:24
+msgid "حذف الإعلان"
+msgstr "Delete report"
+
+#: templates/reports/mine.html:25
+msgid "هل تريد حذف هذا الإعلان نهائيًا؟ لا يمكن التراجع عن هذا الإجراء."
+msgstr ""
+"Do you want to permanently delete this report? This action cannot be undone."
+
+#: templates/reports/mine.html:27
+msgid "تعذّر حذف الإعلان، يرجى المحاولة مرة أخرى."
+msgstr "Could not delete the report, please try again."

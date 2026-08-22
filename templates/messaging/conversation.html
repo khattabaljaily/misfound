@@ -107,7 +107,7 @@ form.addEventListener('submit', function (e) {
     })
     .catch(function () {
         mfSetButtonLoading(sendBtn, false);
-        showToast('error', '{% trans "تعذر إرسال الرسالة، يرجى المحاولة مرة أخرى." %}');
+        showToast('error', '{% trans "تعذر إرسال الرسالة، يرجى المحاولة مرة أخرى." as mf_send_error %}{{ mf_send_error|escapejs }}');
     });
 });
 </script>

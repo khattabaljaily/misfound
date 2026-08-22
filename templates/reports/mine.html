@@ -8,7 +8,7 @@
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
     {% for report in reports %}
-        {% include "reports/_card.html" %}
+        {% include "reports/_card.html" with show_owner_actions=True %}
     {% empty %}
     <div class="col-12 text-center text-muted py-5">
         <i class="bi bi-inboxes display-4 d-block mb-2"></i>
@@ -17,4 +17,48 @@
     {% endfor %}
 </div>
 {% include "core/_pagination.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+{% trans "حذف الإعلان" as mf_delete_title %}
+{% trans "هل تريد حذف هذا الإعلان نهائيًا؟ لا يمكن التراجع عن هذا الإجراء." as mf_delete_message %}
+{% trans "حذف" as mf_delete_label %}
+{% trans "تعذّر حذف الإعلان، يرجى المحاولة مرة أخرى." as mf_delete_error %}
+
+document.querySelectorAll('.mf-card-delete-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        mfConfirm({
+            title: '{{ mf_delete_title|escapejs }}',
+            message: '{{ mf_delete_message|escapejs }}',
+            confirmLabel: '{{ mf_delete_label|escapejs }}',
+            confirmVariant: 'btn-danger',
+            onConfirm: function () {
+                mfSetButtonLoading(btn, true);
+                fetch(btn.dataset.url, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': mfGetCookie('csrftoken'),
+                    },
+                })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.success) {
+                            var col = btn.closest('.col');
+                            if (col) col.remove();
+                        } else {
+                            mfSetButtonLoading(btn, false);
+                            showToast('error', '{{ mf_delete_error|escapejs }}');
+                        }
+                    })
+                    .catch(function () {
+                        mfSetButtonLoading(btn, false);
+                        showToast('error', '{{ mf_delete_error|escapejs }}');
+                    });
+            },
+        });
+    });
+});
+</script>
 {% endblock %}

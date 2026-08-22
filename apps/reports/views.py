@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from django.db.models import Count, F, Q
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import Truncator
 from django.utils.translation import get_language, gettext as _
@@ -217,6 +218,46 @@ def report_create(request, report_type):
         form = ReportForm(report_type=report_type)
 
     return render(request, 'reports/form.html', {'form': form, 'report_type': report_type})
+
+
+@login_required
+def report_edit(request, pk):
+    report = get_object_or_404(Report, pk=pk, reporter=request.user)
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if request.method == 'POST':
+        form = ReportForm(request.POST, request.FILES, instance=report, report_type=report.type)
+        if form.is_valid():
+            form.save()
+            if is_ajax:
+                return JsonResponse({'success': True, 'redirect': report.get_absolute_url()})
+            messages.success(request, _('تم تحديث الإعلان بنجاح.'))
+            return redirect('reports:detail', pk=report.pk)
+
+        if is_ajax:
+            return render(
+                request, 'reports/_form.html',
+                {'form': form, 'report_type': report.type, 'report': report}, status=400
+            )
+    else:
+        form = ReportForm(instance=report, report_type=report.type)
+
+    return render(request, 'reports/form.html', {'form': form, 'report_type': report.type, 'report': report})
+
+
+@login_required
+def report_delete(request, pk):
+    report = get_object_or_404(Report, pk=pk, reporter=request.user)
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if request.method != 'POST':
+        raise Http404
+
+    report.delete()
+    if is_ajax:
+        return JsonResponse({'success': True, 'redirect': reverse('reports:mine')})
+    messages.success(request, _('تم حذف الإعلان بنجاح.'))
+    return redirect('reports:mine')
 
 
 @login_required

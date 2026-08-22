@@ -9,6 +9,8 @@ urlpatterns = [
     path('mine/', views.my_reports, name='mine'),
     path('new/<str:report_type>/', views.report_create, name='create'),
     path('<int:pk>/', views.report_detail, name='detail'),
+    path('<int:pk>/edit/', views.report_edit, name='edit'),
+    path('<int:pk>/delete/', views.report_delete, name='delete'),
     path('<int:pk>/resolve/', views.report_resolve, name='resolve'),
     path('<int:pk>/flag/', views.flag_report, name='flag'),
 ]

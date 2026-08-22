@@ -1,5 +1,5 @@
 {% load i18n widget_tweaks %}
-<form method="post" enctype="multipart/form-data" class="mf-field-grid" id="reportForm" action="{% url 'reports:create' report_type=report_type %}" novalidate>
+<form method="post" enctype="multipart/form-data" class="mf-field-grid" id="reportForm" action="{% if report %}{% url 'reports:edit' pk=report.pk %}{% else %}{% url 'reports:create' report_type=report_type %}{% endif %}" novalidate>
     {% csrf_token %}
     {% for field in form %}
     <div class="mb-2 {% if field|widget_type == 'textarea' or field|widget_type == 'clearablefileinput' %}mf-field-full{% endif %}">
@@ -14,6 +14,6 @@
     </div>
     {% endfor %}
     <div class="mf-field-full">
-        <button class="btn btn-primary" type="submit">{% trans "نشر الإعلان" %}</button>
+        <button class="btn btn-primary" type="submit">{% if report %}{% trans "حفظ التعديلات" %}{% else %}{% trans "نشر الإعلان" %}{% endif %}</button>
     </div>
 </form>

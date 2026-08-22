@@ -298,7 +298,7 @@
                     })
                     .catch(function () {
                         mfNotifDropdown.innerHTML = '<div class="text-center text-muted py-4 small">'
-                            + '{% trans "تعذّر تحميل الإشعارات." %}</div>';
+                            + '{% trans "تعذّر تحميل الإشعارات." as mf_notif_load_error %}{{ mf_notif_load_error|escapejs }}</div>';
                     });
             }
 
