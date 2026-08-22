@@ -15,14 +15,14 @@ from django.utils.translation import get_language, gettext as _
 from apps.locations.models import City, Country
 from .forms import ReportForm
 from .matching import find_and_save_matches
-from .models import Category, Match, Report, ReportFlag
+from .models import Category, Match, Report, ReportFlag, ReportImage
 
 REPORTS_PAGE_SIZE = 16
 MINE_PAGE_SIZE = 12
 
 
 def report_list(request):
-    qs = Report.objects.filter(status=Report.OPEN).select_related('category', 'country', 'city')
+    qs = Report.objects.filter(status=Report.OPEN).select_related('category', 'country', 'city').prefetch_related('images')
 
     report_type = request.GET.get('type')
     if report_type in (Report.LOST, Report.FOUND):
@@ -148,7 +148,9 @@ def cities_for_country(request):
 
 def report_detail(request, pk):
     report = get_object_or_404(
-        Report.objects.select_related('category', 'country', 'city', 'reporter'), pk=pk
+        Report.objects.select_related('category', 'country', 'city', 'reporter')
+        .prefetch_related('images'),
+        pk=pk,
     )
     Report.objects.filter(pk=pk).update(views=F('views') + 1)
     is_owner = request.user.is_authenticated and request.user == report.reporter
@@ -156,12 +158,12 @@ def report_detail(request, pk):
     if report.type == Report.LOST:
         matches = Match.objects.filter(lost_report=report).select_related(
             'found_report', 'found_report__category', 'found_report__city'
-        )
+        ).prefetch_related('found_report__images')
         matched_reports = [(m.found_report, m.score, m.reason) for m in matches]
     else:
         matches = Match.objects.filter(found_report=report).select_related(
             'lost_report', 'lost_report__category', 'lost_report__city'
-        )
+        ).prefetch_related('lost_report__images')
         matched_reports = [(m.lost_report, m.score, m.reason) for m in matches]
 
     already_flagged = (
@@ -185,7 +187,7 @@ def report_detail(request, pk):
         'whatsapp_share_url': 'https://wa.me/?text=' + quote(share_text),
         'meta_title': f'{report.title} | Misfound',
         'meta_description': meta_description,
-        'meta_image': request.build_absolute_uri(report.image.url) if report.image else None,
+        'meta_image': request.build_absolute_uri(report.cover_image.image.url) if report.cover_image else None,
         'canonical_url': absolute_url,
     })
 
@@ -204,6 +206,8 @@ def report_create(request, report_type):
             report.type = report_type
             report.reporter = request.user
             report.save()
+            for i, f in enumerate(form.cleaned_data['images']):
+                ReportImage.objects.create(report=report, image=f, order=i)
             find_and_save_matches(report)
             if is_ajax:
                 return JsonResponse({'success': True, 'redirect': report.get_absolute_url()})
@@ -229,6 +233,9 @@ def report_edit(request, pk):
         form = ReportForm(request.POST, request.FILES, instance=report, report_type=report.type)
         if form.is_valid():
             form.save()
+            next_order = report.images.count()
+            for i, f in enumerate(form.cleaned_data['images']):
+                ReportImage.objects.create(report=report, image=f, order=next_order + i)
             if is_ajax:
                 return JsonResponse({'success': True, 'redirect': report.get_absolute_url()})
             messages.success(request, _('تم تحديث الإعلان بنجاح.'))
@@ -243,6 +250,17 @@ def report_edit(request, pk):
         form = ReportForm(instance=report, report_type=report.type)
 
     return render(request, 'reports/form.html', {'form': form, 'report_type': report.type, 'report': report})
+
+
+@login_required
+def report_image_delete(request, pk):
+    image = get_object_or_404(ReportImage, pk=pk, report__reporter=request.user)
+
+    if request.method != 'POST':
+        raise Http404
+
+    image.delete()
+    return JsonResponse({'success': True})
 
 
 @login_required
@@ -262,7 +280,7 @@ def report_delete(request, pk):
 
 @login_required
 def my_reports(request):
-    qs = Report.objects.filter(reporter=request.user).select_related('category', 'city')
+    qs = Report.objects.filter(reporter=request.user).select_related('category', 'city').prefetch_related('images')
     page_obj = Paginator(qs, MINE_PAGE_SIZE).get_page(request.GET.get('page'))
     return render(request, 'reports/mine.html', {'reports': page_obj, 'page_obj': page_obj})
 

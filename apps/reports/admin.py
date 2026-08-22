@@ -1,11 +1,16 @@
 from django.contrib import admin
-from .models import Category, Match, Report, ReportFlag
+from .models import Category, Match, Report, ReportFlag, ReportImage
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name_ar', 'name_en', 'icon']
     search_fields = ['name_ar', 'name_en']
+
+
+class ReportImageInline(admin.TabularInline):
+    model = ReportImage
+    extra = 0
 
 
 @admin.register(Report)
@@ -15,6 +20,7 @@ class ReportAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'identifier', 'reporter__username']
     autocomplete_fields = ['reporter']
     date_hierarchy = 'created_at'
+    inlines = [ReportImageInline]
 
 
 @admin.register(Match)

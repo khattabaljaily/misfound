@@ -71,7 +71,6 @@ class Report(models.Model):
         max_length=200, blank=True, verbose_name=_('تفاصيل المكان'),
         help_text=_('مكان الفقدان/العثور بالتفصيل')
     )
-    image = models.ImageField(upload_to='reports/%Y/%m/', blank=True, null=True, verbose_name=_('الصورة'))
     event_date = models.DateField(verbose_name=_('تاريخ الفقدان أو العثور'))
 
     verification_question = models.CharField(
@@ -96,6 +95,29 @@ class Report(models.Model):
 
     def get_absolute_url(self):
         return reverse('reports:detail', args=[self.pk])
+
+    @property
+    def cover_image(self):
+        return self.images.first()
+
+
+class ReportImage(models.Model):
+    MAX_PER_REPORT = 3
+
+    report = models.ForeignKey(
+        Report, on_delete=models.CASCADE, related_name='images', verbose_name=_('الإعلان')
+    )
+    image = models.ImageField(upload_to='reports/%Y/%m/', verbose_name=_('الصورة'))
+    order = models.PositiveSmallIntegerField(default=0, verbose_name=_('الترتيب'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاريخ الرفع'))
+
+    class Meta:
+        ordering = ['order', 'created_at']
+        verbose_name = _('صورة الإعلان')
+        verbose_name_plural = _('صور الإعلان')
+
+    def __str__(self):
+        return f'{self.report} — {self.order}'
 
 
 class ReportFlag(models.Model):

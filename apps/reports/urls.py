@@ -11,6 +11,7 @@ urlpatterns = [
     path('<int:pk>/', views.report_detail, name='detail'),
     path('<int:pk>/edit/', views.report_edit, name='edit'),
     path('<int:pk>/delete/', views.report_delete, name='delete'),
+    path('images/<int:pk>/delete/', views.report_image_delete, name='image_delete'),
     path('<int:pk>/resolve/', views.report_resolve, name='resolve'),
     path('<int:pk>/flag/', views.flag_report, name='flag'),
 ]

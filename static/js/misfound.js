@@ -358,6 +358,141 @@ function initCityCascade(countrySelectId, citySelectId, citiesUrl, emptyLabel) {
     }
 }
 
+/**
+ * Wires up drag-and-drop multi-image uploaders (report create/edit form).
+ * Keeps a JS-side list of newly selected File objects (since a native
+ * <input type=file> FileList can't be edited in place), rebuilds the
+ * input's FileList via DataTransfer on every add/remove so the right files
+ * still go out with the form submit, and lets existing (already-uploaded)
+ * images be deleted immediately via AJAX rather than waiting for submit.
+ */
+function mfInitImageUploader(root) {
+    (root || document).querySelectorAll('[data-mf-uploader]').forEach(function (uploader) {
+        if (uploader.dataset.mfUploaderInit) return;
+        uploader.dataset.mfUploaderInit = '1';
+
+        var max = parseInt(uploader.dataset.max, 10) || 3;
+        var input = uploader.querySelector('[data-mf-uploader-input]');
+        var dropzone = uploader.querySelector('[data-mf-uploader-dropzone]');
+        var previews = uploader.querySelector('[data-mf-uploader-previews]');
+        var countEl = uploader.querySelector('[data-mf-uploader-count]');
+        var existingEl = uploader.querySelector('[data-mf-uploader-existing]');
+
+        var existingCount = existingEl ? existingEl.querySelectorAll('[data-existing-image]').length : 0;
+        var selectedFiles = [];
+
+        function updateCount() {
+            var total = existingCount + selectedFiles.length;
+            if (countEl) countEl.textContent = total;
+            dropzone.classList.toggle('is-full', total >= max);
+        }
+
+        function syncInput() {
+            var dt = new DataTransfer();
+            selectedFiles.forEach(function (f) { dt.items.add(f); });
+            input.files = dt.files;
+        }
+
+        function renderPreviews() {
+            previews.innerHTML = '';
+            selectedFiles.forEach(function (file, index) {
+                var thumb = document.createElement('div');
+                thumb.className = 'mf-uploader__thumb';
+                var img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.alt = '';
+                var removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'mf-uploader__remove';
+                removeBtn.setAttribute('aria-label', mfI18n('removeImage', 'حذف الصورة'));
+                removeBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
+                removeBtn.addEventListener('click', function () {
+                    selectedFiles.splice(index, 1);
+                    syncInput();
+                    renderPreviews();
+                });
+                thumb.appendChild(img);
+                thumb.appendChild(removeBtn);
+                previews.appendChild(thumb);
+            });
+            updateCount();
+        }
+
+        function addFiles(fileList) {
+            var room = max - existingCount - selectedFiles.length;
+            var files = Array.prototype.slice.call(fileList);
+            var accepted = [];
+            var rejectedType = false;
+            files.forEach(function (f) {
+                if (!f.type || f.type.indexOf('image/') !== 0) {
+                    rejectedType = true;
+                    return;
+                }
+                accepted.push(f);
+            });
+            if (rejectedType) showToast('error', mfI18n('invalidImageType', 'يرجى اختيار صور فقط.'));
+            if (accepted.length > Math.max(room, 0)) {
+                showToast('error', mfI18n('maxImages', 'يمكن رفع 3 صور كحد أقصى.'));
+                accepted = accepted.slice(0, Math.max(room, 0));
+            }
+            selectedFiles = selectedFiles.concat(accepted);
+            syncInput();
+            renderPreviews();
+        }
+
+        input.addEventListener('change', function () {
+            addFiles(input.files);
+        });
+
+        ['dragover', 'dragenter'].forEach(function (evt) {
+            dropzone.addEventListener(evt, function (e) {
+                e.preventDefault();
+                dropzone.classList.add('is-dragover');
+            });
+        });
+        ['dragleave', 'dragend'].forEach(function (evt) {
+            dropzone.addEventListener(evt, function () { dropzone.classList.remove('is-dragover'); });
+        });
+        dropzone.addEventListener('drop', function (e) {
+            e.preventDefault();
+            dropzone.classList.remove('is-dragover');
+            if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+        });
+
+        if (existingEl) {
+            existingEl.querySelectorAll('.mf-existing-image-delete-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    btn.disabled = true;
+                    fetch(btn.dataset.url, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': mfGetCookie('csrftoken'),
+                        },
+                    })
+                        .then(function (r) { return r.json(); })
+                        .then(function (data) {
+                            if (data.success) {
+                                btn.closest('[data-existing-image]').remove();
+                                existingCount -= 1;
+                                updateCount();
+                            } else {
+                                btn.disabled = false;
+                                showToast('error', mfI18n('connectionError', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.'));
+                            }
+                        })
+                        .catch(function () {
+                            btn.disabled = false;
+                            showToast('error', mfI18n('connectionError', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.'));
+                        });
+                });
+            });
+        }
+
+        updateCount();
+    });
+}
+
 /* =================================================================
    Sitewide navigation feedback
    ================================================================= */

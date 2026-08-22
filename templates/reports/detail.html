@@ -16,11 +16,33 @@
 
     <article class="mf-report-detail__shell">
         <div class="mf-report-detail__media">
-            {% if report.image %}
-            <img src="{{ report.image.url }}" alt="{{ report.title }}">
+            {% with images=report.images.all %}
+            {% if images %}
+            <div class="mf-gallery" data-mf-gallery>
+                <div class="mf-gallery__viewport">
+                    {% for img in images %}
+                    <img src="{{ img.image.url }}" alt="{{ report.title }}" class="mf-gallery__slide{% if forloop.first %} is-active{% endif %}" data-mf-gallery-slide data-index="{{ forloop.counter0 }}">
+                    {% endfor %}
+                    {% if images|length > 1 %}
+                    <button type="button" class="mf-gallery__nav mf-gallery__nav--prev" data-mf-gallery-prev aria-label="{% trans 'الصورة السابقة' %}"><i class="bi bi-chevron-right"></i></button>
+                    <button type="button" class="mf-gallery__nav mf-gallery__nav--next" data-mf-gallery-next aria-label="{% trans 'الصورة التالية' %}"><i class="bi bi-chevron-left"></i></button>
+                    <div class="mf-gallery__counter" dir="ltr"><span data-mf-gallery-current>1</span> / {{ images|length }}</div>
+                    {% endif %}
+                </div>
+                {% if images|length > 1 %}
+                <div class="mf-gallery__thumbs">
+                    {% for img in images %}
+                    <button type="button" class="mf-gallery__thumb{% if forloop.first %} is-active{% endif %}" data-mf-gallery-thumb data-index="{{ forloop.counter0 }}" aria-label="{% blocktrans with n=forloop.counter %}صورة {{ n }}{% endblocktrans %}">
+                        <img src="{{ img.image.url }}" alt="">
+                    </button>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
             {% else %}
             <div class="mf-detail-placeholder"><i class="bi {{ report.category.icon|default:'bi-search' }}"></i><span>{{ report.category.name }}</span></div>
             {% endif %}
+            {% endwith %}
         </div>
         <div class="mf-report-detail__content">
             <div class="mf-report-detail__badges">
@@ -98,8 +120,8 @@
         <div class="col">
             <a href="{% url 'reports:detail' pk=matched_report.pk %}" class="card report-card h-100 text-decoration-none">
                 <div class="position-relative report-card__media">
-                    {% if matched_report.image %}
-                        <img src="{{ matched_report.image.url }}" class="card-img-top" alt="{{ matched_report.title }}">
+                    {% if matched_report.cover_image %}
+                        <img src="{{ matched_report.cover_image.image.url }}" class="card-img-top" alt="{{ matched_report.title }}">
                     {% else %}
                         <div class="card-img-placeholder"><i class="bi {{ matched_report.category.icon|default:'bi-search' }}"></i></div>
                     {% endif %}
@@ -162,6 +184,29 @@
 {% trans "نعم، تم الاسترجاع" as mf_resolve_confirm_label %}
 {% trans "حدث خطأ، يرجى المحاولة مرة أخرى." as mf_generic_error %}
 {% trans "تم إبلاغك عن هذا الإعلان مسبقًا" as mf_flagged_label %}
+
+var galleryEl = document.querySelector('[data-mf-gallery]');
+if (galleryEl) {
+    var gallerySlides = Array.prototype.slice.call(galleryEl.querySelectorAll('[data-mf-gallery-slide]'));
+    var galleryThumbs = Array.prototype.slice.call(galleryEl.querySelectorAll('[data-mf-gallery-thumb]'));
+    var galleryCounter = galleryEl.querySelector('[data-mf-gallery-current]');
+    var galleryIndex = 0;
+
+    function mfGalleryShow(index) {
+        galleryIndex = (index + gallerySlides.length) % gallerySlides.length;
+        gallerySlides.forEach(function (slide, i) { slide.classList.toggle('is-active', i === galleryIndex); });
+        galleryThumbs.forEach(function (thumb, i) { thumb.classList.toggle('is-active', i === galleryIndex); });
+        if (galleryCounter) galleryCounter.textContent = galleryIndex + 1;
+    }
+
+    var prevBtn = galleryEl.querySelector('[data-mf-gallery-prev]');
+    var nextBtn = galleryEl.querySelector('[data-mf-gallery-next]');
+    if (prevBtn) prevBtn.addEventListener('click', function () { mfGalleryShow(galleryIndex - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { mfGalleryShow(galleryIndex + 1); });
+    galleryThumbs.forEach(function (thumb) {
+        thumb.addEventListener('click', function () { mfGalleryShow(parseInt(thumb.dataset.index, 10)); });
+    });
+}
 
 var resolveBtn = document.getElementById('resolveBtn');
 if (resolveBtn) {

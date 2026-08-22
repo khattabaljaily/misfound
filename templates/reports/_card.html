@@ -2,10 +2,22 @@
 <div class="col">
     <div class="card report-card h-100">
         <div class="position-relative report-card__media">
-            {% if report.image %}
-                <img src="{{ report.image.url }}" class="card-img-top" alt="{{ report.title }}">
+            {% with cover=report.cover_image %}
+            {% if cover %}
+                <img src="{{ cover.image.url }}" class="card-img-top" alt="{{ report.title }}">
             {% else %}
                 <div class="card-img-placeholder"><i class="bi {{ report.category.icon|default:'bi-search' }}"></i></div>
+            {% endif %}
+            {% endwith %}
+            {% if show_owner_actions %}
+            <div class="mf-card-owner-actions">
+                <a href="{% url 'reports:edit' pk=report.pk %}" class="mf-card-owner-actions__btn" title="{% trans 'تعديل' %}" aria-label="{% trans 'تعديل' %}">
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
+                <button type="button" class="mf-card-owner-actions__btn mf-card-owner-actions__btn--danger mf-card-delete-btn" data-url="{% url 'reports:delete' pk=report.pk %}" title="{% trans 'حذف' %}" aria-label="{% trans 'حذف' %}">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </div>
             {% endif %}
             <span class="badge {% if report.type == 'lost' %}badge-lost{% else %}badge-found{% endif %} mf-card-badge">
                 <i class="bi {% if report.type == 'lost' %}bi-exclamation-circle{% else %}bi-check-circle{% endif %}"></i>
@@ -22,20 +34,10 @@
                 <span><i class="bi bi-geo-alt"></i> {{ report.city.name|default:"" }}</span>
                 <span><i class="bi bi-clock"></i> {{ report.created_at|naturaltime_ar }}</span>
             </div>
-            <div class="mt-auto d-flex align-items-center justify-content-between">
+            <div class="mt-auto">
                 <a href="{% url 'reports:detail' pk=report.pk %}" class="mf-card-link">
                     {% trans "عرض الإعلان" %} <i class="bi bi-arrow-left"></i>
                 </a>
-                {% if show_owner_actions %}
-                <div class="d-flex gap-2">
-                    <a href="{% url 'reports:edit' pk=report.pk %}" class="btn btn-sm btn-outline-secondary" title="{% trans 'تعديل' %}" aria-label="{% trans 'تعديل' %}">
-                        <i class="bi bi-pencil"></i>
-                    </a>
-                    <button type="button" class="btn btn-sm btn-outline-danger mf-card-delete-btn" data-url="{% url 'reports:delete' pk=report.pk %}" title="{% trans 'حذف' %}" aria-label="{% trans 'حذف' %}">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
-                {% endif %}
             </div>
         </div>
     </div>

@@ -3,15 +3,36 @@ from django.utils.translation import gettext_lazy as _
 
 from apps.locations.models import City
 from django.db.models import Case, When, Value, IntegerField
-from .models import Report, Category
+from .models import Report, ReportImage, Category
+
+
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
+
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('widget', MultipleFileInput())
+        super().__init__(*args, **kwargs)
+
+    def clean(self, data, initial=None):
+        single_file_clean = super().clean
+        if isinstance(data, (list, tuple)):
+            return [single_file_clean(d, initial) for d in data]
+        return [single_file_clean(data, initial)] if data else []
 
 
 class ReportForm(forms.ModelForm):
+    images = MultipleFileField(
+        required=False, label=_('الصور'),
+        help_text=_('حتى 3 صور، بصيغة JPG أو PNG.'),
+    )
+
     class Meta:
         model = Report
         fields = [
             'category', 'country', 'city', 'title', 'description', 'identifier',
-            'location_details', 'event_date', 'image', 'verification_question',
+            'location_details', 'event_date', 'verification_question',
         ]
         widgets = {
             'event_date': forms.DateInput(attrs={'type': 'date'}),
@@ -55,3 +76,16 @@ class ReportForm(forms.ModelForm):
             self.fields['verification_question'].help_text = _(
                 'سؤال يُستخدم للتحقق من أن المتواصل معك هو صاحب الغرض فعلاً (لن يظهر للعامة)'
             )
+
+        self.existing_images_count = self.instance.images.count() if self.instance.pk else 0
+
+    def clean_images(self):
+        files = self.cleaned_data.get('images') or []
+        if self.existing_images_count + len(files) > ReportImage.MAX_PER_REPORT:
+            raise forms.ValidationError(
+                _('يمكن رفع %(max)s صور كحد أقصى للإعلان.') % {'max': ReportImage.MAX_PER_REPORT}
+            )
+        for f in files:
+            if not (f.content_type or '').startswith('image/'):
+                raise forms.ValidationError(_('يجب أن تكون جميع الملفات صورًا.'))
+        return files

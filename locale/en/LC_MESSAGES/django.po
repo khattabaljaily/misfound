@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 18:38+0300\n"
+"POT-Creation-Date: 2026-08-22 19:11+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "حروف إنجليزية وأرقام فقط، بدون مسافات أو رموز."
 msgstr "English letters and numbers only, no spaces or symbols."
 
-#: apps/accounts/forms.py:27 apps/reports/forms.py:25
+#: apps/accounts/forms.py:27 apps/reports/forms.py:46
 #, python-format
 msgid "اختر %(field)s"
 msgstr "Choose %(field)s"
@@ -146,7 +146,7 @@ msgstr "City"
 msgid "المدن"
 msgstr "Cities"
 
-#: apps/messaging/forms.py:11 templates/reports/detail.html:63
+#: apps/messaging/forms.py:11 templates/reports/detail.html:85
 msgid "اكتب رسالتك..."
 msgstr "Type your message..."
 
@@ -154,7 +154,8 @@ msgstr "Type your message..."
 msgid "تعليق اختياري عن تجربتك..."
 msgstr "Optional comment about your experience..."
 
-#: apps/messaging/models.py:9 apps/reports/models.py:117
+#: apps/messaging/models.py:9 apps/reports/models.py:108
+#: apps/reports/models.py:139
 msgid "الإعلان"
 msgstr "Report"
 
@@ -239,7 +240,7 @@ msgstr "Rating"
 msgid "التقييمات"
 msgstr "Ratings"
 
-#: apps/notifications/models.py:12 apps/reports/models.py:157
+#: apps/notifications/models.py:12 apps/reports/models.py:179
 msgid "تطابق محتمل"
 msgstr "Possible match"
 
@@ -267,7 +268,7 @@ msgstr "Type"
 msgid "العنوان"
 msgstr "Title"
 
-#: apps/notifications/models.py:31 templates/reports/detail.html:37
+#: apps/notifications/models.py:31 templates/reports/detail.html:59
 msgid "التفاصيل"
 msgstr "Details"
 
@@ -275,7 +276,7 @@ msgstr "Details"
 msgid "الرابط"
 msgstr "Link"
 
-#: apps/notifications/models.py:34 apps/reports/models.py:83
+#: apps/notifications/models.py:34 apps/reports/models.py:82
 msgid "تاريخ الإنشاء"
 msgstr "Created on"
 
@@ -289,12 +290,29 @@ msgstr "Notification"
 msgid "الإشعارات"
 msgstr "Notifications"
 
-#: apps/reports/forms.py:56
+#: apps/reports/forms.py:27
+msgid "الصور"
+msgstr "Photos"
+
+#: apps/reports/forms.py:28
+msgid "حتى 3 صور، بصيغة JPG أو PNG."
+msgstr "Up to 3 photos, in JPG or PNG format."
+
+#: apps/reports/forms.py:77
 msgid ""
 "سؤال يُستخدم للتحقق من أن المتواصل معك هو صاحب الغرض فعلاً (لن يظهر للعامة)"
 msgstr ""
 "A question used to verify that whoever contacts you is the item's real owner "
 "(not shown publicly)"
+
+#: apps/reports/forms.py:86
+#, python-format
+msgid "يمكن رفع %(max)s صور كحد أقصى للإعلان."
+msgstr "You can upload up to %(max)s photos per report."
+
+#: apps/reports/forms.py:90
+msgid "يجب أن تكون جميع الملفات صورًا."
+msgstr "All uploaded files must be images."
 
 #: apps/reports/models.py:11
 msgid "الأيقونة"
@@ -326,8 +344,8 @@ msgstr "Found"
 msgid "قائم"
 msgstr "Open"
 
-#: apps/reports/models.py:41 templates/reports/_card.html:15
-#: templates/reports/detail.html:28 templates/reports/detail.html:55
+#: apps/reports/models.py:41 templates/reports/_card.html:27
+#: templates/reports/detail.html:50 templates/reports/detail.html:77
 msgid "تم الاسترجاع"
 msgstr "Resolved"
 
@@ -351,7 +369,7 @@ msgstr "Category"
 msgid "الوصف"
 msgstr "Description"
 
-#: apps/reports/models.py:67 templates/reports/detail.html:41
+#: apps/reports/models.py:67 templates/reports/detail.html:63
 msgid "رقم المعرف"
 msgstr "Reference number"
 
@@ -373,109 +391,125 @@ msgid "مكان الفقدان/العثور بالتفصيل"
 msgstr "Detailed location of where the item was lost or found"
 
 #: apps/reports/models.py:74
-msgid "الصورة"
-msgstr "Photo"
-
-#: apps/reports/models.py:75
 msgid "تاريخ الفقدان أو العثور"
 msgstr "Date lost or found"
 
-#: apps/reports/models.py:78
+#: apps/reports/models.py:77
 msgid "سؤال التحقق"
 msgstr "Verification question"
 
-#: apps/reports/models.py:79
+#: apps/reports/models.py:78
 msgid "سؤال يُستخدم للتحقق من ملكية الغرض قبل التسليم (يظهر لصاحب الإعلان فقط)"
 msgstr ""
 "A question used to verify ownership of the item before handing it over "
 "(visible only to the reporter)"
 
-#: apps/reports/models.py:82
+#: apps/reports/models.py:81
 msgid "عدد المشاهدات"
 msgstr "View count"
 
-#: apps/reports/models.py:84
+#: apps/reports/models.py:83
 msgid "تاريخ التحديث"
 msgstr "Updated on"
 
-#: apps/reports/models.py:86
+#: apps/reports/models.py:85
 msgid "تاريخ آخر تذكير"
 msgstr "Last reminder sent on"
 
-#: apps/reports/models.py:91
+#: apps/reports/models.py:90
 msgid "إعلان"
 msgstr "Report"
 
-#: apps/reports/models.py:92
+#: apps/reports/models.py:91
 msgid "الإعلانات"
 msgstr "Reports"
 
-#: apps/reports/models.py:110 templates/reports/detail.html:136
+#: apps/reports/models.py:110
+msgid "الصورة"
+msgstr "Photo"
+
+#: apps/reports/models.py:111
+msgid "الترتيب"
+msgstr "Order"
+
+#: apps/reports/models.py:112
+msgid "تاريخ الرفع"
+msgstr "Upload date"
+
+#: apps/reports/models.py:116
+msgid "صورة الإعلان"
+msgstr "Report image"
+
+#: apps/reports/models.py:117
+msgid "صور الإعلان"
+msgstr "Report images"
+
+#: apps/reports/models.py:132 templates/reports/detail.html:158
 msgid "محتوى مسيء أو غير لائق"
 msgstr "Offensive or inappropriate content"
 
-#: apps/reports/models.py:111 templates/reports/detail.html:137
+#: apps/reports/models.py:133 templates/reports/detail.html:159
 msgid "معلومات مضللة أو غير صحيحة"
 msgstr "Misleading or incorrect information"
 
-#: apps/reports/models.py:112 templates/reports/detail.html:138
+#: apps/reports/models.py:134 templates/reports/detail.html:160
 msgid "إعلان مكرر"
 msgstr "Duplicate report"
 
-#: apps/reports/models.py:113 templates/reports/detail.html:139
+#: apps/reports/models.py:135 templates/reports/detail.html:161
 msgid "سبب آخر"
 msgstr "Other reason"
 
-#: apps/reports/models.py:121
+#: apps/reports/models.py:143
 msgid "مقدّم البلاغ"
 msgstr "Flagged by"
 
-#: apps/reports/models.py:123
+#: apps/reports/models.py:145
 msgid "السبب"
 msgstr "Reason"
 
-#: apps/reports/models.py:124
+#: apps/reports/models.py:146
 msgid "ملاحظة إضافية"
 msgstr "Additional note"
 
-#: apps/reports/models.py:125
+#: apps/reports/models.py:147
 msgid "تاريخ الإبلاغ"
 msgstr "Flagged on"
 
-#: apps/reports/models.py:126 templates/core/admin_flags.html:28
+#: apps/reports/models.py:148 templates/core/admin_flags.html:28
 #: templates/core/admin_flags.html:61
 msgid "تمت المراجعة"
 msgstr "Reviewed"
 
-#: apps/reports/models.py:131
+#: apps/reports/models.py:153
 msgid "إبلاغ عن إعلان"
 msgstr "Flag"
 
-#: apps/reports/models.py:132
+#: apps/reports/models.py:154
 msgid "بلاغات الإعلانات"
 msgstr "Flags"
 
-#: apps/reports/models.py:144
+#: apps/reports/models.py:166
 msgid "الإعلان المفقود"
 msgstr "Lost report"
 
-#: apps/reports/models.py:148
+#: apps/reports/models.py:170
 msgid "الإعلان المعثور عليه"
 msgstr "Found report"
 
-#: apps/reports/models.py:150
+#: apps/reports/models.py:172
 msgid "نسبة التطابق"
 msgstr "Match score"
 
-#: apps/reports/models.py:151
+#: apps/reports/models.py:173
 msgid "سبب التطابق"
 msgstr "Match reason"
 
-#: apps/reports/models.py:152
+#: apps/reports/models.py:174
 msgid "تاريخ الاكتشاف"
 msgstr "Detected on"
 
-#: apps/reports/models.py:158
+#: apps/reports/models.py:180
 msgid "التطابقات المحتملة"
 msgstr "Possible matches"
 
@@ -510,37 +544,37 @@ msgstr "Explore reports"
 msgid "تصفح جميع إعلانات المفقودات والمعثورات في الوطن العربي في مكان واحد."
 msgstr "Browse all lost and found reports across the Arab world in one place."
 
-#: apps/reports/views.py:210
+#: apps/reports/views.py:214
 msgid "تم نشر الإعلان بنجاح."
 msgstr "Your report was posted successfully."
 
-#: apps/reports/views.py:234
+#: apps/reports/views.py:241
 msgid "تم تحديث الإعلان بنجاح."
 msgstr "Your report was updated successfully."
 
-#: apps/reports/views.py:259
+#: apps/reports/views.py:277
 msgid "تم حذف الإعلان بنجاح."
 msgstr "Your report was deleted successfully."
 
-#: apps/reports/views.py:280
+#: apps/reports/views.py:298
 msgid "لا يمكنك الإبلاغ عن إعلانك الخاص."
 msgstr "You can't flag your own report."
 
-#: apps/reports/views.py:286
+#: apps/reports/views.py:304
 msgid "يرجى اختيار سبب الإبلاغ."
 msgstr "Please choose a reason for the flag."
 
-#: apps/reports/views.py:293
+#: apps/reports/views.py:311
 msgid "تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة."
 msgstr ""
 "Your flag has been received - thanks for helping keep the platform "
 "trustworthy."
 
-#: apps/reports/views.py:293
+#: apps/reports/views.py:311
 msgid "سبق أن أبلغت عن هذا الإعلان."
 msgstr "You've already flagged this report."
 
-#: apps/reports/views.py:307 apps/reports/views.py:308
+#: apps/reports/views.py:325 apps/reports/views.py:326
 msgid "تم تحديث حالة الإعلان إلى «تم الاسترجاع» بنجاح."
 msgstr "The report's status was updated to “Resolved”."
 
@@ -819,7 +853,7 @@ msgstr "Profile"
 msgid "لوحة الإحصائيات"
 msgstr "Stats dashboard"
 
-#: templates/base.html:168 templates/base.html:262 templates/base.html:264
+#: templates/base.html:168 templates/base.html:265 templates/base.html:267
 msgid "تسجيل الخروج"
 msgstr "Log out"
 
@@ -871,7 +905,7 @@ msgstr "Confirm action"
 msgid "هل أنت متأكد؟"
 msgstr "Are you sure?"
 
-#: templates/base.html:230 templates/reports/detail.html:147
+#: templates/base.html:230 templates/reports/detail.html:169
 msgid "إلغاء"
 msgstr "Cancel"
 
@@ -907,11 +941,23 @@ msgstr "No options available"
 msgid "اختر المدينة"
 msgstr "Choose a city"
 
-#: templates/base.html:263
+#: templates/base.html:252
+msgid "يمكن رفع 3 صور كحد أقصى."
+msgstr "You can upload up to 3 photos maximum."
+
+#: templates/base.html:253
+msgid "يرجى اختيار صور فقط."
+msgstr "Please choose images only."
+
+#: templates/base.html:254 templates/reports/_form.html:14
+msgid "حذف الصورة"
+msgstr "Remove photo"
+
+#: templates/base.html:266
 msgid "هل تريد تسجيل الخروج من حسابك؟"
 msgstr "Do you want to log out of your account?"
 
-#: templates/base.html:301
+#: templates/base.html:304
 msgid "تعذّر تحميل الإشعارات."
 msgstr "Couldn't load notifications."
 
@@ -1097,7 +1143,7 @@ msgstr "No reviewed flags yet."
 msgid "لا توجد بلاغات بانتظار المراجعة."
 msgstr "No flags awaiting review."
 
-#: templates/core/admin_flags.html:69 templates/reports/detail.html:163
+#: templates/core/admin_flags.html:69 templates/reports/detail.html:185
 msgid "حدث خطأ، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong. Please try again."
 
@@ -1497,7 +1543,7 @@ msgstr "This user has a registered phone number"
 msgid "موثوق"
 msgstr "Trusted"
 
-#: templates/messaging/conversation.html:22 templates/reports/_card.html:27
+#: templates/messaging/conversation.html:22 templates/reports/_card.html:39
 msgid "عرض الإعلان"
 msgstr "View report"
 
@@ -1563,19 +1609,23 @@ msgstr "No notifications yet."
 msgid "عرض كل الإشعارات"
 msgstr "View all notifications"
 
-#: templates/reports/_card.html:31
+#: templates/reports/_card.html:14
 msgid "تعديل"
 msgstr "Edit"
 
-#: templates/reports/_card.html:34 templates/reports/mine.html:26
+#: templates/reports/_card.html:17 templates/reports/mine.html:26
 msgid "حذف"
 msgstr "Delete"
 
-#: templates/reports/_form.html:17
+#: templates/reports/_form.html:22
+msgid "اسحب الصور هنا أو اضغط للاختيار"
+msgstr "Drag photos here or click to choose"
+
+#: templates/reports/_form.html:44
 msgid "حفظ التعديلات"
 msgstr "Save changes"
 
-#: templates/reports/_form.html:17
+#: templates/reports/_form.html:44
 msgid "نشر الإعلان"
 msgstr "Post report"
 
@@ -1595,84 +1645,97 @@ msgstr "Share"
 msgid "مشاهدة"
 msgstr "views"
 
-#: templates/reports/detail.html:33
+#: templates/reports/detail.html:27
+msgid "الصورة السابقة"
+msgstr "Previous photo"
+
+#: templates/reports/detail.html:28
+msgid "الصورة التالية"
+msgstr "Next photo"
+
+#: templates/reports/detail.html:35
+#, python-format
+msgid "صورة %(n)s"
+msgstr "Photo %(n)s"
+
+#: templates/reports/detail.html:55
 msgid "، "
 msgstr ", "
 
-#: templates/reports/detail.html:44
+#: templates/reports/detail.html:66
 msgid "مكان الفقدان/العثور"
 msgstr "Where it was lost/found"
 
-#: templates/reports/detail.html:51
+#: templates/reports/detail.html:73
 msgid "سؤال التحقق الخاص بك"
 msgstr "Your verification question"
 
-#: templates/reports/detail.html:60
+#: templates/reports/detail.html:82
 msgid "هل هذا الإعلان يخصك؟"
 msgstr "Is this your report?"
 
-#: templates/reports/detail.html:60
+#: templates/reports/detail.html:82
 msgid "أرسل رسالة لصاحب الإعلان"
 msgstr "Send a message to the reporter"
 
-#: templates/reports/detail.html:66
+#: templates/reports/detail.html:88
 msgid "أعتقد أنني وجدتها"
 msgstr "I think I found it"
 
-#: templates/reports/detail.html:66
+#: templates/reports/detail.html:88
 msgid "أعتقد أنها لي"
 msgstr "I think it's mine"
 
-#: templates/reports/detail.html:72
+#: templates/reports/detail.html:94
 msgid "يرجى تسجيل الدخول للتواصل"
 msgstr "Please log in to get in touch"
 
-#: templates/reports/detail.html:80 templates/reports/detail.html:164
+#: templates/reports/detail.html:102 templates/reports/detail.html:186
 msgid "تم إبلاغك عن هذا الإعلان مسبقًا"
 msgstr "You've already flagged this report"
 
-#: templates/reports/detail.html:82 templates/reports/detail.html:130
+#: templates/reports/detail.html:104 templates/reports/detail.html:152
 msgid "الإبلاغ عن هذا الإعلان"
 msgstr "Flag this report"
 
-#: templates/reports/detail.html:93
+#: templates/reports/detail.html:115
 msgid "اقتراحات لك"
 msgstr "Suggestions for you"
 
-#: templates/reports/detail.html:93
+#: templates/reports/detail.html:115
 msgid "إعلانات قد تكون مطابقة"
 msgstr "Reports that might match"
 
-#: templates/reports/detail.html:106
+#: templates/reports/detail.html:128
 msgid "تطابق"
 msgstr "match"
 
-#: templates/reports/detail.html:133
+#: templates/reports/detail.html:155
 msgid "سبب الإبلاغ"
 msgstr "Reason for flagging"
 
-#: templates/reports/detail.html:135
+#: templates/reports/detail.html:157
 msgid "اختر السبب"
 msgstr "Choose a reason"
 
-#: templates/reports/detail.html:143
+#: templates/reports/detail.html:165
 msgid "ملاحظة إضافية (اختياري)"
 msgstr "Additional note (optional)"
 
-#: templates/reports/detail.html:148
+#: templates/reports/detail.html:170
 msgid "إرسال البلاغ"
 msgstr "Submit flag"
 
-#: templates/reports/detail.html:160
+#: templates/reports/detail.html:182
 msgid "تأكيد الاسترجاع"
 msgstr "Confirm recovery"
 
-#: templates/reports/detail.html:161
+#: templates/reports/detail.html:183
 msgid "هل استرجعت هذا الغرض فعلاً؟ سيتم وسم الإعلان كمنتهي."
 msgstr ""
 "Have you actually recovered this item? The report will be marked as closed."
 
-#: templates/reports/detail.html:162
+#: templates/reports/detail.html:184
 msgid "نعم، تم الاسترجاع"
 msgstr "Yes, it's recovered"
 

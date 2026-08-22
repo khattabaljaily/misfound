@@ -24,6 +24,7 @@
 function mfInitReportForm(root) {
     initCityCascade('id_country', 'id_city', "{% url 'reports:cities_for_country' %}");
     initChoicesOn(root || document);
+    mfInitImageUploader(root || document);
     var form = (root || document).querySelector('#reportForm');
     if (!form) return;
     ajaxForm(form, {

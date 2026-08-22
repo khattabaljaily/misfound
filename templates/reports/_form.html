@@ -2,7 +2,33 @@
 <form method="post" enctype="multipart/form-data" class="mf-field-grid" id="reportForm" action="{% if report %}{% url 'reports:edit' pk=report.pk %}{% else %}{% url 'reports:create' report_type=report_type %}{% endif %}" novalidate>
     {% csrf_token %}
     {% for field in form %}
-    <div class="mb-2 {% if field|widget_type == 'textarea' or field|widget_type == 'clearablefileinput' %}mf-field-full{% endif %}">
+    {% if field.name == 'images' %}
+    <div class="mb-2 mf-field-full">
+        <label class="form-label">{{ field.label }}</label>
+        <div class="mf-uploader" data-mf-uploader data-max="3">
+            {% if report %}
+            <div class="mf-uploader__existing" data-mf-uploader-existing>
+                {% for img in report.images.all %}
+                <div class="mf-uploader__thumb" data-existing-image>
+                    <img src="{{ img.image.url }}" alt="">
+                    <button type="button" class="mf-uploader__remove mf-existing-image-delete-btn" data-url="{% url 'reports:image_delete' pk=img.pk %}" aria-label="{% trans 'حذف الصورة' %}"><i class="bi bi-x-lg"></i></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="mf-uploader__previews" data-mf-uploader-previews></div>
+            <label class="mf-uploader__dropzone" data-mf-uploader-dropzone>
+                <i class="bi bi-cloud-arrow-up"></i>
+                <span class="mf-uploader__dropzone-text">{% trans "اسحب الصور هنا أو اضغط للاختيار" %}</span>
+                <span class="mf-uploader__count"><span data-mf-uploader-count>0</span>/3</span>
+                {{ field|attr:"accept:image/png,image/jpeg,image/webp"|attr:"hidden:true"|attr:"data-mf-uploader-input:true" }}
+            </label>
+        </div>
+        {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+        {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+    </div>
+    {% else %}
+    <div class="mb-2 {% if field|widget_type == 'textarea' %}mf-field-full{% endif %}">
         <label class="form-label">{{ field.label }}</label>
         {% if field.name == 'category' %}
             {{ field|add_class:"form-control"|attr:"data-choices:true" }}
@@ -12,6 +38,7 @@
         {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
         {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
     </div>
+    {% endif %}
     {% endfor %}
     <div class="mf-field-full">
         <button class="btn btn-primary" type="submit">{% if report %}{% trans "حفظ التعديلات" %}{% else %}{% trans "نشر الإعلان" %}{% endif %}</button>
