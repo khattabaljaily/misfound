@@ -241,6 +241,41 @@
         </div>
     </div>
 
+    <!-- First-visit language preference modal -->
+    <div class="modal fade" id="mfLangPickerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content mf-lang-picker">
+                <div class="modal-body p-4 text-center">
+                    <div class="mf-lang-picker__icon"><i class="bi bi-translate"></i></div>
+                    <h5 class="mb-1">اختر لغتك المفضلة</h5>
+                    <p class="text-muted mb-4 mf-lang-picker__subtitle">Choose your preferred language</p>
+                    <div class="mf-lang-picker__options">
+                        <label class="mf-lang-picker__option">
+                            <input type="radio" name="mfLangChoice" value="ar" {% if LANGUAGE_BIDI %}checked{% endif %}>
+                            <span class="mf-lang-picker__option-card">
+                                <strong>العربية</strong>
+                                <small>Arabic</small>
+                            </span>
+                        </label>
+                        <label class="mf-lang-picker__option">
+                            <input type="radio" name="mfLangChoice" value="en" {% if not LANGUAGE_BIDI %}checked{% endif %}>
+                            <span class="mf-lang-picker__option-card">
+                                <strong>English</strong>
+                                <small>الإنجليزية</small>
+                            </span>
+                        </label>
+                    </div>
+                    <button type="button" class="btn btn-primary w-100 mt-4" id="mfLangPickerConfirm">متابعة / Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="{% url 'set_language' %}" method="post" id="mfLangPickerForm" class="d-none">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="hidden" name="language" id="mfLangPickerFormLang" value="">
+    </form>
+
     <script>
         window.MF_I18N = {
             close: '{% trans "إغلاق" %}',
@@ -315,6 +350,34 @@
             mfRefreshNotifCount();
             setInterval(mfRefreshNotifCount, 45000);
         }
+
+        (function () {
+            var STORAGE_KEY = 'mfLangPrefSet';
+            var modalEl = document.getElementById('mfLangPickerModal');
+            if (!modalEl) return;
+
+            var alreadySet;
+            try {
+                alreadySet = localStorage.getItem(STORAGE_KEY);
+            } catch (e) {
+                alreadySet = '1';
+            }
+            if (alreadySet) return;
+
+            var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.show();
+
+            document.getElementById('mfLangPickerConfirm').addEventListener('click', function () {
+                var checked = modalEl.querySelector('input[name="mfLangChoice"]:checked');
+                var choice = checked ? checked.value : '{{ LANGUAGE_CODE }}';
+                try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+                modal.hide();
+                if (choice !== '{{ LANGUAGE_CODE }}') {
+                    document.getElementById('mfLangPickerFormLang').value = choice;
+                    document.getElementById('mfLangPickerForm').submit();
+                }
+            });
+        })();
     </script>
     {% block extra_js %}{% endblock %}
 </body>

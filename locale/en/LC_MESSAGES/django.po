@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 19:40+0300\n"
+"POT-Creation-Date: 2026-08-22 22:12+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -639,7 +639,7 @@ msgid "إنشاء الحساب"
 msgstr "Create account"
 
 #: templates/accounts/_verify_otp_form.html:12 templates/base.html:237
-#: templates/base.html:249
+#: templates/base.html:284
 msgid "تأكيد"
 msgstr "Confirm"
 
@@ -829,7 +829,7 @@ msgstr "My reports"
 msgid "تبديل اللغة"
 msgstr "Switch language"
 
-#: templates/base.html:153 templates/base.html:256
+#: templates/base.html:153 templates/base.html:291
 msgid "جاري التحميل..."
 msgstr "Loading..."
 
@@ -845,7 +845,7 @@ msgstr "Profile"
 msgid "لوحة الإحصائيات"
 msgstr "Stats dashboard"
 
-#: templates/base.html:167 templates/base.html:271 templates/base.html:273
+#: templates/base.html:167 templates/base.html:306 templates/base.html:308
 msgid "تسجيل الخروج"
 msgstr "Log out"
 
@@ -897,11 +897,11 @@ msgstr "Developed by"
 msgid "خطاب الجيلي"
 msgstr "Khattab Aljaily"
 
-#: templates/base.html:233 templates/base.html:247
+#: templates/base.html:233 templates/base.html:282
 msgid "تأكيد العملية"
 msgstr "Confirm action"
 
-#: templates/base.html:234 templates/base.html:248
+#: templates/base.html:234 templates/base.html:283
 msgid "هل أنت متأكد؟"
 msgstr "Are you sure?"
 
@@ -909,55 +909,55 @@ msgstr "Are you sure?"
 msgid "إلغاء"
 msgstr "Cancel"
 
-#: templates/base.html:246
+#: templates/base.html:281
 msgid "إغلاق"
 msgstr "Close"
 
-#: templates/base.html:250
+#: templates/base.html:285
 msgid "جاري التنفيذ..."
 msgstr "Working..."
 
-#: templates/base.html:251
+#: templates/base.html:286
 msgid "توجد بيانات تحتاج إلى مراجعة، يرجى التحقق من الحقول أدناه."
 msgstr "Some fields need your attention - please check the form below."
 
-#: templates/base.html:252
+#: templates/base.html:287
 msgid "حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى."
 msgstr "A connection error occurred. Please try again."
 
-#: templates/base.html:253
+#: templates/base.html:288
 msgid "اكتب للبحث..."
 msgstr "Type to search..."
 
-#: templates/base.html:254
+#: templates/base.html:289
 msgid "لا توجد نتائج"
 msgstr "No results found"
 
-#: templates/base.html:255
+#: templates/base.html:290
 msgid "لا توجد خيارات"
 msgstr "No options available"
 
-#: templates/base.html:257
+#: templates/base.html:292
 msgid "اختر المدينة"
 msgstr "Choose a city"
 
-#: templates/base.html:258
+#: templates/base.html:293
 msgid "يمكن رفع 3 صور كحد أقصى."
 msgstr "You can upload up to 3 photos maximum."
 
-#: templates/base.html:259
+#: templates/base.html:294
 msgid "يرجى اختيار صور فقط."
 msgstr "Please choose images only."
 
-#: templates/base.html:260 templates/reports/_form.html:14
+#: templates/base.html:295 templates/reports/_form.html:14
 msgid "حذف الصورة"
 msgstr "Remove photo"
 
-#: templates/base.html:272
+#: templates/base.html:307
 msgid "هل تريد تسجيل الخروج من حسابك؟"
 msgstr "Do you want to log out of your account?"
 
-#: templates/base.html:310
+#: templates/base.html:345
 msgid "تعذّر تحميل الإشعارات."
 msgstr "Couldn't load notifications."
 
