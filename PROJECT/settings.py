@@ -159,14 +159,18 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # 30 days
 
 
 # Email
+# Several mailboxes (see EMAIL_ACCOUNTS in secrets.json) share the sending
+# load so no single one hits its host's hourly cap; RotatingSMTPEmailBackend
+# picks the least-used mailbox for each message. EMAIL_HOST_USER isn't set
+# here because the account used for sending varies per message.
 EMAIL_BACKEND = get_secret('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = get_secret('EMAIL_HOST', '')
 EMAIL_PORT = int(get_secret('EMAIL_PORT', 465))
-EMAIL_HOST_USER = get_secret('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_SSL = str(get_secret('EMAIL_USE_SSL', 'True')).lower() == 'true'
 EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = f'Misfound <{EMAIL_HOST_USER}>'
+EMAIL_ACCOUNTS = get_secret('EMAIL_ACCOUNTS', [])
+EMAIL_HOURLY_LIMIT = int(get_secret('EMAIL_HOURLY_LIMIT', 500))
+DEFAULT_FROM_EMAIL = f'Misfound <{EMAIL_ACCOUNTS[0]["user"]}>' if EMAIL_ACCOUNTS else 'Misfound <no-reply@misfound.com>'
 
 
 MESSAGE_TAGS = {
