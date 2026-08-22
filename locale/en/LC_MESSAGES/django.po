@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 21:34+0300\n"
+"POT-Creation-Date: 2026-08-22 15:44+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -18,7 +18,16 @@ msgstr ""
 msgid "معلومات إضافية"
 msgstr "Additional information"
 
-#: apps/accounts/forms.py:18 apps/reports/forms.py:25
+#: apps/accounts/forms.py:11
+msgid ""
+"اسم المستخدم يجب أن يتكون من حروف إنجليزية وأرقام فقط، بدون مسافات أو رموز."
+msgstr "Username must contain only English letters and numbers, no spaces or symbols."
+
+#: apps/accounts/forms.py:23
+msgid "حروف إنجليزية وأرقام فقط، بدون مسافات أو رموز."
+msgstr "English letters and numbers only, no spaces or symbols."
+
+#: apps/accounts/forms.py:26 apps/reports/forms.py:25
 #, python-format
 msgid "اختر %(field)s"
 msgstr "Choose %(field)s"
@@ -532,10 +541,22 @@ msgstr "Something went wrong"
 msgid "نعتذر، حدث خطأ من جانبنا. يرجى المحاولة مرة أخرى بعد قليل."
 msgstr "Sorry, something went wrong on our end. Please try again shortly."
 
-#: templates/accounts/_login_form.html:12 templates/accounts/login.html:7
-#: templates/base.html:175
+#: templates/accounts/_login_form.html:13
+msgid "نسيت كلمة المرور؟"
+msgstr "Forgot your password?"
+
+#: templates/accounts/_login_form.html:15 templates/accounts/login.html:7
+#: templates/accounts/password_reset_complete.html:14 templates/base.html:175
 msgid "تسجيل الدخول"
 msgstr "Log in"
+
+#: templates/accounts/_password_reset_confirm_form.html:13
+msgid "تعيين كلمة المرور"
+msgstr "Set password"
+
+#: templates/accounts/_password_reset_form.html:12
+msgid "إرسال رابط الاستعادة"
+msgstr "Send reset link"
 
 #: templates/accounts/_register_form.html:13
 msgid "إنشاء الحساب"
@@ -544,6 +565,83 @@ msgstr "Create account"
 #: templates/accounts/login.html:14
 msgid "ليس لديك حساب؟ أنشئ حسابًا جديدًا"
 msgstr "Don't have an account? Create one"
+
+#: templates/accounts/password_reset.html:7
+msgid "استعادة كلمة المرور"
+msgstr "Reset password"
+
+#: templates/accounts/password_reset.html:11
+msgid "أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور."
+msgstr "Enter your email and we'll send you a link to reset your password."
+
+#: templates/accounts/password_reset.html:17
+msgid "تذكرت كلمة المرور؟ سجّل الدخول"
+msgstr "Remembered your password? Log in"
+
+#: templates/accounts/password_reset_complete.html:7
+msgid "تم تغيير كلمة المرور"
+msgstr "Password changed"
+
+#: templates/accounts/password_reset_complete.html:11
+msgid "تم تعيين كلمة المرور الجديدة بنجاح. يمكنك الآن تسجيل الدخول."
+msgstr "Your new password has been set successfully. You can now log in."
+
+#: templates/accounts/password_reset_confirm.html:7
+msgid "تعيين كلمة مرور جديدة"
+msgstr "Set a new password"
+
+#: templates/accounts/password_reset_confirm.html:16
+msgid ""
+"رابط إعادة تعيين كلمة المرور غير صالح، ربما تم استخدامه من قبل. يمكنك طلب "
+"رابط جديد."
+msgstr ""
+"This password reset link is invalid, it may have already been used. You "
+"can request a new one."
+
+#: templates/accounts/password_reset_confirm.html:19
+msgid "طلب رابط جديد"
+msgstr "Request a new link"
+
+#: templates/accounts/password_reset_done.html:7
+msgid "تحقق من بريدك الإلكتروني"
+msgstr "Check your email"
+
+#: templates/accounts/password_reset_done.html:11
+msgid ""
+"إذا كان بريدك الإلكتروني مسجلاً لدينا، فسنرسل لك رابطًا لإعادة تعيين كلمة "
+"المرور خلال دقائق."
+msgstr ""
+"If your email is registered with us, we'll send you a password reset link "
+"within a few minutes."
+
+#: templates/accounts/password_reset_done.html:14
+msgid "العودة لتسجيل الدخول"
+msgstr "Back to log in"
+
+#: templates/accounts/password_reset_email.html:1
+#, python-format
+msgid "مرحبًا %(user)s،"
+msgstr "Hello %(user)s,"
+
+#: templates/accounts/password_reset_email.html:3
+msgid "وصلنا طلب لإعادة تعيين كلمة المرور الخاصة بحسابك في Misfound."
+msgstr "We received a request to reset the password for your Misfound account."
+
+#: templates/accounts/password_reset_email.html:4
+msgid "اضغط على الرابط التالي لتعيين كلمة مرور جديدة:"
+msgstr "Click the link below to set a new password:"
+
+#: templates/accounts/password_reset_email.html:8
+msgid "إذا لم تطلب إعادة تعيين كلمة المرور، يمكنك تجاهل هذه الرسالة بأمان."
+msgstr "If you didn't request a password reset, you can safely ignore this email."
+
+#: templates/accounts/password_reset_email.html:10
+msgid "فريق Misfound"
+msgstr "The Misfound Team"
+
+#: templates/accounts/password_reset_subject.txt:1
+msgid "استعادة كلمة المرور - Misfound"
+msgstr "Password Reset - Misfound"
 
 #: templates/accounts/register.html:7
 msgid "إنشاء حساب جديد"
@@ -1030,7 +1128,9 @@ msgstr "Your data privacy is protected"
 
 #: templates/core/home.html:167
 msgid "لا نشارك رقم هاتفك أو بريدك الإلكتروني مع أي مستخدم آخر دون موافقتك."
-msgstr "We never share your phone number or email with another user without your consent."
+msgstr ""
+"We never share your phone number or email with another user without your "
+"consent."
 
 #: templates/core/privacy_policy.html:7 templates/core/terms.html:7
 msgid "آخر تحديث: أغسطس 2026"
