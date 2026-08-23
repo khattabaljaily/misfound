@@ -1,5 +1,8 @@
+import ipaddress
+import os
 import uuid
 
+import geoip2fast as _geoip2fast_pkg
 from geoip2fast import GeoIP2Fast
 from user_agents import parse as parse_user_agent
 
@@ -9,7 +12,9 @@ VISITOR_COOKIE_NAME = 'mf_vid'
 VISITOR_COOKIE_MAX_AGE = 60 * 60 * 24 * 365
 EXCLUDED_PATH_PREFIXES = ('DDQ9RKHA/', 'admin/')
 
-_geoip = GeoIP2Fast()
+# The default bundled database only covers IPv4; this variant also resolves IPv6.
+_GEOIP_IPV6_DATA_FILE = os.path.join(os.path.dirname(_geoip2fast_pkg.__file__), 'geoip2fast-ipv6.dat.gz')
+_geoip = GeoIP2Fast(geoip2fast_data_file=_GEOIP_IPV6_DATA_FILE)
 
 
 class VisitorTrackingMiddleware:
@@ -38,12 +43,15 @@ class VisitorTrackingMiddleware:
         if request.user.is_authenticated and request.user.is_staff:
             return
 
+        ip_address = self._client_ip(request)
+        if not ip_address or self._is_private_ip(ip_address):
+            return
+
         visitor_id = request.COOKIES.get(VISITOR_COOKIE_NAME)
         is_new_visitor = not visitor_id
         if is_new_visitor:
             visitor_id = uuid.uuid4().hex
 
-        ip_address = self._client_ip(request)
         user_agent = request.META.get('HTTP_USER_AGENT', '')[:255]
 
         PageVisit.objects.create(
@@ -69,6 +77,13 @@ class VisitorTrackingMiddleware:
         if forwarded_for:
             return forwarded_for.split(',')[0].strip()
         return request.META.get('REMOTE_ADDR')
+
+    @staticmethod
+    def _is_private_ip(ip_address):
+        try:
+            return ipaddress.ip_address(ip_address).is_private
+        except ValueError:
+            return True
 
     @staticmethod
     def _country_code(ip_address):

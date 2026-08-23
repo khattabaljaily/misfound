@@ -2027,6 +2027,11 @@ button.mf-flag-link:hover { color: var(--mf-danger); }
 .mf-bar-chart__bar { width: 100%; min-height: 2px; border-radius: 3px 3px 0 0; background: var(--mf-teal-dark); }
 .mf-bar-chart__bar--empty { background: var(--mf-bg); }
 
+.mf-visits-table th, .mf-visits-table td { padding: 0.65rem 1rem; font-size: 0.82rem; vertical-align: middle; }
+.mf-visits-table thead th { color: var(--mf-text-muted); font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; border-bottom-width: 1px; white-space: nowrap; }
+.mf-visits-table tbody tr:not(:last-child) td { border-bottom: 1px solid var(--mf-border); }
+.mf-visits-table code { font-size: 0.78rem; color: var(--mf-text-muted); background: var(--mf-bg); padding: 0.15rem 0.4rem; border-radius: 4px; }
+
 /* ---------------------------------------------------------------- */
 /* Notifications                                                      */
 /* ---------------------------------------------------------------- */
