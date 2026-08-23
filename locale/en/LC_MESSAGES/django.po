@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-23 08:25+0300\n"
+"POT-Creation-Date: 2026-08-23 09:07+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -59,7 +59,7 @@ msgid "رقم الهاتف"
 msgstr "Phone number"
 
 #: apps/accounts/models.py:18 apps/locations/models.py:25
-#: apps/reports/models.py:57 templates/core/admin_visits.html:120
+#: apps/reports/models.py:57 templates/core/admin_visits.html:76
 msgid "الدولة"
 msgstr "Country"
 
@@ -117,43 +117,43 @@ msgstr "Tablet"
 msgid "أخرى"
 msgstr "Other"
 
-#: apps/core/views.py:210 apps/core/views.py:260 apps/core/views.py:276
+#: apps/core/views.py:191 apps/core/views.py:241 apps/core/views.py:257
 msgid "طلب غير صالح."
 msgstr "Invalid request."
 
-#: apps/core/views.py:214
+#: apps/core/views.py:195
 msgid "تم وسم البلاغ كمُراجَع."
 msgstr "Report marked as reviewed."
 
-#: apps/core/views.py:249
+#: apps/core/views.py:230
 msgid "تم تحديث بيانات المستخدم."
 msgstr "User details updated."
 
-#: apps/core/views.py:263
+#: apps/core/views.py:244
 msgid "لا يمكنك حظر حسابك الخاص."
 msgstr "You can't block your own account."
 
-#: apps/core/views.py:265
+#: apps/core/views.py:246
 msgid "لا تملك صلاحية تعديل حساب أدمن."
 msgstr "You don't have permission to modify an admin account."
 
-#: apps/core/views.py:269
+#: apps/core/views.py:250
 msgid "تم إلغاء حظر المستخدم."
 msgstr "User unblocked."
 
-#: apps/core/views.py:269
+#: apps/core/views.py:250
 msgid "تم حظر المستخدم."
 msgstr "User blocked."
 
-#: apps/core/views.py:279
+#: apps/core/views.py:260
 msgid "لا يمكنك حذف حسابك الخاص."
 msgstr "You can't delete your own account."
 
-#: apps/core/views.py:281
+#: apps/core/views.py:262
 msgid "لا تملك صلاحية حذف حساب أدمن."
 msgstr "You don't have permission to delete an admin account."
 
-#: apps/core/views.py:284
+#: apps/core/views.py:265
 msgid "تم حذف المستخدم وكل بياناته."
 msgstr "User and all their data deleted."
 
@@ -393,7 +393,7 @@ msgstr "Found"
 msgid "قائم"
 msgstr "Open"
 
-#: apps/reports/models.py:41 templates/reports/_card.html:27
+#: apps/reports/models.py:41 templates/reports/_card.html:29
 #: templates/reports/detail.html:50 templates/reports/detail.html:77
 msgid "تم الاسترجاع"
 msgstr "Resolved"
@@ -1025,7 +1025,7 @@ msgstr "Previous"
 msgid "التالي"
 msgstr "Next"
 
-#: templates/core/_user_actions.html:3 templates/reports/_card.html:14
+#: templates/core/_user_actions.html:3 templates/reports/_card.html:16
 msgid "تعديل"
 msgstr "Edit"
 
@@ -1037,7 +1037,7 @@ msgstr "Block"
 msgid "إلغاء الحظر"
 msgstr "Unblock"
 
-#: templates/core/_user_actions.html:14 templates/reports/_card.html:17
+#: templates/core/_user_actions.html:14 templates/reports/_card.html:19
 #: templates/reports/mine.html:26
 msgid "حذف"
 msgstr "Delete"
@@ -1181,10 +1181,9 @@ msgstr "Report breakdown: lost vs. found"
 
 #: templates/core/admin_dashboard.html:46
 #: templates/core/admin_dashboard.html:61
-#: templates/core/admin_dashboard.html:75 templates/core/admin_visits.html:46
-#: templates/core/admin_visits.html:61 templates/core/admin_visits.html:92
-#: templates/core/admin_visits.html:106 templates/core/admin_visits.html:134
-#: templates/core/admin_visits.html:152
+#: templates/core/admin_dashboard.html:75 templates/core/admin_visits.html:48
+#: templates/core/admin_visits.html:62 templates/core/admin_visits.html:90
+#: templates/core/admin_visits.html:108
 msgid "لا توجد بيانات كافية بعد."
 msgstr "Not enough data yet."
 
@@ -1333,40 +1332,24 @@ msgstr "Total Visits"
 msgid "إجمالي الزوّار الفريدين"
 msgstr "Total Unique Visitors"
 
-#: templates/core/admin_visits.html:35
+#: templates/core/admin_visits.html:37
 #, python-format
 msgid "الزيارات اليومية (آخر %(chart_days)s يومًا)"
 msgstr "Daily Visits (last %(chart_days)s days)"
 
-#: templates/core/admin_visits.html:53
-msgid "أكثر الصفحات زيارةً"
-msgstr "Most Visited Pages"
-
-#: templates/core/admin_visits.html:67
-msgid "أهم مصادر الزيارات"
-msgstr "Top Referrers"
-
-#: templates/core/admin_visits.html:75
-msgid "لا توجد بيانات كافية بعد (زيارة مباشرة)."
-msgstr "Not enough data yet (direct visits)."
-
-#: templates/core/admin_visits.html:84
+#: templates/core/admin_visits.html:54
 msgid "أكثر الدول زيارةً"
 msgstr "Top Countries"
 
-#: templates/core/admin_visits.html:98
-msgid "الأجهزة"
-msgstr "Devices"
-
-#: templates/core/admin_visits.html:113
+#: templates/core/admin_visits.html:69
 msgid "سجل الزيارات"
 msgstr "Visits Log"
 
-#: templates/core/admin_visits.html:119
+#: templates/core/admin_visits.html:75
 msgid "الوقت"
 msgstr "Time"
 
-#: templates/core/admin_visits.html:121
+#: templates/core/admin_visits.html:77
 msgid "الجهاز"
 msgstr "Device"
 
@@ -1766,7 +1749,7 @@ msgstr "This user has a registered phone number"
 msgid "موثوق"
 msgstr "Trusted"
 
-#: templates/messaging/conversation.html:22 templates/reports/_card.html:39
+#: templates/messaging/conversation.html:22 templates/reports/_card.html:44
 msgid "عرض الإعلان"
 msgstr "View report"
 
@@ -2038,6 +2021,18 @@ msgstr ""
 #: templates/reports/mine.html:27
 msgid "تعذّر حذف الإعلان، يرجى المحاولة مرة أخرى."
 msgstr "Could not delete the report, please try again."
+
+#~ msgid "أكثر الصفحات زيارةً"
+#~ msgstr "Most Visited Pages"
+
+#~ msgid "أهم مصادر الزيارات"
+#~ msgstr "Top Referrers"
+
+#~ msgid "لا توجد بيانات كافية بعد (زيارة مباشرة)."
+#~ msgstr "Not enough data yet (direct visits)."
+
+#~ msgid "الأجهزة"
+#~ msgstr "Devices"
 
 #~ msgid "الصفحة"
 #~ msgstr "Page"

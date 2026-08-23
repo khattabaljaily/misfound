@@ -2,6 +2,7 @@
 <div class="col">
     <div class="card report-card h-100">
         <div class="position-relative report-card__media">
+            <a href="{% url 'reports:detail' pk=report.pk %}" class="report-card__media-link">
             {% with cover=report.cover_image %}
             {% if cover %}
                 <img src="{{ cover.image.url }}" class="card-img-top" alt="{{ report.title }}">
@@ -9,6 +10,7 @@
                 <div class="card-img-placeholder"><i class="bi {{ report.category.icon|default:'bi-search' }}"></i></div>
             {% endif %}
             {% endwith %}
+            </a>
             {% if show_owner_actions %}
             <div class="mf-card-owner-actions">
                 <a href="{% url 'reports:edit' pk=report.pk %}" class="mf-card-owner-actions__btn" title="{% trans 'تعديل' %}" aria-label="{% trans 'تعديل' %}">
@@ -29,10 +31,13 @@
         </div>
         <div class="card-body d-flex flex-column report-card__body">
             <div class="report-card__category"><i class="bi {{ report.category.icon|default:'bi-tag' }}"></i> {{ report.category.name }}</div>
-            <h5 class="card-title">{{ report.title }}</h5>
+            <h5 class="card-title">
+                <a href="{% url 'reports:detail' pk=report.pk %}" class="report-card__title-link">{{ report.title }}</a>
+            </h5>
             <div class="report-card__meta">
                 <span><i class="bi bi-geo-alt"></i> {{ report.city.name|default:"" }}</span>
                 <span><i class="bi bi-clock"></i> {{ report.created_at|naturaltime_ar }}</span>
+                <span><i class="bi bi-eye"></i> {{ report.views }}</span>
             </div>
             <div class="mt-auto">
                 <a href="{% url 'reports:detail' pk=report.pk %}" class="mf-card-link">
