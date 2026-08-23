@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-23 08:18+0300\n"
+"POT-Creation-Date: 2026-08-23 08:25+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -24,11 +24,11 @@ msgid ""
 msgstr ""
 "Username must contain only English letters and numbers, no spaces or symbols."
 
-#: apps/accounts/forms.py:23
+#: apps/accounts/forms.py:23 apps/core/forms.py:17
 msgid "حروف إنجليزية وأرقام فقط، بدون مسافات أو رموز."
 msgstr "English letters and numbers only, no spaces or symbols."
 
-#: apps/accounts/forms.py:27 apps/core/forms.py:20 apps/reports/forms.py:46
+#: apps/accounts/forms.py:27 apps/core/forms.py:21 apps/reports/forms.py:46
 #, python-format
 msgid "اختر %(field)s"
 msgstr "Choose %(field)s"
@@ -1296,8 +1296,8 @@ msgid ""
 "سيتم حذف كل إعلانات ورسائل وبيانات {username} نهائياً ولا يمكن التراجع عن "
 "ذلك. هل أنت متأكد؟"
 msgstr ""
-"All of {username}'s reports, messages, and data will be permanently "
-"deleted. This can't be undone. Are you sure?"
+"All of {username}'s reports, messages, and data will be permanently deleted. "
+"This can't be undone. Are you sure?"
 
 #: templates/core/admin_users.html:138
 msgid "حذف المستخدم نهائياً"

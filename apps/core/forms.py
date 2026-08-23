@@ -14,6 +14,7 @@ class AdminUserEditForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].validators = [USERNAME_VALIDATOR]
+        self.fields['username'].help_text = _('حروف إنجليزية وأرقام فقط، بدون مسافات أو رموز.')
         self.fields['email'].required = True
         for field in self.fields.values():
             if isinstance(field, forms.ModelChoiceField):
