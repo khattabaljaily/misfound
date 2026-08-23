@@ -1,0 +1,18 @@
+{% load i18n %}
+<div class="d-flex gap-1">
+    <a href="{% url 'core:admin_user_edit' pk=u.pk %}" class="btn btn-sm btn-outline-secondary" title="{% trans 'تعديل' %}">
+        <i class="bi bi-pencil"></i>
+    </a>
+    {% if u.can_manage %}
+    <button type="button"
+            class="btn btn-sm {% if u.is_active %}btn-outline-warning{% else %}btn-outline-success{% endif %} mf-user-toggle-btn"
+            data-user-id="{{ u.pk }}" data-is-active="{% if u.is_active %}1{% else %}0{% endif %}"
+            title="{% if u.is_active %}{% trans 'حظر' %}{% else %}{% trans 'إلغاء الحظر' %}{% endif %}">
+        <i class="bi {% if u.is_active %}bi-slash-circle{% else %}bi-check-circle{% endif %}"></i>
+    </button>
+    <button type="button" class="btn btn-sm btn-outline-danger mf-user-delete-btn"
+            data-user-id="{{ u.pk }}" data-username="{{ u.username }}" title="{% trans 'حذف' %}">
+        <i class="bi bi-trash"></i>
+    </button>
+    {% endif %}
+</div>

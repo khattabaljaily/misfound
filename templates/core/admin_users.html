@@ -1,0 +1,167 @@
+{% extends "core/admin_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "المستخدمون" %} | {{ block.super }}{% endblock %}
+{% block admin_content %}
+<div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+    <h1 class="h4 mb-0">{% trans "المستخدمون" %}</h1>
+    <form method="get" class="d-flex gap-2">
+        <input type="search" name="q" value="{{ query }}" class="form-control form-control-sm" style="min-width: 220px;"
+               placeholder="{% trans 'ابحث بالاسم أو البريد أو الهاتف' %}">
+        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="bi bi-search"></i></button>
+    </form>
+</div>
+
+<div class="mf-panel p-0">
+    <div class="table-responsive d-none d-md-block">
+        <table class="table mf-visits-table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>{% trans "المستخدم" %}</th>
+                    <th>{% trans "الهاتف" %}</th>
+                    <th>{% trans "الموقع" %}</th>
+                    <th>{% trans "تاريخ التسجيل" %}</th>
+                    <th>{% trans "الحالة" %}</th>
+                    <th>{% trans "إجراءات" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users_list %}
+                <tr id="user-row-{{ u.pk }}">
+                    <td>
+                        <div class="fw-bold">{{ u.username }}</div>
+                        <div class="text-muted small">{{ u.email }}</div>
+                    </td>
+                    <td class="text-nowrap small">{{ u.phone|default:"—" }}</td>
+                    <td class="text-nowrap small">{{ u.city|default:"—" }}{% if u.country %}, {{ u.country }}{% endif %}</td>
+                    <td class="text-nowrap small">{{ u.date_joined|date:"Y-m-d" }}</td>
+                    <td>
+                        {% if u.is_active %}
+                        <span class="badge bg-success">{% trans "نشط" %}</span>
+                        {% else %}
+                        <span class="badge bg-danger">{% trans "محظور" %}</span>
+                        {% endif %}
+                        {% if u.is_staff %}<span class="badge bg-dark">{% trans "أدمن" %}</span>{% endif %}
+                    </td>
+                    <td>
+                        {% include "core/_user_actions.html" with u=u %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center text-muted py-4">{% trans "لا يوجد مستخدمون." %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mf-user-cards d-md-none">
+        {% for u in users_list %}
+        <div class="mf-user-card" id="user-card-{{ u.pk }}">
+            <div class="mf-user-card__main">
+                <div class="fw-bold">{{ u.username }}</div>
+                <div class="text-muted small">{{ u.email }}</div>
+                <div class="text-muted small mt-1">
+                    {{ u.phone|default:"—" }} · {{ u.city|default:"—" }}{% if u.country %}, {{ u.country }}{% endif %} · {{ u.date_joined|date:"Y-m-d" }}
+                </div>
+                <div class="mt-2">
+                    {% if u.is_active %}
+                    <span class="badge bg-success">{% trans "نشط" %}</span>
+                    {% else %}
+                    <span class="badge bg-danger">{% trans "محظور" %}</span>
+                    {% endif %}
+                    {% if u.is_staff %}<span class="badge bg-dark">{% trans "أدمن" %}</span>{% endif %}
+                </div>
+            </div>
+            <div class="mf-user-card__actions">
+                {% include "core/_user_actions.html" with u=u %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted small text-center py-4 mb-0">{% trans "لا يوجد مستخدمون." %}</p>
+        {% endfor %}
+    </div>
+</div>
+{% include "core/_pagination.html" %}
+{% endblock %}
+
+{% block admin_js %}
+<script>
+var toggleUrlTemplate = "{% url 'core:admin_user_toggle_active' pk=0 %}";
+var deleteUrlTemplate = "{% url 'core:admin_user_delete' pk=0 %}";
+
+function mfUserRowElements(userId) {
+    return document.querySelectorAll('#user-row-' + userId + ', #user-card-' + userId);
+}
+
+document.querySelectorAll('.mf-user-toggle-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        var userId = btn.dataset.userId;
+        var willBlock = btn.dataset.isActive === '1';
+        mfConfirm({
+            title: willBlock ? "{% trans 'حظر المستخدم' %}" : "{% trans 'إلغاء حظر المستخدم' %}",
+            message: willBlock
+                ? "{% trans 'سيُمنع هذا المستخدم من تسجيل الدخول. متابعة؟' %}"
+                : "{% trans 'سيتمكن هذا المستخدم من تسجيل الدخول مجدداً. متابعة؟' %}",
+            confirmLabel: willBlock ? "{% trans 'حظر' %}" : "{% trans 'إلغاء الحظر' %}",
+            confirmVariant: willBlock ? 'btn-danger' : 'btn-success',
+            onConfirm: function () {
+                mfSetButtonLoading(btn, true);
+                fetch(toggleUrlTemplate.replace('/0/', '/' + userId + '/'), {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': mfGetCookie('csrftoken') },
+                })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.success) {
+                            showToast('success', data.message);
+                            setTimeout(function () { window.location.reload(); }, 600);
+                        } else {
+                            mfSetButtonLoading(btn, false);
+                            showToast('error', data.message);
+                        }
+                    })
+                    .catch(function () {
+                        mfSetButtonLoading(btn, false);
+                        showToast('error', "{% trans 'حدث خطأ، يرجى المحاولة مرة أخرى.' %}");
+                    });
+            },
+        });
+    });
+});
+
+var deleteUserMessageTpl = "{% blocktrans %}سيتم حذف كل إعلانات ورسائل وبيانات {username} نهائياً ولا يمكن التراجع عن ذلك. هل أنت متأكد؟{% endblocktrans %}";
+
+document.querySelectorAll('.mf-user-delete-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        var userId = btn.dataset.userId;
+        var username = btn.dataset.username;
+        mfConfirm({
+            title: "{% trans 'حذف المستخدم نهائياً' %}",
+            message: deleteUserMessageTpl.replace('{username}', username),
+            confirmLabel: "{% trans 'حذف نهائياً' %}",
+            confirmVariant: 'btn-danger',
+            onConfirm: function () {
+                mfSetButtonLoading(btn, true);
+                fetch(deleteUrlTemplate.replace('/0/', '/' + userId + '/'), {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': mfGetCookie('csrftoken') },
+                })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.success) {
+                            showToast('success', data.message);
+                            mfUserRowElements(userId).forEach(function (el) { el.remove(); });
+                        } else {
+                            mfSetButtonLoading(btn, false);
+                            showToast('error', data.message);
+                        }
+                    })
+                    .catch(function () {
+                        mfSetButtonLoading(btn, false);
+                        showToast('error', "{% trans 'حدث خطأ، يرجى المحاولة مرة أخرى.' %}");
+                    });
+            },
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -2038,6 +2038,10 @@ button.mf-flag-link:hover { color: var(--mf-danger); }
 .mf-visit-card__sep { color: var(--mf-text-muted); }
 .mf-visit-card code { font-size: 0.72rem; color: var(--mf-text-muted); background: var(--mf-bg); padding: 0.1rem 0.35rem; border-radius: 4px; }
 
+.mf-user-card { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.7rem 1rem; }
+.mf-user-card:not(:last-child) { border-bottom: 1px solid var(--mf-border); }
+.mf-user-card__main { min-width: 0; flex: 1 1 auto; }
+
 /* ---------------------------------------------------------------- */
 /* Notifications                                                      */
 /* ---------------------------------------------------------------- */

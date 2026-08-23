@@ -1,17 +1,19 @@
 from datetime import timedelta
 
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
-from django.db.models import Avg, Count, DurationField, ExpressionWrapper, F
+from django.db.models import Avg, Count, DurationField, ExpressionWrapper, F, Q
 from django.db.models.functions import TruncDate
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from apps.locations.models import City, Country
 from apps.reports.models import Category, Match, Report, ReportFlag
+from .forms import AdminUserEditForm
 from .models import PageVisit
 
 VISITS_CHART_DAYS = 30
@@ -19,6 +21,7 @@ ADMIN_VISITS_TOP_LIMIT = 8
 ADMIN_VISITS_LOG_PAGE_SIZE = 30
 
 ADMIN_FLAGS_PAGE_SIZE = 20
+ADMIN_USERS_PAGE_SIZE = 20
 
 
 def _admin_context(active):
@@ -209,3 +212,73 @@ def admin_flag_resolve(request, pk):
     flag.resolved = True
     flag.save(update_fields=['resolved'])
     return JsonResponse({'success': True, 'message': _('تم وسم البلاغ كمُراجَع.')})
+
+
+@staff_member_required(login_url='accounts:login')
+def admin_users(request):
+    query = request.GET.get('q', '').strip()
+    qs = get_user_model().objects.select_related('country', 'city').order_by('-date_joined')
+    if query:
+        qs = qs.filter(Q(username__icontains=query) | Q(email__icontains=query) | Q(phone__icontains=query))
+    page_obj = Paginator(qs, ADMIN_USERS_PAGE_SIZE).get_page(request.GET.get('page'))
+    for target in page_obj:
+        target.can_manage = target != request.user and (
+            not (target.is_staff or target.is_superuser) or request.user.is_superuser
+        )
+
+    querystring = request.GET.copy()
+    querystring.pop('page', None)
+
+    context = {
+        'users_list': page_obj,
+        'page_obj': page_obj,
+        'base_qs': querystring.urlencode(),
+        'query': query,
+        **_admin_context('users'),
+    }
+    return render(request, 'core/admin_users.html', context)
+
+
+@staff_member_required(login_url='accounts:login')
+def admin_user_edit(request, pk):
+    edited_user = get_object_or_404(get_user_model(), pk=pk)
+    if request.method == 'POST':
+        form = AdminUserEditForm(request.POST, instance=edited_user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('تم تحديث بيانات المستخدم.'))
+            return redirect('core:admin_users')
+    else:
+        form = AdminUserEditForm(instance=edited_user)
+    context = {'form': form, 'edited_user': edited_user, **_admin_context('users')}
+    return render(request, 'core/admin_user_edit.html', context)
+
+
+@staff_member_required(login_url='accounts:login')
+def admin_user_toggle_active(request, pk):
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': _('طلب غير صالح.')}, status=405)
+    target = get_object_or_404(get_user_model(), pk=pk)
+    if target == request.user:
+        return JsonResponse({'success': False, 'message': _('لا يمكنك حظر حسابك الخاص.')}, status=400)
+    if (target.is_staff or target.is_superuser) and not request.user.is_superuser:
+        return JsonResponse({'success': False, 'message': _('لا تملك صلاحية تعديل حساب أدمن.')}, status=403)
+
+    target.is_active = not target.is_active
+    target.save(update_fields=['is_active'])
+    message = _('تم إلغاء حظر المستخدم.') if target.is_active else _('تم حظر المستخدم.')
+    return JsonResponse({'success': True, 'message': message, 'is_active': target.is_active})
+
+
+@staff_member_required(login_url='accounts:login')
+def admin_user_delete(request, pk):
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': _('طلب غير صالح.')}, status=405)
+    target = get_object_or_404(get_user_model(), pk=pk)
+    if target == request.user:
+        return JsonResponse({'success': False, 'message': _('لا يمكنك حذف حسابك الخاص.')}, status=400)
+    if (target.is_staff or target.is_superuser) and not request.user.is_superuser:
+        return JsonResponse({'success': False, 'message': _('لا تملك صلاحية حذف حساب أدمن.')}, status=403)
+
+    target.delete()
+    return JsonResponse({'success': True, 'message': _('تم حذف المستخدم وكل بياناته.')})
