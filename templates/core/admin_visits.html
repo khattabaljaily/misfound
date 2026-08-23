@@ -111,7 +111,8 @@
 
 <div class="mf-panel p-0 mt-4">
     <h2 class="h6 m-3 mb-0">{% trans "سجل الزيارات" %}</h2>
-    <div class="table-responsive">
+
+    <div class="table-responsive d-none d-md-block">
         <table class="table mf-visits-table table-hover align-middle mb-0">
             <thead>
                 <tr>
@@ -134,6 +135,22 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+
+    <div class="mf-visit-cards d-md-none">
+        {% for visit in visits_log %}
+        <div class="mf-visit-card">
+            <span class="mf-visit-card__time">{{ visit.created_at|date:"m-d H:i" }}</span>
+            <span class="mf-visit-card__sep">·</span>
+            <span>{% if visit.country_flag %}{{ visit.country_flag }} {{ visit.country_code }}{% else %}—{% endif %}</span>
+            <span class="mf-visit-card__sep">·</span>
+            <span>{{ visit.get_device_type_display|default:"—" }}</span>
+            <span class="mf-visit-card__sep">·</span>
+            <code>{{ visit.ip_address|default:"—" }}</code>
+        </div>
+        {% empty %}
+        <p class="text-muted small text-center py-4 mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
+        {% endfor %}
     </div>
 </div>
 {% include "core/_pagination.html" %}

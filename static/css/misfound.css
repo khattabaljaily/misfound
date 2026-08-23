@@ -2032,6 +2032,12 @@ button.mf-flag-link:hover { color: var(--mf-danger); }
 .mf-visits-table tbody tr:not(:last-child) td { border-bottom: 1px solid var(--mf-border); }
 .mf-visits-table code { font-size: 0.78rem; color: var(--mf-text-muted); background: var(--mf-bg); padding: 0.15rem 0.4rem; border-radius: 4px; }
 
+.mf-visit-card { display: flex; align-items: center; flex-wrap: wrap; gap: 0.3rem; padding: 0.5rem 1rem; font-size: 0.76rem; color: var(--mf-text); }
+.mf-visit-card:not(:last-child) { border-bottom: 1px solid var(--mf-border); }
+.mf-visit-card__time { font-weight: 700; }
+.mf-visit-card__sep { color: var(--mf-text-muted); }
+.mf-visit-card code { font-size: 0.72rem; color: var(--mf-text-muted); background: var(--mf-bg); padding: 0.1rem 0.35rem; border-radius: 4px; }
+
 /* ---------------------------------------------------------------- */
 /* Notifications                                                      */
 /* ---------------------------------------------------------------- */
