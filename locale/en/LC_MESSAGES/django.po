@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 22:12+0300\n"
+"POT-Creation-Date: 2026-08-23 07:21+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -100,11 +100,11 @@ msgstr "Misfound Admin"
 msgid "لوحة التحكم"
 msgstr "Dashboard"
 
-#: apps/core/views.py:122
+#: apps/core/views.py:174
 msgid "طلب غير صالح."
 msgstr "Invalid request."
 
-#: apps/core/views.py:126
+#: apps/core/views.py:178
 msgid "تم وسم البلاغ كمُراجَع."
 msgstr "Report marked as reviewed."
 
@@ -1064,16 +1064,21 @@ msgstr "We cover every Arab country with an Arabic-first experience."
 msgid "نظرة عامة"
 msgstr "Overview"
 
-#: templates/core/admin_base.html:29 templates/core/admin_flags.html:3
+#: templates/core/admin_base.html:29 templates/core/admin_visits.html:3
+#: templates/core/admin_visits.html:5
+msgid "زيارات الموقع"
+msgstr "Site Visits"
+
+#: templates/core/admin_base.html:32 templates/core/admin_flags.html:3
 #: templates/core/admin_flags.html:6
 msgid "البلاغات"
 msgstr "Flags"
 
-#: templates/core/admin_base.html:35
+#: templates/core/admin_base.html:38
 msgid "لوحة إدارة Django"
 msgstr "Django Admin"
 
-#: templates/core/admin_base.html:37
+#: templates/core/admin_base.html:40
 msgid "العودة إلى الموقع"
 msgstr "Back to site"
 
@@ -1107,7 +1112,8 @@ msgstr "Report breakdown: lost vs. found"
 
 #: templates/core/admin_dashboard.html:46
 #: templates/core/admin_dashboard.html:61
-#: templates/core/admin_dashboard.html:75
+#: templates/core/admin_dashboard.html:75 templates/core/admin_visits.html:46
+#: templates/core/admin_visits.html:61
 msgid "لا توجد بيانات كافية بعد."
 msgstr "Not enough data yet."
 
@@ -1146,6 +1152,49 @@ msgstr "No flags awaiting review."
 #: templates/core/admin_flags.html:69 templates/reports/detail.html:185
 msgid "حدث خطأ، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong. Please try again."
+
+#: templates/core/admin_visits.html:10
+msgid "زيارات اليوم"
+msgstr "Visits Today"
+
+#: templates/core/admin_visits.html:14
+msgid "زوّار فريدون اليوم"
+msgstr "Unique Visitors Today"
+
+#: templates/core/admin_visits.html:18
+#, python-format
+msgid "زيارات آخر %(chart_days)s يومًا"
+msgstr "Visits (last %(chart_days)s days)"
+
+#: templates/core/admin_visits.html:22
+#, python-format
+msgid "زوّار فريدون آخر %(chart_days)s يومًا"
+msgstr "Unique Visitors (last %(chart_days)s days)"
+
+#: templates/core/admin_visits.html:26
+msgid "إجمالي الزيارات"
+msgstr "Total Visits"
+
+#: templates/core/admin_visits.html:30
+msgid "إجمالي الزوّار الفريدين"
+msgstr "Total Unique Visitors"
+
+#: templates/core/admin_visits.html:35
+#, python-format
+msgid "الزيارات اليومية (آخر %(chart_days)s يومًا)"
+msgstr "Daily Visits (last %(chart_days)s days)"
+
+#: templates/core/admin_visits.html:53
+msgid "أكثر الصفحات زيارةً"
+msgstr "Most Visited Pages"
+
+#: templates/core/admin_visits.html:67
+msgid "أهم مصادر الزيارات"
+msgstr "Top Referrers"
+
+#: templates/core/admin_visits.html:75
+msgid "لا توجد بيانات كافية بعد (زيارة مباشرة)."
+msgstr "Not enough data yet (direct visits)."
 
 #: templates/core/home.html:9
 msgid "مجتمع يساعد كل صاحب غرض على الوصول إلى غرضه"
