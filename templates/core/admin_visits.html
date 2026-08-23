@@ -31,55 +31,25 @@
     </div>
 </div>
 
-<div class="mf-panel mb-4">
-    <h2 class="h6 mb-3">{% blocktrans %}الزيارات اليومية (آخر {{ chart_days }} يومًا){% endblocktrans %}</h2>
-    {% if max_daily_visits %}
-    <div class="mf-bar-chart">
-        {% for day in daily_series %}
-        <div class="mf-bar-chart__col" title="{{ day.day }}: {{ day.visits }}">
-            <div class="mf-bar-chart__bar {% if not day.visits %}mf-bar-chart__bar--empty{% endif %}"
-                 style="height: {% widthratio day.visits max_daily_visits 100 %}%"></div>
-        </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
-    {% endif %}
-</div>
-
 <div class="row g-4">
-    <div class="col-md-6">
+    <div class="col-md-7">
         <div class="mf-panel h-100">
-            <h2 class="h6 mb-3">{% trans "أكثر الصفحات زيارةً" %}</h2>
-            {% for p in top_pages %}
-            <div class="mf-rank-row">
-                <span class="mf-rank-row__label" title="{{ p.path }}">{{ p.path }}</span>
-                <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio p.visits max_page_visits 100 %}%"></div></div>
-                <span class="mf-rank-row__value">{{ p.visits }}</span>
+            <h2 class="h6 mb-3">{% blocktrans %}الزيارات اليومية (آخر {{ chart_days }} يومًا){% endblocktrans %}</h2>
+            {% if max_daily_visits %}
+            <div class="mf-bar-chart">
+                {% for day in daily_series %}
+                <div class="mf-bar-chart__col" title="{{ day.day }}: {{ day.visits }}">
+                    <div class="mf-bar-chart__bar {% if not day.visits %}mf-bar-chart__bar--empty{% endif %}"
+                         style="height: {% widthratio day.visits max_daily_visits 100 %}%"></div>
+                </div>
+                {% endfor %}
             </div>
-            {% empty %}
+            {% else %}
             <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
-            {% endfor %}
+            {% endif %}
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="mf-panel h-100">
-            <h2 class="h6 mb-3">{% trans "أهم مصادر الزيارات" %}</h2>
-            {% for r in top_referrers %}
-            <div class="mf-rank-row">
-                <span class="mf-rank-row__label" title="{{ r.referer }}">{{ r.referer }}</span>
-                <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio r.visits max_referrer_visits 100 %}%"></div></div>
-                <span class="mf-rank-row__value">{{ r.visits }}</span>
-            </div>
-            {% empty %}
-            <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد (زيارة مباشرة)." %}</p>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-
-<div class="row g-4 mt-0">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="mf-panel h-100">
             <h2 class="h6 mb-3">{% trans "أكثر الدول زيارةً" %}</h2>
             {% for c in top_countries %}
@@ -87,20 +57,6 @@
                 <span class="mf-rank-row__label">{{ c.flag }} {{ c.country_code }}</span>
                 <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio c.visits max_country_visits 100 %}%"></div></div>
                 <span class="mf-rank-row__value">{{ c.visits }}</span>
-            </div>
-            {% empty %}
-            <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="mf-panel h-100">
-            <h2 class="h6 mb-3">{% trans "الأجهزة" %}</h2>
-            {% for d in device_breakdown %}
-            <div class="mf-rank-row">
-                <span class="mf-rank-row__label">{{ d.label }}</span>
-                <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio d.visits max_device_visits 100 %}%"></div></div>
-                <span class="mf-rank-row__value">{{ d.visits }}</span>
             </div>
             {% empty %}
             <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>

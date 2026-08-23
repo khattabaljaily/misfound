@@ -18,10 +18,10 @@ from .models import PageVisit
 
 VISITS_CHART_DAYS = 30
 ADMIN_VISITS_TOP_LIMIT = 8
-ADMIN_VISITS_LOG_PAGE_SIZE = 30
+ADMIN_VISITS_LOG_PAGE_SIZE = 10
 
 ADMIN_FLAGS_PAGE_SIZE = 20
-ADMIN_USERS_PAGE_SIZE = 20
+ADMIN_USERS_PAGE_SIZE = 10
 
 
 def _admin_context(active):
@@ -133,25 +133,12 @@ def admin_visits(request):
         daily_series.append({'day': day, 'visits': row['visits'] if row else 0})
     max_daily_visits = max((d['visits'] for d in daily_series), default=0)
 
-    top_pages = list(qs.values('path').annotate(visits=Count('id')).order_by('-visits')[:ADMIN_VISITS_TOP_LIMIT])
-    top_referrers = list(
-        qs.exclude(referer='').values('referer').annotate(visits=Count('id'))
-        .order_by('-visits')[:ADMIN_VISITS_TOP_LIMIT]
-    )
-
     top_countries = list(
         qs.exclude(country_code='').values('country_code').annotate(visits=Count('id'))
         .order_by('-visits')[:ADMIN_VISITS_TOP_LIMIT]
     )
     for row in top_countries:
         row['flag'] = _country_flag(row['country_code'])
-
-    device_labels = dict(PageVisit.DEVICE_CHOICES)
-    device_breakdown = list(
-        qs.exclude(device_type='').values('device_type').annotate(visits=Count('id')).order_by('-visits')
-    )
-    for row in device_breakdown:
-        row['label'] = device_labels.get(row['device_type'], row['device_type'])
 
     log_qs = PageVisit.objects.select_related('user').order_by('-created_at')
     page_obj = Paginator(log_qs, ADMIN_VISITS_LOG_PAGE_SIZE).get_page(request.GET.get('page'))
@@ -169,14 +156,8 @@ def admin_visits(request):
         'chart_days': VISITS_CHART_DAYS,
         'daily_series': daily_series,
         'max_daily_visits': max_daily_visits,
-        'top_pages': top_pages,
-        'max_page_visits': top_pages[0]['visits'] if top_pages else 0,
-        'top_referrers': top_referrers,
-        'max_referrer_visits': top_referrers[0]['visits'] if top_referrers else 0,
         'top_countries': top_countries,
         'max_country_visits': top_countries[0]['visits'] if top_countries else 0,
-        'device_breakdown': device_breakdown,
-        'max_device_visits': device_breakdown[0]['visits'] if device_breakdown else 0,
         'visits_log': page_obj,
         'page_obj': page_obj,
         'base_qs': '',
