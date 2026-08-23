@@ -25,6 +25,9 @@
                 <a href="{% url 'core:admin_stats' %}" class="mf-admin-nav__link {% if active == 'dashboard' %}mf-admin-nav__link--active{% endif %}">
                     <i class="bi bi-bar-chart-line"></i> {% trans "نظرة عامة" %}
                 </a>
+                <a href="{% url 'core:admin_visits' %}" class="mf-admin-nav__link {% if active == 'visits' %}mf-admin-nav__link--active{% endif %}">
+                    <i class="bi bi-eye"></i> {% trans "زيارات الموقع" %}
+                </a>
                 <a href="{% url 'core:admin_flags' %}" class="mf-admin-nav__link {% if active == 'flags' %}mf-admin-nav__link--active{% endif %}">
                     <i class="bi bi-flag"></i> {% trans "البلاغات" %}
                     {% if pending_flags_count %}<span class="mf-admin-nav__badge">{{ pending_flags_count }}</span>{% endif %}

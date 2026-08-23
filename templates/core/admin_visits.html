@@ -1,0 +1,80 @@
+{% extends "core/admin_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "زيارات الموقع" %} | {{ block.super }}{% endblock %}
+{% block admin_content %}
+<h1 class="h4 mb-4">{% trans "زيارات الموقع" %}</h1>
+
+<div class="mf-stat-grid mb-4">
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ visits_today }}</span>
+        <span class="mf-stat-tile__label">{% trans "زيارات اليوم" %}</span>
+    </div>
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ visitors_today }}</span>
+        <span class="mf-stat-tile__label">{% trans "زوّار فريدون اليوم" %}</span>
+    </div>
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ visits_range }}</span>
+        <span class="mf-stat-tile__label">{% blocktrans %}زيارات آخر {{ chart_days }} يومًا{% endblocktrans %}</span>
+    </div>
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ visitors_range }}</span>
+        <span class="mf-stat-tile__label">{% blocktrans %}زوّار فريدون آخر {{ chart_days }} يومًا{% endblocktrans %}</span>
+    </div>
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ visits_all }}</span>
+        <span class="mf-stat-tile__label">{% trans "إجمالي الزيارات" %}</span>
+    </div>
+    <div class="mf-stat-tile">
+        <span class="mf-stat-tile__value">{{ visitors_all }}</span>
+        <span class="mf-stat-tile__label">{% trans "إجمالي الزوّار الفريدين" %}</span>
+    </div>
+</div>
+
+<div class="mf-panel mb-4">
+    <h2 class="h6 mb-3">{% blocktrans %}الزيارات اليومية (آخر {{ chart_days }} يومًا){% endblocktrans %}</h2>
+    {% if max_daily_visits %}
+    <div class="mf-bar-chart">
+        {% for day in daily_series %}
+        <div class="mf-bar-chart__col" title="{{ day.day }}: {{ day.visits }}">
+            <div class="mf-bar-chart__bar {% if not day.visits %}mf-bar-chart__bar--empty{% endif %}"
+                 style="height: {% widthratio day.visits max_daily_visits 100 %}%"></div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
+    {% endif %}
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="mf-panel h-100">
+            <h2 class="h6 mb-3">{% trans "أكثر الصفحات زيارةً" %}</h2>
+            {% for p in top_pages %}
+            <div class="mf-rank-row">
+                <span class="mf-rank-row__label" title="{{ p.path }}">{{ p.path }}</span>
+                <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio p.visits max_page_visits 100 %}%"></div></div>
+                <span class="mf-rank-row__value">{{ p.visits }}</span>
+            </div>
+            {% empty %}
+            <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mf-panel h-100">
+            <h2 class="h6 mb-3">{% trans "أهم مصادر الزيارات" %}</h2>
+            {% for r in top_referrers %}
+            <div class="mf-rank-row">
+                <span class="mf-rank-row__label" title="{{ r.referer }}">{{ r.referer }}</span>
+                <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio r.visits max_referrer_visits 100 %}%"></div></div>
+                <span class="mf-rank-row__value">{{ r.visits }}</span>
+            </div>
+            {% empty %}
+            <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد (زيارة مباشرة)." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,13 +1,21 @@
+from datetime import timedelta
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.db.models import Avg, Count, DurationField, ExpressionWrapper, F
+from django.db.models.functions import TruncDate
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from apps.locations.models import City, Country
 from apps.reports.models import Category, Match, Report, ReportFlag
+from .models import PageVisit
+
+VISITS_CHART_DAYS = 30
+ADMIN_VISITS_TOP_LIMIT = 8
 
 ADMIN_FLAGS_PAGE_SIZE = 20
 
@@ -95,6 +103,50 @@ def admin_stats(request):
         **_admin_context('dashboard'),
     }
     return render(request, 'core/admin_dashboard.html', context)
+
+
+@staff_member_required(login_url='accounts:login')
+def admin_visits(request):
+    today = timezone.localdate()
+    range_start = today - timedelta(days=VISITS_CHART_DAYS - 1)
+    qs = PageVisit.objects.filter(created_at__date__gte=range_start)
+
+    daily_rows = {
+        row['day']: row for row in
+        qs.annotate(day=TruncDate('created_at')).values('day')
+        .annotate(visits=Count('id'), visitors=Count('visitor_id', distinct=True))
+    }
+    daily_series = []
+    for offset in range(VISITS_CHART_DAYS):
+        day = range_start + timedelta(days=offset)
+        row = daily_rows.get(day)
+        daily_series.append({'day': day, 'visits': row['visits'] if row else 0})
+    max_daily_visits = max((d['visits'] for d in daily_series), default=0)
+
+    top_pages = list(qs.values('path').annotate(visits=Count('id')).order_by('-visits')[:ADMIN_VISITS_TOP_LIMIT])
+    top_referrers = list(
+        qs.exclude(referer='').values('referer').annotate(visits=Count('id'))
+        .order_by('-visits')[:ADMIN_VISITS_TOP_LIMIT]
+    )
+
+    context = {
+        'visits_today': PageVisit.objects.filter(created_at__date=today).count(),
+        'visitors_today': PageVisit.objects.filter(created_at__date=today)
+            .values('visitor_id').distinct().count(),
+        'visits_range': qs.count(),
+        'visitors_range': qs.values('visitor_id').distinct().count(),
+        'visits_all': PageVisit.objects.count(),
+        'visitors_all': PageVisit.objects.values('visitor_id').distinct().count(),
+        'chart_days': VISITS_CHART_DAYS,
+        'daily_series': daily_series,
+        'max_daily_visits': max_daily_visits,
+        'top_pages': top_pages,
+        'max_page_visits': top_pages[0]['visits'] if top_pages else 0,
+        'top_referrers': top_referrers,
+        'max_referrer_visits': top_referrers[0]['visits'] if top_referrers else 0,
+        **_admin_context('visits'),
+    }
+    return render(request, 'core/admin_visits.html', context)
 
 
 @staff_member_required(login_url='accounts:login')
