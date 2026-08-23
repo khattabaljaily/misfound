@@ -16,12 +16,19 @@ from .models import PageVisit
 
 VISITS_CHART_DAYS = 30
 ADMIN_VISITS_TOP_LIMIT = 8
+ADMIN_VISITS_LOG_PAGE_SIZE = 30
 
 ADMIN_FLAGS_PAGE_SIZE = 20
 
 
 def _admin_context(active):
     return {'active': active, 'pending_flags_count': ReportFlag.objects.filter(resolved=False).count()}
+
+
+def _country_flag(country_code):
+    if not country_code or len(country_code) != 2:
+        return ''
+    return ''.join(chr(0x1F1E6 + ord(letter) - ord('A')) for letter in country_code.upper())
 
 
 def robots_txt(request):
@@ -129,6 +136,25 @@ def admin_visits(request):
         .order_by('-visits')[:ADMIN_VISITS_TOP_LIMIT]
     )
 
+    top_countries = list(
+        qs.exclude(country_code='').values('country_code').annotate(visits=Count('id'))
+        .order_by('-visits')[:ADMIN_VISITS_TOP_LIMIT]
+    )
+    for row in top_countries:
+        row['flag'] = _country_flag(row['country_code'])
+
+    device_labels = dict(PageVisit.DEVICE_CHOICES)
+    device_breakdown = list(
+        qs.exclude(device_type='').values('device_type').annotate(visits=Count('id')).order_by('-visits')
+    )
+    for row in device_breakdown:
+        row['label'] = device_labels.get(row['device_type'], row['device_type'])
+
+    log_qs = PageVisit.objects.select_related('user').order_by('-created_at')
+    page_obj = Paginator(log_qs, ADMIN_VISITS_LOG_PAGE_SIZE).get_page(request.GET.get('page'))
+    for visit in page_obj:
+        visit.country_flag = _country_flag(visit.country_code)
+
     context = {
         'visits_today': PageVisit.objects.filter(created_at__date=today).count(),
         'visitors_today': PageVisit.objects.filter(created_at__date=today)
@@ -144,6 +170,13 @@ def admin_visits(request):
         'max_page_visits': top_pages[0]['visits'] if top_pages else 0,
         'top_referrers': top_referrers,
         'max_referrer_visits': top_referrers[0]['visits'] if top_referrers else 0,
+        'top_countries': top_countries,
+        'max_country_visits': top_countries[0]['visits'] if top_countries else 0,
+        'device_breakdown': device_breakdown,
+        'max_device_visits': device_breakdown[0]['visits'] if device_breakdown else 0,
+        'visits_log': page_obj,
+        'page_obj': page_obj,
+        'base_qs': '',
         **_admin_context('visits'),
     }
     return render(request, 'core/admin_visits.html', context)

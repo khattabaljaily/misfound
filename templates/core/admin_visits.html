@@ -77,4 +77,68 @@
         </div>
     </div>
 </div>
+
+<div class="row g-4 mt-0">
+    <div class="col-md-6">
+        <div class="mf-panel h-100">
+            <h2 class="h6 mb-3">{% trans "أكثر الدول زيارةً" %}</h2>
+            {% for c in top_countries %}
+            <div class="mf-rank-row">
+                <span class="mf-rank-row__label">{{ c.flag }} {{ c.country_code }}</span>
+                <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio c.visits max_country_visits 100 %}%"></div></div>
+                <span class="mf-rank-row__value">{{ c.visits }}</span>
+            </div>
+            {% empty %}
+            <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mf-panel h-100">
+            <h2 class="h6 mb-3">{% trans "الأجهزة" %}</h2>
+            {% for d in device_breakdown %}
+            <div class="mf-rank-row">
+                <span class="mf-rank-row__label">{{ d.label }}</span>
+                <div class="mf-rank-row__track"><div class="mf-rank-row__fill" style="width: {% widthratio d.visits max_device_visits 100 %}%"></div></div>
+                <span class="mf-rank-row__value">{{ d.visits }}</span>
+            </div>
+            {% empty %}
+            <p class="text-muted small mb-0">{% trans "لا توجد بيانات كافية بعد." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="mf-panel p-0 mt-4">
+    <h2 class="h6 m-3 mb-0">{% trans "سجل الزيارات" %}</h2>
+    <div class="table-responsive">
+        <table class="table table-sm table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>{% trans "الوقت" %}</th>
+                    <th>{% trans "الصفحة" %}</th>
+                    <th>{% trans "الدولة" %}</th>
+                    <th>{% trans "الجهاز" %}</th>
+                    <th>IP</th>
+                    <th>{% trans "المصدر" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for visit in visits_log %}
+                <tr>
+                    <td class="text-nowrap small">{{ visit.created_at|date:"Y-m-d H:i" }}</td>
+                    <td class="text-truncate small" style="max-width: 220px;" title="{{ visit.path }}">{{ visit.path }}</td>
+                    <td class="text-nowrap small">{% if visit.country_flag %}{{ visit.country_flag }} {{ visit.country_code }}{% else %}—{% endif %}</td>
+                    <td class="text-nowrap small">{{ visit.get_device_type_display|default:"—" }}</td>
+                    <td class="text-nowrap small"><code>{{ visit.ip_address|default:"—" }}</code></td>
+                    <td class="text-truncate small" style="max-width: 220px;" title="{{ visit.referer }}">{{ visit.referer|default:"—" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center text-muted py-4">{% trans "لا توجد بيانات كافية بعد." %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% include "core/_pagination.html" %}
 {% endblock %}

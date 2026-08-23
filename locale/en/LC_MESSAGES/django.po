@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-23 07:21+0300\n"
+"POT-Creation-Date: 2026-08-23 07:27+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -59,7 +59,7 @@ msgid "رقم الهاتف"
 msgstr "Phone number"
 
 #: apps/accounts/models.py:18 apps/locations/models.py:25
-#: apps/reports/models.py:57
+#: apps/reports/models.py:57 templates/core/admin_visits.html:120
 msgid "الدولة"
 msgstr "Country"
 
@@ -100,11 +100,27 @@ msgstr "Misfound Admin"
 msgid "لوحة التحكم"
 msgstr "Dashboard"
 
-#: apps/core/views.py:174
+#: apps/core/models.py:12
+msgid "كمبيوتر"
+msgstr "Desktop"
+
+#: apps/core/models.py:13
+msgid "جوال"
+msgstr "Mobile"
+
+#: apps/core/models.py:14
+msgid "تابلت"
+msgstr "Tablet"
+
+#: apps/core/models.py:15
+msgid "أخرى"
+msgstr "Other"
+
+#: apps/core/views.py:207
 msgid "طلب غير صالح."
 msgstr "Invalid request."
 
-#: apps/core/views.py:178
+#: apps/core/views.py:211
 msgid "تم وسم البلاغ كمُراجَع."
 msgstr "Report marked as reviewed."
 
@@ -1113,7 +1129,8 @@ msgstr "Report breakdown: lost vs. found"
 #: templates/core/admin_dashboard.html:46
 #: templates/core/admin_dashboard.html:61
 #: templates/core/admin_dashboard.html:75 templates/core/admin_visits.html:46
-#: templates/core/admin_visits.html:61
+#: templates/core/admin_visits.html:61 templates/core/admin_visits.html:92
+#: templates/core/admin_visits.html:106 templates/core/admin_visits.html:137
 msgid "لا توجد بيانات كافية بعد."
 msgstr "Not enough data yet."
 
@@ -1195,6 +1212,34 @@ msgstr "Top Referrers"
 #: templates/core/admin_visits.html:75
 msgid "لا توجد بيانات كافية بعد (زيارة مباشرة)."
 msgstr "Not enough data yet (direct visits)."
+
+#: templates/core/admin_visits.html:84
+msgid "أكثر الدول زيارةً"
+msgstr "Top Countries"
+
+#: templates/core/admin_visits.html:98
+msgid "الأجهزة"
+msgstr "Devices"
+
+#: templates/core/admin_visits.html:113
+msgid "سجل الزيارات"
+msgstr "Visits Log"
+
+#: templates/core/admin_visits.html:118
+msgid "الوقت"
+msgstr "Time"
+
+#: templates/core/admin_visits.html:119
+msgid "الصفحة"
+msgstr "Page"
+
+#: templates/core/admin_visits.html:121
+msgid "الجهاز"
+msgstr "Device"
+
+#: templates/core/admin_visits.html:123
+msgid "المصدر"
+msgstr "Source"
 
 #: templates/core/home.html:9
 msgid "مجتمع يساعد كل صاحب غرض على الوصول إلى غرضه"
