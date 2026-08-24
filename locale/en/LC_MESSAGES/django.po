@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Misfound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-23 09:07+0300\n"
+"POT-Creation-Date: 2026-08-24 07:16+0300\n"
 "PO-Revision-Date: 2026-08-20 20:15+0300\n"
 "Last-Translator: Misfound\n"
 "Language-Team: English\n"
@@ -35,7 +35,7 @@ msgstr "Choose %(field)s"
 
 #: apps/accounts/forms.py:38
 msgid "حسابك غير مُفعّل بعد. تحقق من بريدك الإلكتروني لإكمال عملية التفعيل."
-msgstr ""
+msgstr "Your account isn't activated yet. Check your email to complete activation."
 "Your account isn't verified yet. Check your email to complete verification."
 
 #: apps/accounts/forms.py:44 apps/accounts/models.py:41
@@ -195,7 +195,7 @@ msgstr "City"
 msgid "المدن"
 msgstr "Cities"
 
-#: apps/messaging/forms.py:11 templates/reports/detail.html:85
+#: apps/messaging/forms.py:11 templates/reports/detail.html:99
 msgid "اكتب رسالتك..."
 msgstr "Type your message..."
 
@@ -317,7 +317,7 @@ msgstr "Type"
 msgid "العنوان"
 msgstr "Title"
 
-#: apps/notifications/models.py:31 templates/reports/detail.html:59
+#: apps/notifications/models.py:31 templates/reports/detail.html:73
 msgid "التفاصيل"
 msgstr "Details"
 
@@ -394,7 +394,7 @@ msgid "قائم"
 msgstr "Open"
 
 #: apps/reports/models.py:41 templates/reports/_card.html:29
-#: templates/reports/detail.html:50 templates/reports/detail.html:77
+#: templates/reports/detail.html:64 templates/reports/detail.html:91
 msgid "تم الاسترجاع"
 msgstr "Resolved"
 
@@ -418,7 +418,7 @@ msgstr "Category"
 msgid "الوصف"
 msgstr "Description"
 
-#: apps/reports/models.py:67 templates/reports/detail.html:63
+#: apps/reports/models.py:67 templates/reports/detail.html:77
 msgid "رقم المعرف"
 msgstr "Reference number"
 
@@ -449,7 +449,7 @@ msgstr "Verification question"
 
 #: apps/reports/models.py:78
 msgid "سؤال يُستخدم للتحقق من ملكية الغرض قبل التسليم (يظهر لصاحب الإعلان فقط)"
-msgstr ""
+msgstr "A question used to verify ownership of the item before handover (visible only to you)"
 "A question used to verify ownership of the item before handing it over "
 "(visible only to the reporter)"
 
@@ -493,19 +493,19 @@ msgstr "Report image"
 msgid "صور الإعلان"
 msgstr "Report images"
 
-#: apps/reports/models.py:132 templates/reports/detail.html:158
+#: apps/reports/models.py:132 templates/reports/detail.html:172
 msgid "محتوى مسيء أو غير لائق"
 msgstr "Offensive or inappropriate content"
 
-#: apps/reports/models.py:133 templates/reports/detail.html:159
+#: apps/reports/models.py:133 templates/reports/detail.html:173
 msgid "معلومات مضللة أو غير صحيحة"
 msgstr "Misleading or incorrect information"
 
-#: apps/reports/models.py:134 templates/reports/detail.html:160
+#: apps/reports/models.py:134 templates/reports/detail.html:174
 msgid "إعلان مكرر"
 msgstr "Duplicate report"
 
-#: apps/reports/models.py:135 templates/reports/detail.html:161
+#: apps/reports/models.py:135 templates/reports/detail.html:175
 msgid "سبب آخر"
 msgstr "Other reason"
 
@@ -615,7 +615,7 @@ msgstr "Please choose a reason for the flag."
 
 #: apps/reports/views.py:311
 msgid "تم استلام بلاغك، شكرًا لمساعدتك في الحفاظ على جودة المنصة."
-msgstr ""
+msgstr "Your report has been received. Thank you for helping keep the platform trustworthy."
 "Your flag has been received - thanks for helping keep the platform "
 "trustworthy."
 
@@ -633,7 +633,7 @@ msgstr "Bad request"
 
 #: templates/400.html:9
 msgid "تعذّر على الخادم فهم هذا الطلب. تحقق من الرابط وحاول مرة أخرى."
-msgstr ""
+msgstr "The server couldn't understand this request. Check the link and try again."
 "The server couldn't understand this request. Check the link and try again."
 
 #: templates/400.html:11 templates/403.html:11 templates/404.html:11
@@ -655,7 +655,7 @@ msgstr "Page not found"
 
 #: templates/404.html:9
 msgid "يبدو أن الرابط الذي وصلت إليه غير صحيح أو أن الصفحة أصبحت غير متاحة."
-msgstr ""
+msgstr "The link you followed appears to be incorrect, or the page is no longer available."
 "The link you followed seems to be broken, or the page is no longer available."
 
 #: templates/500.html:7 templates/500.html:25
@@ -722,7 +722,7 @@ msgstr "This code is valid for 10 minutes only."
 
 #: templates/accounts/otp_email.html:26
 msgid "إذا لم تطلب إنشاء حساب في Misfound، يمكنك تجاهل هذه الرسالة بأمان."
-msgstr ""
+msgstr "If you didn't request to create a Misfound account, you can safely ignore this email."
 "If you didn't request to create a Misfound account, you can safely ignore "
 "this email."
 
@@ -818,7 +818,7 @@ msgstr "Or copy this link into your browser:"
 #: templates/accounts/password_reset_email.html:34
 #: templates/accounts/password_reset_email.txt:8
 msgid "إذا لم تطلب إعادة تعيين كلمة المرور، يمكنك تجاهل هذه الرسالة بأمان."
-msgstr ""
+msgstr "If you didn't request a password reset, you can safely ignore this email."
 "If you didn't request a password reset, you can safely ignore this email."
 
 #: templates/accounts/password_reset_email.txt:3
@@ -912,7 +912,7 @@ msgstr "Found Item"
 
 #: templates/base.html:200
 msgid "نساعد كل صاحب غرض على الوصول إلى غرضه، بخطوة بسيطة وتواصل آمن."
-msgstr ""
+msgstr "We help every item's owner reclaim it, with one simple step and safe communication."
 "We help every owner reach their item, through one simple step and a safe "
 "conversation."
 
@@ -943,8 +943,8 @@ msgid "تم التطوير بواسطة"
 msgstr "Developed by"
 
 #: templates/base.html:216
-msgid "خطاب الجيلي"
-msgstr "Khattab Aljaily"
+msgid "إنجاز لتقنية المعلومات"
+msgstr "Enjaz Information Technology"
 
 #: templates/base.html:233 templates/base.html:282
 #: templates/core/admin_base.html:62
@@ -957,11 +957,11 @@ msgid "هل أنت متأكد؟"
 msgstr "Are you sure?"
 
 #: templates/base.html:236 templates/core/admin_base.html:65
-#: templates/core/admin_user_edit.html:23 templates/reports/detail.html:169
+#: templates/core/admin_user_edit.html:23 templates/reports/detail.html:183
 msgid "إلغاء"
 msgstr "Cancel"
 
-#: templates/base.html:281
+#: templates/base.html:281 templates/reports/detail.html:46
 msgid "إغلاق"
 msgstr "Close"
 
@@ -1092,7 +1092,7 @@ msgstr "1. Post your report"
 
 #: templates/core/about.html:44 templates/core/home.html:124
 msgid "بلّغ عن غرض فقدته أو عثرت عليه في دقائق، مع صورة ووصف ومكان."
-msgstr ""
+msgstr "Report a lost or found item in minutes, with a photo, description, and location."
 "Report something you've lost or found in minutes, with a photo, description, "
 "and location."
 
@@ -1102,7 +1102,7 @@ msgstr "2. We look for a match"
 
 #: templates/core/about.html:53 templates/core/home.html:130
 msgid "نظام ذكي يقارن إعلانك تلقائيًا بالإعلانات المقابلة ويقترح ما قد يطابقه."
-msgstr ""
+msgstr "A smart system automatically compares your listing with matching ones and suggests possible matches."
 "A smart system automatically compares your report against matching ones and "
 "suggests possible matches."
 
@@ -1112,7 +1112,7 @@ msgstr "3. Connect safely"
 
 #: templates/core/about.html:62 templates/core/home.html:136
 msgid "تراسل الطرف الآخر داخل المنصة مباشرة، وتتحقق من الملكية قبل التسليم."
-msgstr ""
+msgstr "Message the other party directly within the platform, and verify ownership before handover."
 "Message the other party directly within the platform, and verify ownership "
 "before handing anything over."
 
@@ -1220,7 +1220,7 @@ msgid "لا توجد بلاغات بانتظار المراجعة."
 msgstr "No flags awaiting review."
 
 #: templates/core/admin_flags.html:69 templates/core/admin_users.html:124
-#: templates/core/admin_users.html:160 templates/reports/detail.html:185
+#: templates/core/admin_users.html:160 templates/reports/detail.html:199
 msgid "حدث خطأ، يرجى المحاولة مرة أخرى."
 msgstr "Something went wrong. Please try again."
 
@@ -1495,7 +1495,7 @@ msgstr "Your data privacy is protected"
 
 #: templates/core/home.html:167
 msgid "لا نشارك رقم هاتفك أو بريدك الإلكتروني مع أي مستخدم آخر دون موافقتك."
-msgstr ""
+msgstr "We never share your phone number or email with other users without your consent."
 "We never share your phone number or email with another user without your "
 "consent."
 
@@ -1557,13 +1557,13 @@ msgstr "3. How we use your data"
 
 #: templates/core/privacy_policy.html:22
 msgid "عرض إعلاناتك للمستخدمين الآخرين وتمكينهم من التواصل معك بخصوصها."
-msgstr ""
+msgstr "Show your listings to other users and let them contact you about them."
 "Showing your reports to other users and enabling them to contact you about "
 "them."
 
 #: templates/core/privacy_policy.html:23
 msgid "تشغيل نظام التحقق قبل تسليم الأغراض وحماية حسابك."
-msgstr ""
+msgstr "Run the verification system before item handover and protect your account."
 "Running the verification system before items are handed over, and protecting "
 "your account."
 
@@ -1613,7 +1613,7 @@ msgstr "You can request deletion of your account and data by contacting us."
 
 #: templates/core/privacy_policy.html:37
 msgid "يمكنك حذف أي إعلان نشرته بنفسك بعد استرجاع الغرض."
-msgstr ""
+msgstr "You can delete any listing you've posted yourself after the item has been recovered."
 "You can delete any report you've posted once the item has been recovered."
 
 #: templates/core/privacy_policy.html:40
@@ -1657,7 +1657,7 @@ msgstr "2. User responsibilities"
 
 #: templates/core/terms.html:14
 msgid "تقديم معلومات صحيحة عند نشر إعلان أو التواصل بشأنه."
-msgstr ""
+msgstr "Provide accurate information when posting a listing or communicating about it."
 "Providing accurate information when posting a report or communicating about "
 "it."
 
@@ -1671,7 +1671,7 @@ msgstr "Not posting content related to illegal or prohibited items."
 
 #: templates/core/terms.html:17
 msgid "التعامل باحترام مع باقي المستخدمين وعدم إساءة استخدام نظام الرسائل."
-msgstr ""
+msgstr "Treat other users with respect and don't misuse the messaging system."
 "Treating other users respectfully and not misusing the messaging system."
 
 #: templates/core/terms.html:20
@@ -1839,11 +1839,11 @@ msgstr "Share"
 msgid "مشاهدة"
 msgstr "views"
 
-#: templates/reports/detail.html:27
+#: templates/reports/detail.html:27 templates/reports/detail.html:49
 msgid "الصورة السابقة"
 msgstr "Previous photo"
 
-#: templates/reports/detail.html:28
+#: templates/reports/detail.html:28 templates/reports/detail.html:50
 msgid "الصورة التالية"
 msgstr "Next photo"
 
@@ -1852,84 +1852,84 @@ msgstr "Next photo"
 msgid "صورة %(n)s"
 msgstr "Photo %(n)s"
 
-#: templates/reports/detail.html:55
+#: templates/reports/detail.html:69
 msgid "، "
 msgstr ", "
 
-#: templates/reports/detail.html:66
+#: templates/reports/detail.html:80
 msgid "مكان الفقدان/العثور"
 msgstr "Where it was lost/found"
 
-#: templates/reports/detail.html:73
+#: templates/reports/detail.html:87
 msgid "سؤال التحقق الخاص بك"
 msgstr "Your verification question"
 
-#: templates/reports/detail.html:82
+#: templates/reports/detail.html:96
 msgid "هل هذا الإعلان يخصك؟"
 msgstr "Is this your report?"
 
-#: templates/reports/detail.html:82
+#: templates/reports/detail.html:96
 msgid "أرسل رسالة لصاحب الإعلان"
 msgstr "Send a message to the reporter"
 
-#: templates/reports/detail.html:88
+#: templates/reports/detail.html:102
 msgid "أعتقد أنني وجدتها"
 msgstr "I think I found it"
 
-#: templates/reports/detail.html:88
+#: templates/reports/detail.html:102
 msgid "أعتقد أنها لي"
 msgstr "I think it's mine"
 
-#: templates/reports/detail.html:94
+#: templates/reports/detail.html:108
 msgid "يرجى تسجيل الدخول للتواصل"
 msgstr "Please log in to get in touch"
 
-#: templates/reports/detail.html:102 templates/reports/detail.html:186
+#: templates/reports/detail.html:116 templates/reports/detail.html:200
 msgid "تم إبلاغك عن هذا الإعلان مسبقًا"
 msgstr "You've already flagged this report"
 
-#: templates/reports/detail.html:104 templates/reports/detail.html:152
+#: templates/reports/detail.html:118 templates/reports/detail.html:166
 msgid "الإبلاغ عن هذا الإعلان"
 msgstr "Flag this report"
 
-#: templates/reports/detail.html:115
+#: templates/reports/detail.html:129
 msgid "اقتراحات لك"
 msgstr "Suggestions for you"
 
-#: templates/reports/detail.html:115
+#: templates/reports/detail.html:129
 msgid "إعلانات قد تكون مطابقة"
 msgstr "Reports that might match"
 
-#: templates/reports/detail.html:128
+#: templates/reports/detail.html:142
 msgid "تطابق"
 msgstr "match"
 
-#: templates/reports/detail.html:155
+#: templates/reports/detail.html:169
 msgid "سبب الإبلاغ"
 msgstr "Reason for flagging"
 
-#: templates/reports/detail.html:157
+#: templates/reports/detail.html:171
 msgid "اختر السبب"
 msgstr "Choose a reason"
 
-#: templates/reports/detail.html:165
+#: templates/reports/detail.html:179
 msgid "ملاحظة إضافية (اختياري)"
 msgstr "Additional note (optional)"
 
-#: templates/reports/detail.html:170
+#: templates/reports/detail.html:184
 msgid "إرسال البلاغ"
 msgstr "Submit flag"
 
-#: templates/reports/detail.html:182
+#: templates/reports/detail.html:196
 msgid "تأكيد الاسترجاع"
 msgstr "Confirm recovery"
 
-#: templates/reports/detail.html:183
+#: templates/reports/detail.html:197
 msgid "هل استرجعت هذا الغرض فعلاً؟ سيتم وسم الإعلان كمنتهي."
-msgstr ""
+msgstr "Have you actually recovered this item? The listing will be marked as resolved."
 "Have you actually recovered this item? The report will be marked as closed."
 
-#: templates/reports/detail.html:184
+#: templates/reports/detail.html:198
 msgid "نعم، تم الاسترجاع"
 msgstr "Yes, it's recovered"
 
@@ -2015,7 +2015,7 @@ msgstr "Delete report"
 
 #: templates/reports/mine.html:25
 msgid "هل تريد حذف هذا الإعلان نهائيًا؟ لا يمكن التراجع عن هذا الإجراء."
-msgstr ""
+msgstr "Do you want to permanently delete this listing? This action cannot be undone."
 "Do you want to permanently delete this report? This action cannot be undone."
 
 #: templates/reports/mine.html:27
