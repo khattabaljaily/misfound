@@ -1391,16 +1391,8 @@ a.mf-pagination__link:hover {
     transition: color 0.15s ease, opacity 0.15s ease;
 }
 .mf-footer__enjaz-link:hover { color: rgba(255, 255, 255, 0.9); }
-.mf-footer__enjaz-icon { width: 34px; height: 34px; opacity: 0.9; }
-.mf-footer__enjaz-name { display: block; line-height: 1.4; }
-.mf-footer__enjaz-name--ar { font-size: 0.85rem; font-weight: 800; letter-spacing: 0.01em; color: rgba(255, 255, 255, 0.85); }
-.mf-footer__enjaz-name--en {
-    font-size: 0.64rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4);
-}
+.mf-footer__enjaz-icon { width: 42px; height: 42px; opacity: 0.9; }
+.mf-footer__enjaz-name { display: block; line-height: 1.4; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.01em; color: rgba(255, 255, 255, 0.85); }
 
 @media (max-width: 991px) {
     .mf-navbar__links { padding-top: 1rem; }
