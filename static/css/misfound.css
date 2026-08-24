@@ -1391,8 +1391,7 @@ a.mf-pagination__link:hover {
     transition: color 0.15s ease, opacity 0.15s ease;
 }
 .mf-footer__enjaz-link:hover { color: rgba(255, 255, 255, 0.9); }
-.mf-footer__enjaz-icon { width: 70px; height: 70x; opacity: 0.9; }
-.mf-footer__enjaz-name { display: block; line-height: 1.4; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.01em; color: rgba(255, 255, 255, 0.85); }
+.mf-footer__enjaz-icon { width: 96px; height: 96px; opacity: 0.9; }
 
 @media (max-width: 991px) {
     .mf-navbar__links { padding-top: 1rem; }
