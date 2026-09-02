@@ -1379,20 +1379,6 @@ a.mf-pagination__link:hover {
 .mf-footer__label { color: var(--mf-teal); font-size: 0.78rem; font-weight: 700; margin-bottom: 0.35rem; }
 .mf-footer__bottom { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 1.1rem 0; font-size: 0.78rem; }
 
-.mf-footer__enjaz { display: flex; justify-content: center; padding-bottom: 2rem; }
-.mf-footer__enjaz-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1rem;
-    color: rgba(255, 255, 255, 0.55);
-    text-align: center;
-    transition: color 0.15s ease, opacity 0.15s ease;
-}
-.mf-footer__enjaz-link:hover { color: rgba(255, 255, 255, 0.9); }
-.mf-footer__enjaz-icon { width: 96px; height: 96px; opacity: 0.9; }
-
 @media (max-width: 991px) {
     .mf-navbar__links { padding-top: 1rem; }
     .mf-navbar__actions { flex-direction: column; align-items: stretch; gap: 0.6rem; padding: 1rem 0 0.8rem; white-space: normal; }
