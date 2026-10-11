@@ -569,22 +569,18 @@ msgid "المفقودات"
 msgstr "Lost items"
 
 #: apps/reports/views.py:109
-msgid ""
-"تصفح أحدث إعلانات المفقودات في الوطن العربي وساعد في إعادتها إلى أصحابها."
+msgid "تصفح أحدث إعلانات المفقودات وساعد في إعادتها إلى أصحابها."
 msgstr ""
-"Browse the latest lost item reports across the Arab world and help reunite "
-"them with their owners."
+"Browse the latest lost item reports and help reunite them with their owners."
 
 #: apps/reports/views.py:111 templates/base.html:125 templates/base.html:205
 msgid "المعثورات"
 msgstr "Found items"
 
 #: apps/reports/views.py:112
-msgid ""
-"تصفح أحدث إعلانات المعثورات في الوطن العربي وساعد في إيصالها إلى أصحابها."
+msgid "تصفح أحدث إعلانات المعثورات وساعد في إيصالها إلى أصحابها."
 msgstr ""
-"Browse the latest found item reports across the Arab world and help get them "
-"to their owners."
+"Browse the latest found item reports and help get them to their owners."
 
 #: apps/reports/views.py:114 templates/404.html:12 templates/core/about.html:75
 #: templates/reports/list.html:11
@@ -592,8 +588,8 @@ msgid "تصفح الإعلانات"
 msgstr "Explore reports"
 
 #: apps/reports/views.py:115
-msgid "تصفح جميع إعلانات المفقودات والمعثورات في الوطن العربي في مكان واحد."
-msgstr "Browse all lost and found reports across the Arab world in one place."
+msgid "تصفح جميع إعلانات المفقودات والمعثورات في مكان واحد."
+msgstr "Browse all lost and found reports in one place."
 
 #: apps/reports/views.py:214
 msgid "تم نشر الإعلان بنجاح."
@@ -868,11 +864,11 @@ msgstr "Lost & Found"
 
 #: templates/base.html:56
 msgid ""
-"منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب "
+"منصة تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب "
 "غرض على الوصول إلى غرضه بتواصل آمن."
 msgstr ""
-"A platform for the Arab world that brings lost and found reports together in "
-"one place, helping every owner reach their item through safe communication."
+"A platform that brings lost and found reports together in one place, "
+"helping every owner reach their item through safe communication."
 
 #: templates/base.html:116
 msgid "فتح القائمة"
@@ -1049,15 +1045,15 @@ msgstr "About Misfound"
 
 #: templates/core/about.html:8
 msgid ""
-"منصة عربية تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب "
+"منصة تجمع إعلانات المفقودات والمعثورات في مكان واحد، وتساعد كل صاحب "
 "غرض على الوصول إلى غرضه."
 msgstr ""
-"A platform for the Arab world that brings lost and found reports together in "
-"one place, helping every owner reach their item."
+"A platform that brings lost and found reports together in one place, "
+"helping every owner reach their item."
 
 #: templates/core/about.html:15
-msgid "دولة عربية"
-msgstr "Arab countries"
+msgid "دولة مدعومة"
+msgstr "Countries supported"
 
 #: templates/core/about.html:21
 msgid "مدينة مغطاة"
@@ -1129,8 +1125,8 @@ msgid "لا نشارك رقم هاتفك أو بريدك الإلكتروني م
 msgstr "We never share your phone number or email with other users."
 
 #: templates/core/about.html:71
-msgid "نغطي كل الدول العربية بواجهة عربية أولاً."
-msgstr "We cover every Arab country with an Arabic-first experience."
+msgid "نتوسع باستمرار لنغطي دولًا ومدنًا جديدة."
+msgstr "We are continuously expanding to cover new countries and cities."
 
 #: templates/core/admin_base.html:26 templates/core/admin_dashboard.html:3
 #: templates/core/admin_dashboard.html:5
@@ -1387,8 +1383,8 @@ msgid "أو تصفح كل الإعلانات"
 msgstr "Or browse all reports"
 
 #: templates/core/home.html:21
-msgid "مدينة عربية"
-msgstr "Arab cities"
+msgid "مدينة مدعومة"
+msgstr "Cities supported"
 
 #: templates/core/home.html:22
 msgid "تواصل آمن"

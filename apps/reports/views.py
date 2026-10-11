@@ -106,13 +106,13 @@ def report_list(request):
 
     if report_type == Report.LOST:
         meta_title = _('المفقودات') + ' | Misfound'
-        meta_description = _('تصفح أحدث إعلانات المفقودات في الوطن العربي وساعد في إعادتها إلى أصحابها.')
+        meta_description = _('تصفح أحدث إعلانات المفقودات وساعد في إعادتها إلى أصحابها.')
     elif report_type == Report.FOUND:
         meta_title = _('المعثورات') + ' | Misfound'
-        meta_description = _('تصفح أحدث إعلانات المعثورات في الوطن العربي وساعد في إيصالها إلى أصحابها.')
+        meta_description = _('تصفح أحدث إعلانات المعثورات وساعد في إيصالها إلى أصحابها.')
     else:
         meta_title = _('تصفح الإعلانات') + ' | Misfound'
-        meta_description = _('تصفح جميع إعلانات المفقودات والمعثورات في الوطن العربي في مكان واحد.')
+        meta_description = _('تصفح جميع إعلانات المفقودات والمعثورات في مكان واحد.')
 
     context = {
         'reports': page_obj,
